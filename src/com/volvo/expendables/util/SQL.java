@@ -74,18 +74,14 @@ public class SQL {
 	
 	public static final String GET_USER_PASSWORD ="select password from users where username=?";
 
-<<<<<<< Updated upstream
 	public static final String GET_ALL_SUPPLIERS = "select * from supplier";
 
 	public static final String INSERT_SUPPLIER = "insert into ";
-	
-=======
 	public static final String CREATE_CONTENT = "insert into content (content_id,content_name) "
 			+ "values (:content_id,:content_name)";
 
 	public static final String DELETE_CONTENT_BY_ID = "delete from content where content_id=:content_id ";
 
->>>>>>> Stashed changes
 	private SQL(){
 		
 	}
