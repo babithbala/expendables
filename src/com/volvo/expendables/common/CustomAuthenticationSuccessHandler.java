@@ -20,7 +20,7 @@ public class CustomAuthenticationSuccessHandler   implements AuthenticationSucce
 			Authentication authentication) throws IOException,ServletException {
 		
 		String userName="";
-
+//
 		userName = request.getParameter("j_username");
 		
 		HttpSession session = request.getSession(false);
