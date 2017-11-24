@@ -197,7 +197,7 @@
 			                            </a>
 			                        </li>
                                  </sec:authorize>
-                                 
+
                                  <li>
 			                            <a href="${pageContext.request.contextPath}/calendarBooking.htm">
 			                                <i class="fa fa-glass"></i> <span>Booking</span>
@@ -564,14 +564,14 @@
 
                               <div class=" add-task-row">
                                   <a class="btn btn-danger btn-sm pull-left" id= "addNewEventByUserButton" href="addEvent.htm">
-                                   <spring:message code="label.AddNewTasks"/></a>
+                                   <spring:message code="label.Add_New_Tasks"/></a>
                                   <section class="pull-right">
 	                                  <label class="label-danger label inline m-t-15">
-	                                  <spring:message code="label.High"/></label>&nbsp;&nbsp;
+	                                  High</label>&nbsp;&nbsp;
 	                                  <label class="label-success label inline m-t-15">
-	                                  <spring:message code="label.Medium"/></label>&nbsp;&nbsp;
+	                                  Medium</label>&nbsp;&nbsp;
 	                                  <label class="label-info label inline m-t-15">
-	                                  <spring:message code="label.Low"/></label>
+	                                  Low</label>
 	                               </section>
 <!--                                   <a class="btn btn-default btn-sm pull-right" href="#">See All Tasks</a> -->
                               </div>
@@ -722,8 +722,8 @@
             });
 
             	 populatePrincipalDetails($("#addUserProfileFullNameLabelId"),$("#addUserProfileFirstNameLabelId"));
-           	 
-           		        		 
+
+
             
 			var events="";
             

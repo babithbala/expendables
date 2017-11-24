@@ -4,8 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
-
+import java.util.logging.Logger;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -13,20 +12,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.volvo.expendables.dto.ContentDTO;
+import com.volvo.expendables.dto.Slot;
 import net.sf.json.JSONArray;
 
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
@@ -34,7 +29,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.volvo.expendables.dto.Acknowledge;
 import com.volvo.expendables.dto.EventDTO;
 import com.volvo.expendables.dto.PrincipalDTO;
-import com.volvo.expendables.service.impl.ExpendablesService;
+import com.volvo.expendables.service.ExpendablesService;
 
 
 
@@ -46,8 +41,8 @@ public class UserInfoController {
 
     private ExpendablesService expendablesService;
     private ObjectMapper jacksonObjectMapper;
-
-
+    
+    
     public ObjectMapper getJacksonObjectMapper() {
         return jacksonObjectMapper;
     }
@@ -178,11 +173,11 @@ public class UserInfoController {
         InputStream image = null;
         if(userName!=null)
             userName = userName.substring(0, userName.indexOf("-"));
-
+        
         PrincipalDTO photoDTO = expendablesService.getProfilePhoto(userName);
         image=photoDTO.getProfilePhoto();
         ServletOutputStream out = null;
-
+        
         try {
               response.flushBuffer();
               out = response.getOutputStream();
@@ -229,14 +224,14 @@ public class UserInfoController {
         String userName = getLoggedInUserName();
         profileDetails.setUserName(userName);
         HttpSession session = request.getSession(false);
-            if(session.getAttribute("profilePhoto")!=null && session.getAttribute("profilePhoto") !=""){
-                FileUploadBean uploadImage=(FileUploadBean)session.getAttribute("profilePhoto");
-                session.setAttribute("profilePhoto", null);
-                profileDetails.setProfilePhoto(uploadImage.getFile().getInputStream());
-                profileDetails.setRequestWithImage(true);
-                UserInfoController.LOG.info("image set in dto");
-            }
-        list =  expendablesService.uploadProfilePhoto(profileDetails);
+        if (session.getAttribute("profilePhoto") != null && session.getAttribute("profilePhoto") != "") {
+            FileUploadBean uploadImage = (FileUploadBean) session.getAttribute("profilePhoto");
+            session.setAttribute("profilePhoto", null);
+            profileDetails.setProfilePhoto(uploadImage.getFile().getInputStream());
+            profileDetails.setRequestWithImage(true);
+            UserInfoController.LOG.info("image set in dto");
+        }
+        list = expendablesService.uploadProfilePhoto(profileDetails);
         JSONArray data = JSONArray.fromObject(list);
         return data.toString();
     }
@@ -261,5 +256,38 @@ public class UserInfoController {
         }
         JSONArray data = JSONArray.fromObject(list);
         return data.toString();
+    }
+
+    @RequestMapping(value = "/slots", method = RequestMethod.GET)
+    public String listSlots(Model model) {
+        model.addAttribute("slot", new Slot());
+        model.addAttribute("listSlots", this.expendablesService.getAllSlots());
+        return "slot";
+    }
+
+    @RequestMapping(value = "/slot/add", method = RequestMethod.POST)
+    public @ResponseBody String addSlot(@RequestBody  Slot slotDetails) {
+
+
+        List<Acknowledge> list = new ArrayList<Acknowledge>();
+        UserInfoController.LOG.info("--------------------inside saveOrUpdateEvent" + slotDetails.getDuration());
+
+        list = expendablesService.createNewSlot(slotDetails);
+        JSONArray data = JSONArray.fromObject(list);
+        return data.toString();
+
+    }
+
+    @RequestMapping(value = "/slot/remove/{slot_name}", method = RequestMethod.GET)
+    public String deleteSlot(@PathVariable("slot_name") String slot_name) {
+        this.expendablesService.deleteSlot(slot_name);
+        return "redirect:/slot";
+    }
+
+    @RequestMapping(value = "/slot/get/{slot_name}", method = RequestMethod.GET)
+    public String getSlot(Model model, @PathVariable("slot_name") String slot_name) {
+        model.addAttribute("slot", new Slot());
+        this.expendablesService.getSlot(slot_name);
+        return "redirect:/slot";
     }
 }

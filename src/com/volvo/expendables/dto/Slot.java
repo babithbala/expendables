@@ -6,6 +6,9 @@ public class Slot {
     private String slot_name;
     int duration;
 
+    public Slot() {
+    }
+
     public Slot(String slot_name, int duration) {
         this.slot_name = slot_name;
         this.duration = duration;

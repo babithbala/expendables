@@ -61,6 +61,13 @@ public class HomeController {
         model.addAttribute(TITLE, "Home");
         return "demo";
     }
+
+	@RequestMapping(value = "/slotInfo.htm", method = RequestMethod.GET)
+	public String slotInfo(Model model) {
+		/*model.addAttribute(TITLE, "Home");*/
+		return "slotInfo";
+	}
+
 	
 	
 	@RequestMapping(value = "/calendarBooking.htm", method = RequestMethod.GET)
