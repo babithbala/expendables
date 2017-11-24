@@ -14,7 +14,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 
 public class CustomAuthenticationSuccessHandler   implements AuthenticationSuccessHandler {
 	Logger logger=Logger.getLogger(CustomAuthenticationSuccessHandler.class.getName());
-	// cx
+	// cxccx
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request,HttpServletResponse response,
 			Authentication authentication) throws IOException,ServletException {
