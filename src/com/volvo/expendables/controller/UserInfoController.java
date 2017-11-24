@@ -265,12 +265,10 @@ public class UserInfoController {
         return "slot";
     }
 
-    @RequestMapping(value = "/slot/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/saveOrUpdateSlot.htm", method = RequestMethod.POST)
     public @ResponseBody String addSlot(@RequestBody  Slot slotDetails) {
-
-
         List<Acknowledge> list = new ArrayList<Acknowledge>();
-        UserInfoController.LOG.info("--------------------inside saveOrUpdateEvent" + slotDetails.getDuration());
+        UserInfoController.LOG.info("--------------------inside saveOrUpdateEvent" + slotDetails.getSlotDuration());
 
         list = expendablesService.createNewSlot(slotDetails);
         JSONArray data = JSONArray.fromObject(list);

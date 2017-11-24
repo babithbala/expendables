@@ -279,14 +279,20 @@ public class ExpendablesServiceImpl implements ExpendablesService {
     @Override
     @Transactional
     public List<Acknowledge> createNewSlot(Slot slot) {
+        List<Acknowledge> list =new ArrayList<Acknowledge>();
+        Acknowledge ack = new Acknowledge();
         try {
+
             ExpendablesServiceImpl.LOG.info("Add slot " + SQL.ADD_SLOT);
-            jdbcTemplate.update(SQL.ADD_SLOT, slot.getSlot_name(), slot.getDuration());
+            jdbcTemplate.update(SQL.ADD_SLOT, slot.getSlotName(), slot.getSlotDuration());
             ExpendablesServiceImpl.LOG.info("Added slot: " + slot);
+            ack.setMessage("Slot Added ");
         } catch (DataAccessException e) {
             ExpendablesServiceImpl.LOG.info("Exception cause " + e.getMessage());
+            ack.setMessage(e.getMessage());
         }
-        return null;
+        list.add(ack);
+        return list;
     }
 
     @Override
@@ -335,7 +341,7 @@ public class ExpendablesServiceImpl implements ExpendablesService {
         try {
             ExpendablesServiceImpl.LOG.info("SQL Get slot " + SQL.GET_SLOT_BY_NAME);
             slot = jdbcTemplate.queryForObject(SQL.GET_SLOT_BY_NAME, new Object[]{slotName}, mapper);
-            ExpendablesServiceImpl.LOG.info("SQL Slot name " + slot.getSlot_name());
+            ExpendablesServiceImpl.LOG.info("SQL Slot name " + slot.getSlotName());
         } catch (DataAccessException e) {
             ExpendablesServiceImpl.LOG.info("Exception cause " + e.getMessage());
         }
