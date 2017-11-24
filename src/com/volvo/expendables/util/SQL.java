@@ -12,8 +12,8 @@ public class SQL {
 
 	public static final String SAVE_EVENT = "insert into tbl_event (eventName,eventDate,eventTime,eventDescription,priority,userName,addressId) "
 			+ "values (:eventName,:eventDate,:eventTime,:eventDescription,:priority,:userName,:addressId)";
-	
-	
+
+
 	public static final String UPDATE_EVENT = "update tbl_event set eventName=:eventName,eventDate=:eventDate,eventTime=:eventTime,"
 			+ "eventDescription=:eventDescription,priority=:priority,addressId=:addressId where eventId=:eventId"; 
 	
@@ -73,7 +73,15 @@ public class SQL {
 	public static final String GET_ALL_USERS_COUNT="select count(*) from users";
 	
 	public static final String GET_USER_PASSWORD ="select password from users where username=?";
-	
+
+	public static final String GET_ALL_SUPPLIERS = "select * from supplier";
+
+	public static final String INSERT_SUPPLIER = "insert into ";
+	public static final String CREATE_CONTENT = "insert into content (content_id,content_name) "
+			+ "values (:content_id,:content_name)";
+
+	public static final String DELETE_CONTENT_BY_ID = "delete from content where content_id=:content_id ";
+
 	private SQL(){
 		
 	}
