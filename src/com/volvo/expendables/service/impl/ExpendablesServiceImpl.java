@@ -25,10 +25,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import com.volvo.expendables.service.*;
 
 
 @Component
-public class ExpendablesServiceImpl implements com.volvo.expendables.service.impl.ExpendablesService {
+public class ExpendablesServiceImpl implements ExpendablesService {
 
     private static final Logger LOG = Logger.getLogger(ExpendablesServiceImpl.class.getName());
 
