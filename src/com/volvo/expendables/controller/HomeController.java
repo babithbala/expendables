@@ -3,27 +3,12 @@
  */
 package com.volvo.expendables.controller;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 
-import net.sf.json.JSONArray;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.volvo.expendables.dto.Acknowledge;
-import com.volvo.expendables.dto.EventDTO;
-import com.volvo.expendables.service.ExpendablesService;
 
 
 /**

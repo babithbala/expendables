@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.volvo.expendables.dto.Supplier;
+import com.volvo.expendables.dto.ContentDTO;
 import net.sf.json.JSONArray;
 
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -32,7 +32,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.volvo.expendables.dto.Acknowledge;
 import com.volvo.expendables.dto.EventDTO;
 import com.volvo.expendables.dto.PrincipalDTO;
-import com.volvo.expendables.service.ExpendablesService;
+import com.volvo.expendables.service.impl.ExpendablesService;
 
 
 
@@ -41,11 +41,11 @@ import com.volvo.expendables.service.ExpendablesService;
 public class UserInfoController {
 
     private static final Logger LOG=Logger.getLogger(UserInfoController.class.getName());
-    
+
     private ExpendablesService expendablesService;
     private ObjectMapper jacksonObjectMapper;
-    
-    
+
+
     public ObjectMapper getJacksonObjectMapper() {
         return jacksonObjectMapper;
     }
@@ -54,7 +54,7 @@ public class UserInfoController {
     public void setJacksonObjectMapper(ObjectMapper jacksonObjectMapper) {
         this.jacksonObjectMapper = jacksonObjectMapper;
     }
-    
+
     public ExpendablesService getExpendablesService() {
         return expendablesService;
     }
@@ -63,19 +63,19 @@ public class UserInfoController {
     public void setExpendablesService(ExpendablesService expendablesService) {
         this.expendablesService = expendablesService;
     }
-    
-    
+
+
     @RequestMapping(value = "/uploadProfilePhoto.htm", method = RequestMethod.GET)
     public String uploadProfilePhoto() {
            return "uploadPhoto";
        }
-    
+
     @Secured({ "ROLE_USER", "ROLE_ADMIN" })
     @RequestMapping(value="getPrincipalDetails.htm",method= RequestMethod.GET)
     public @ResponseBody PrincipalDTO getPrincipalDetails(){
         String userName =getLoggedInUserName();
         UserInfoController.LOG.info("--------------------inside getPrincipalDetails :"+ userName);
-        LOG.info("=============================================="); 
+        LOG.info("==============================================");
         LOG.info("==============================================");
         LOG.info("==============================================");
         LOG.info("==========================USERNAME="+userName);
@@ -84,21 +84,21 @@ public class UserInfoController {
         PrincipalDTO user= expendablesService.getPrincipalDetails(userName);
         return user;
     }
-    
+
     @RequestMapping(value = "/addEvent.htm", method = RequestMethod.GET)
     public String addEvent(Model model) {
            model.addAttribute("message",
                    "Hello " + getLoggedInUserName()+ "\n This is protected page!.");
-     
+
            return "addEventDetails";
        }
-    
+
     @RequestMapping(value = "/saveOrUpdateEvent.htm", method = RequestMethod.POST)
     public @ResponseBody String saveOrUpdateEvent(@RequestBody  EventDTO eventDetails){
         List<Acknowledge>  list = new ArrayList<Acknowledge>();
         UserInfoController.LOG.info("--------------------inside saveOrUpdateEvent"+ eventDetails.getEventDate());
         eventDetails.setUserName(getLoggedInUserName());
-        if(eventDetails.getEventId()!=null && eventDetails.getEventId() >0){    
+        if(eventDetails.getEventId()!=null && eventDetails.getEventId() >0){
                 list=expendablesService.updateEventDetails(eventDetails);
         }else{
                 list=expendablesService.saveEventDetails(eventDetails);
@@ -106,7 +106,7 @@ public class UserInfoController {
         JSONArray data = JSONArray.fromObject(list);
         return data.toString();
     }
-    
+
     @RequestMapping(value = "/getUserEvents.htm", method = RequestMethod.GET)
     public @ResponseBody String getUserEvents( ){
         UserInfoController.LOG.info("--------------------inside getUserEvents :");
@@ -115,8 +115,8 @@ public class UserInfoController {
         JSONArray data = JSONArray.fromObject(eventList);
         return data.toString();
     }
-    
-    
+
+
     @RequestMapping(value = "/populateAllSelectedDateEvents.htm", method = RequestMethod.GET)
     public @ResponseBody String populateAllSelectedDateEvents(@RequestParam String selectedDate){
         List<EventDTO> eventList= new ArrayList<EventDTO>();
@@ -126,14 +126,14 @@ public class UserInfoController {
         JSONArray data = JSONArray.fromObject(eventList);
         return data.toString();
     }
-    
+
     private String getLoggedInUserName(){
         String userName = (String) RequestContextHolder.currentRequestAttributes()
                 .getAttribute("userName", RequestAttributes.SCOPE_SESSION);
         return userName;
     }
-    
-    
+
+
     @Secured({ "ROLE_USER", "ROLE_ADMIN","ROLE_NURSE", "ROLE_PHYSICIAN","ROLE_PATIENT" })
     @RequestMapping(value="/getProfilePhoto.htm",method=RequestMethod.GET)
     public ServletOutputStream profilePhotoByUserName(HttpServletRequest request,HttpServletResponse response){
@@ -142,7 +142,7 @@ public class UserInfoController {
          PrincipalDTO photoDTO = expendablesService.getProfilePhoto(getLoggedInUserName());
         image=photoDTO.getProfilePhoto();
         ServletOutputStream out = null;
-        
+
         try {
               response.flushBuffer();
               out = response.getOutputStream();
@@ -166,21 +166,21 @@ public class UserInfoController {
         }
         return out;
     }
-    
+
     @Secured({ "ROLE_USER", "ROLE_ADMIN","ROLE_NURSE", "ROLE_PHYSICIAN","ROLE_PATIENT" })
     @RequestMapping(value="/getProfilePhotoByUserName.htm",method=RequestMethod.GET)
     public ServletOutputStream profilePhotoByUserNameRequest(HttpServletRequest request,HttpServletResponse response){
-        
+
         UserInfoController.LOG.info("getProfilePhotoByUserName method called"+request.getParameter("userName"));
         String userName = request.getParameter("userName");
         InputStream image = null;
         if(userName!=null)
             userName = userName.substring(0, userName.indexOf("-"));
-        
+
         PrincipalDTO photoDTO = expendablesService.getProfilePhoto(userName);
         image=photoDTO.getProfilePhoto();
         ServletOutputStream out = null;
-        
+
         try {
               response.flushBuffer();
               out = response.getOutputStream();
@@ -204,8 +204,8 @@ public class UserInfoController {
         }
         return out;
     }
-    
-    
+
+
     @RequestMapping(value="/profilePictureUpload.htm",method = RequestMethod.POST)
     public String create(FileUploadBean file, HttpServletRequest request, HttpServletResponse response) throws IOException{
         if (!ServletFileUpload.isMultipartContent(request)) {
@@ -218,7 +218,7 @@ public class UserInfoController {
         //return "success:true";
         return "uploadPhoto";
     }
-    
+
     @Secured({"ROLE_ADMIN","ROLE_NURSE", "ROLE_PHYSICIAN","ROLE_PATIENT" })
     @RequestMapping(value="saveProfilePhoto.htm",method= RequestMethod.POST)
     public @ResponseBody String saveProfilePhoto(HttpServletRequest request,
@@ -239,10 +239,25 @@ public class UserInfoController {
         return data.toString();
     }
 
-    @RequestMapping(value = "/supplier.htm", method = RequestMethod.GET)
-    public String suppliers(Model model) {
-        model.addAttribute("supplier", new Supplier());
-        model.addAttribute("suppliers", expendablesService.getAllSuppliers());
-        return "supplier";
+
+
+    @RequestMapping(value ="/manageContent.htm", method = RequestMethod.GET)
+    public String createContent(Model model) {
+        //expendablesService.createContent(content);
+        return "manageContent";
+    }
+
+    @RequestMapping(value = "/saveOrUpdateContent", method = RequestMethod.POST)
+    public @ResponseBody String saveOrUpdateContent(@RequestBody ContentDTO contentDetails){
+        List<Acknowledge>  list = new ArrayList<Acknowledge>();
+        UserInfoController.LOG.info("--------------------inside saveOrUpdateContent"+ contentDetails.getContentName());
+
+        if(contentDetails.getContentId()!=null && contentDetails.getContentId() >0){
+            list=expendablesService.updateContentDetails(contentDetails);
+        }else{
+            list=expendablesService.saveContentDetails(contentDetails);
+        }
+        JSONArray data = JSONArray.fromObject(list);
+        return data.toString();
     }
 }
