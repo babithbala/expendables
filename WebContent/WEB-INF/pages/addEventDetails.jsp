@@ -288,43 +288,49 @@
                     <!-- /.search form -->
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
-                        <li>
-                            <a href="home.htm">
-                                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="general.htm">
-                                <i class="fa fa-gavel"></i> <span>General</span>
-                            </a>
-                        </li>
-
-                        <li class="active">
-                            <a href="basicForm.htm">
-                                <i class="fa fa-globe"></i> <span>Basic Elements</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="simple.htm">
-                                <i class="fa fa-glass"></i> <span>Simple tables</span>
-                            </a>
-                        </li>
-						<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+                                <li  class="active">
+		                            <a href="home.htm">
+		                                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+		                            </a>
+		                        </li>
+		                        <li>
+		                            <a href="general.htm">
+		                                <i class="fa fa-gavel"></i> <span>General</span>
+		                            </a>
+		                        </li>
+		
+		                        <li>
+		                            <a href="basicForm.htm">
+		                                <i class="fa fa-globe"></i> <span>Basic Elements</span>
+		                            </a>
+		                        </li>
+		
+		                        <li>
+		                            <a href="simple.htm">
+		                                <i class="fa fa-glass"></i> <span>Simple tables</span>
+		                            </a>
+		                        </li>
+		                        <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
 			                        <li>
 			                            <a href="${pageContext.request.contextPath}/demo.htm">
 			                                <i class="fa fa-glass"></i> <span>Additional</span>
 			                            </a>
 			                        </li>
                                  </sec:authorize>
-                        <sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+                                <sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
 			                        <li>
 			                            <a href="${pageContext.request.contextPath}/uploadProfilePhoto.htm">
 			                                <i class="fa fa-glass"></i> <span>Upload Photo</span>
 			                            </a>
 			                        </li>
                                  </sec:authorize>
-                    </ul>
+                                 
+                                 <li>
+			                            <a href="${pageContext.request.contextPath}/calendarBooking.htm">
+			                                <i class="fa fa-glass"></i> <span>Booking</span>
+			                            </a>
+			                        </li>
+                            </ul>
                 </section>
                 <!-- /.sidebar -->
             </aside>

@@ -16,6 +16,9 @@
         <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
         <!-- Theme style -->
         <link href="/Expendables/css/style.css" rel="stylesheet" type="text/css" />
+        
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+        <script src="/Expendables/js/common.js"></script>
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -244,10 +247,10 @@
                 <section class="sidebar">
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
-                         <div class="pull-left image">
-                                    <img src="getProfilePhoto.htm" class="img-circle" id="indexWelcomeProfilePic"
-                                    alt="User Image" onerror="standbyPic($('#indexWelcomeProfilePic'));"/>
-                                </div>
+                        <div class="pull-left image">
+                            <img src="getProfilePhoto.htm"  class="img-circle" alt="User Image" id="addProfilePhotoFromDb"
+                            onerror="standbyPic($('#addProfilePhotoFromDb'));"/>
+                        </div>
                         <div class="pull-left info">
                             <p>Hello,&nbsp;
 									<label id="addUserProfileFirstNameLabelId"></label></p>
@@ -265,43 +268,49 @@
                         </div>
                     </form>
                     <ul class="sidebar-menu">
-                        <li>
-                            <a href="home.htm">
-                                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="general.htm">
-                                <i class="fa fa-gavel"></i> <span>General</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="basicForm.htm">
-                                <i class="fa fa-globe"></i> <span>Basic Elements</span>
-                            </a>
-                        </li>
-
-                        <li  class="active">
-                            <a href="simple.htm">
-                                <i class="fa fa-glass"></i> <span>Simple tables</span>
-                            </a>
-                        </li>
-		               <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+                                <li  class="active">
+		                            <a href="home.htm">
+		                                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+		                            </a>
+		                        </li>
+		                        <li>
+		                            <a href="general.htm">
+		                                <i class="fa fa-gavel"></i> <span>General</span>
+		                            </a>
+		                        </li>
+		
+		                        <li>
+		                            <a href="basicForm.htm">
+		                                <i class="fa fa-globe"></i> <span>Basic Elements</span>
+		                            </a>
+		                        </li>
+		
+		                        <li>
+		                            <a href="simple.htm">
+		                                <i class="fa fa-glass"></i> <span>Simple tables</span>
+		                            </a>
+		                        </li>
+		                        <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
 			                        <li>
 			                            <a href="${pageContext.request.contextPath}/demo.htm">
 			                                <i class="fa fa-glass"></i> <span>Additional</span>
 			                            </a>
 			                        </li>
                                  </sec:authorize>
-                       <sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+                                <sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
 			                        <li>
 			                            <a href="${pageContext.request.contextPath}/uploadProfilePhoto.htm">
 			                                <i class="fa fa-glass"></i> <span>Upload Photo</span>
 			                            </a>
 			                        </li>
                                  </sec:authorize>
-                    </ul>
+                                 
+                                 <li>
+			                            <a href="${pageContext.request.contextPath}/calendarBooking.htm">
+			                                <i class="fa fa-glass"></i> <span>Booking</span>
+			                            </a>
+			                        </li>
+                            </ul>
                 </section>
                 <!-- /.sidebar -->
             </aside>

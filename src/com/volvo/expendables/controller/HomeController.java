@@ -78,4 +78,11 @@ public class HomeController {
     }
 	
 	
+	@RequestMapping(value = "/calendarBooking.htm", method = RequestMethod.GET)
+    public String calendarBooking(Model model) {
+        model.addAttribute(TITLE, "Booking");
+        return "calendarBooking";
+    }
+	
+	
 }

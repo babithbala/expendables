@@ -197,6 +197,12 @@
 			                            </a>
 			                        </li>
                                  </sec:authorize>
+                                 
+                                 <li>
+			                            <a href="${pageContext.request.contextPath}/calendarBooking.htm">
+			                                <i class="fa fa-glass"></i> <span>Booking</span>
+			                            </a>
+			                        </li>
                             </ul>
                         </section>
                         <!-- /.sidebar -->
@@ -715,7 +721,9 @@
                 maintainAspectRatio: false,
             });
 
-            
+            	 populatePrincipalDetails($("#addUserProfileFullNameLabelId"),$("#addUserProfileFirstNameLabelId"));
+           	 
+           		        		 
             
 			var events="";
             
