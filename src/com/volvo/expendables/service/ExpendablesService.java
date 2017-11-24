@@ -5,7 +5,7 @@ import java.util.List;
 import com.volvo.expendables.dto.Acknowledge;
 import com.volvo.expendables.dto.EventDTO;
 import com.volvo.expendables.dto.PrincipalDTO;
-
+import com.volvo.expendables.dto.Supplier;
 
 
 public interface ExpendablesService {
@@ -17,4 +17,7 @@ public interface ExpendablesService {
     public abstract List<EventDTO> getAllSelectedDateEvents(String userName,String selectedDate);
     public abstract PrincipalDTO getProfilePhoto(String userName);
     public abstract List<Acknowledge> uploadProfilePhoto(PrincipalDTO user);
+    List<Supplier> getAllSuppliers();
+    void createSupplier(Supplier supplier);
+    void deleteSupplier(Supplier supplier);
 }

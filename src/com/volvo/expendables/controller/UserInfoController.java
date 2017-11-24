@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.volvo.expendables.dto.Supplier;
 import net.sf.json.JSONArray;
 
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -236,5 +237,12 @@ public class UserInfoController {
         list =  expendablesService.uploadProfilePhoto(profileDetails);
         JSONArray data = JSONArray.fromObject(list);
         return data.toString();
+    }
+
+    @RequestMapping(value = "/supplier.htm", method = RequestMethod.GET)
+    public String suppliers(Model model) {
+        model.addAttribute("supplier", new Supplier());
+        model.addAttribute("suppliers", expendablesService.getAllSuppliers());
+        return "supplier";
     }
 }

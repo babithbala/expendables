@@ -73,6 +73,10 @@ public class SQL {
 	public static final String GET_ALL_USERS_COUNT="select count(*) from users";
 	
 	public static final String GET_USER_PASSWORD ="select password from users where username=?";
+
+	public static final String GET_ALL_SUPPLIERS = "select * from supplier";
+
+	public static final String INSERT_SUPPLIER = "insert into ";
 	
 	private SQL(){
 		

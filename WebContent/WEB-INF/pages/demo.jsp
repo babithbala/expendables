@@ -558,7 +558,7 @@
 
                               <div class=" add-task-row">
                                   <a class="btn btn-danger btn-sm pull-left" id= "addNewEventByUserButton" href="addEvent.htm">
-                                   <spring:message code="label.Add_New_Tasks"/></a>
+                                   <spring:message code="label.AddNewTasks"/></a>
                                   <section class="pull-right">
 	                                  <label class="label-danger label inline m-t-15">
 	                                  <spring:message code="label.High"/></label>&nbsp;&nbsp;
@@ -589,7 +589,7 @@
                                       <div class="modal-dialog">
                                           <div class="modal-content">
                                               <div class="modal-header">
-                                                  <button aria-hidden="true" data-dismiss="modal" class="close" type="button">—</button>
+                                                  <button aria-hidden="true" data-dismiss="modal" class="close" type="button">ï¿½</button>
                                                   <h4 class="modal-title"><img alt="" src="/Expendables/img/images.png" style="width: 190px;">Event Details</h4>
                                               </div>
                                               <div class="modal-body" id="userEventData">
