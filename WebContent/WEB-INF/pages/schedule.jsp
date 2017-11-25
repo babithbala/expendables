@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Expendables</title>
+    <title>Schedule</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <meta name="description" content="Developed By M Abdur Rokib Promy">
     <meta name="keywords" content="Admin, Bootstrap 3, Template, Theme, Responsive">
@@ -347,137 +347,57 @@
                 <div class="col-lg-12">
                     <section class="panel">
                         <header class="panel-heading">
-                            Membership Application Form
+                            Schedule Application Form
                         </header>
                         <div class="panel-body">
                             <div id="addMembershipRegErrorMessage" style="color: red"></div>
                             <form class="form-horizontal tasi-form" role="form" id="membershipRegForm">
                                 <div class="form-group">
-                                    <label for="membershipInputUserName" class="col-lg-2 col-sm-2 control-label">
-                                        User&nbsp;Name<font color="red">&nbsp;*</font></label>
-                                    <div class="col-lg-6">
-                                        <input name="userName" type="text" class="form-control"
-                                               id="membershipInputUserName" placeholder="User's Unique Name">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="membershipInputRole" class="col-lg-2 col-sm-2 control-label">
-                                        Role<font color="red">&nbsp;*</font></label>
-                                    <div class="col-lg-6">
-                                        <select class="form-control m-b-10" id="membershipInputRole" name="role">
-                                            <option value="" selected="selected">Select Role</option>
-                                            <option value="ROLE_ADMIN">Admin</option>
-                                            <option value="ROLE_SUPPLIER">Supplier</option>
-                                            <!-- 	                                                  <option value="ROLE_CARRIER">Carrier</option> -->
-                                            <option value="ROLE_USER">User</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group" id="membershipInputSupplierNameDiv">
-                                    <label for="membershipInputSupplierName" class="col-lg-2 col-sm-2 control-label">
-                                        Supplier&nbsp;Name<font color="red">&nbsp;*</font></label>
-                                    <div class="col-lg-6">
-                                        <input name="supplierName" type="text" class="form-control"
-                                               id="membershipInputSupplierName" placeholder="Supplier Name">
-                                    </div>
-                                </div>
-
-                                <div class="form-group" id="membershipInputSupplierContactpersonNameDiv">
-                                    <label for="membershipInputSupplierContactpersonName"
-                                           class="col-lg-2 col-sm-2 control-label">
-                                        Contact&nbsp;Person<font color="red">&nbsp;*</font></label>
-                                    <div class="col-lg-6">
-                                        <input name="contactPersonName" type="text" class="form-control"
-                                               id="membershipInputSupplierContactpersonName"
-                                               placeholder="Supplier Name">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="membershipInputFirstName" class="col-lg-2 col-sm-2 control-label">
-                                        First&nbsp;Name<font color="red">&nbsp;*</font></label>
-                                    <div class="col-lg-6">
-                                        <input name="firstName" type="text" class="form-control"
-                                               id="membershipInputFirstName" placeholder="First Name">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="membershipInputLastName" class="col-lg-2 col-sm-2 control-label">
-                                        Last&nbsp;Name<font color="red">&nbsp;*</font></label>
-                                    <div class="col-lg-6">
-                                        <input name="lastName" type="text" class="form-control"
-                                               id="membershipInputLastName" placeholder="Last Name">
-                                    </div>
-                                </div>
-                                <div class="form-group">
                                     <label for="membershipInputSex" class="col-lg-2 col-sm-2 control-label">
-                                        Sex<font color="red">&nbsp;*</font></label>
+                                        Content<font color="red">&nbsp;*</font></label><br>
                                     <div class="col-lg-8">
                                         <div class="row">
-                                            <div class="col-lg-3">
-                                                <select class="form-control" id="membershipInputSex" name="sex">
-                                                    <option value="" selected="selected">Select One</option>
-                                                    <option value="M">Male</option>
-                                                    <option value="F">Female</option>
-                                                    <option value="U">Unknown</option>
-                                                </select>
+                                            <label for="membershipInputDoB" class="col-lg-2 col-sm-2 control-label">
+                                                Pizza<font color="red">&nbsp;*</font></label>
+                                            <div class="col-lg-4">
+                                                <input type="checkbox" id="membershipInputDoB" name="dob"
+                                                       maxlength="8">
                                             </div>
                                             <label for="membershipInputDoB" class="col-lg-2 col-sm-2 control-label">
-                                                DOB<font color="red">&nbsp;*</font></label>
+                                                Coke<font color="red">&nbsp;*</font></label>
                                             <div class="col-lg-4">
-                                                <input type="text" id="membershipInputDoB" name="dob"
-                                                       class="inputTextToDataPicker form-control " maxlength="8">
+                                                <input type="checkbox" id="membershipInputDoB" name="dob"
+                                                       maxlength="8">
                                             </div>
                                         </div>
                                     </div>
 
                                 </div>
 
+
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label col-lg-2"
-                                           for="membershipInputStreetNo">Address</label>
+                                    <label for="membershipInputRole" class="col-lg-2 col-sm-2 control-label">
+                                        Pizza<font color="red">&nbsp;*</font></label>
                                     <div class="col-lg-6">
-                                        <input type="text" name="address" class="form-control"
-                                               id="membershipInputAddress" placeholder="Address">
+                                        <input id="pizzaSpinner" name="pizzaSpinner"
+                                               maxlength="8">
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1" class="col-lg-2 col-sm-2 control-label">Email&nbsp;address</label>
-                                    <div class="col-lg-6">
-                                        <input type="email" name="email" class="form-control"
-                                               id="membershipInputEmail1" placeholder="Enter email">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="membershipInputMobileNo" class="col-lg-2 col-sm-2 control-label">Phone&nbsp;No</label>
-                                    <div class="col-lg-6">
-                                        <input name="mobileNo" type="text" class="form-control"
-                                               id="membershipInputMobileNo" placeholder="(+CountryCode)PhoneNo">
-                                    </div>
-                                </div>
+
                                 <div class="form-group">
                                     <label for="membershipInputPassword" class="col-lg-2 col-sm-2 control-label">
-                                        Password<font color="red">&nbsp;*</font></label>
+                                        Pizza<font color="red">&nbsp;*</font></label>
                                     <div class="col-lg-6">
                                         <input type="password" name="password" class="form-control"
                                                id="membershipInputPassword" placeholder="Password">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="membershipInputConfirmPassword" class="col-lg-2 col-sm-2 control-label">Confirm&nbsp;Password</label>
+                                    <label for="membershipInputConfirmPassword" class="col-lg-2 col-sm-2 control-label">Coke</label>
                                     <div class="col-lg-6">
                                         <input type="password" name="confirmPassword" class="form-control"
                                                id="membershipInputConfirmPassword" placeholder="Confirm Password">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputFile" class="col-lg-2 col-sm-2 control-label">Upload&nbsp;Photo</label>
-                                    <div class="col-lg-6">
-                                        <input type="file" id="membershipInputProfileFile" name="profilePhoto">
-                                        <p class="help-block">Example block-level help text here.</p>
                                     </div>
                                 </div>
 
@@ -542,6 +462,8 @@
             changeYear: true
         });
         $(".inputTextToDataPicker").datepicker("option", "yearRange", getYearRange());
+        var pizzaSpinner = $("#pizzaSpinner").spinner();
+        var cokeSpinner = $("#cokeSpinner").spinner();
 
         populatePrincipalDetails($("#addNewUserFullNameLabelId"), $("#addNewUserFirstNameLabelId"));
         $("#membershipInputSupplierNameDiv").hide();
