@@ -1,5 +1,6 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,6 +31,7 @@
 
     <!-- jQuery 2.0.2 -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+
     <script src="/Expendables/js/common.js"></script>
 
 </head>
@@ -322,6 +324,13 @@
                     </a>
                 </li>
                 <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+                <li>
+                    <a href="getAllSlots.htm.htm">
+                        <i class="fa fa-glass"></i> <span>Slots managment</span>
+                    </a>
+                </li>
+                </sec:authorize>
+                <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
                     <li>
                         <a href="${pageContext.request.contextPath}/demo.htm">
                             <i class="fa fa-glass"></i> <span>Additional</span>
@@ -367,7 +376,7 @@
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label col-lg-2" for="addSlotInputSlotTime">
-                                       Min Duration</label>
+                                        Min Duration</label>
                                     <div class="col-lg-8">
                                         <div class="row">
                                             <div class="col-lg-6">
@@ -394,6 +403,34 @@
                     </section>
                 </div>
             </div>
+            <c:if test="${listSlots.size()>0}">
+                <div class="col-md-3">
+                    <table class="table table-striped" id="slotTable">
+                        <thead>
+                        <tr>
+                            <th>Slot name</th>
+                            <th>Duration</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${listSlots}" var="Slot">
+                            <tr>
+                                <td id="tableSlotName">${Slot.slotName}</td>
+                                <td>${Slot.slotDuration}</td>
+                                <td>
+                                    <form action="/Expendables/slot/remove/${Slot.slotName}" method="get">
+                                        <button type="submit" class="close" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </c:if>
         </section><!-- /.content -->
     </aside><!-- /.right-side -->
     <div class="footer-main">
@@ -423,6 +460,18 @@
 
 <script type="text/javascript">
     $(function () {
+        $("#deleteSlotButton").click(function () {
+            $.ajax({
+                type: "DELETE",
+                url: '/slot/remove/#tableSlotName',
+                success: function () {
+                    $(location).attr('', '/slot/remove/#tableSlotName');
+                }
+            });
+        });
+    });
+
+    $(function () {
         $("#addEventInputEventCancelButton").click(function () {
             $.ajax({
                 url: 'demo.htm',
@@ -437,14 +486,14 @@
 
         populatePrincipalDetails($("#addNewEventUserFullNameLabelId"), $("#addNewEventUserFirstNameLabelId"));
 
-        var slotID=0;
+        var slotID = 0;
         var validator = $("#addSlotForm").validate({
             meta: "validate",
             rules: {
                 slotName: {
                     required: true
                 },
-                slotDuration:{
+                slotDuration: {
                     required: true,
                     integer: true
                 }
@@ -460,19 +509,20 @@
                 }
             },
             submitHandler: function () {
-                $("#addEventErrorMessage").html("");
+                $("#addSlot").html("");
                 var slotDetails = $('#addSlotForm').serializeObject();
                 $.postJSON("saveOrUpdateSlot.htm", slotDetails, function (data) {
                     $(".inputError").removeClass("inputError");
                     var messages = "";
                     for (i = 0; i < data.length; i++) {
                         messages += data[i].message;
-                        slotID= data[i].id;
+                        slotID = data[i].id;
 
                     }
                     //$("#addEventInputEventId").val(slotID);
 
-                    $("#addEventErrorMessage").html(messages);
+                    $("#addSlot").html(messages);
+                    location.reload();
                 });
                 $('html,body').animate({
                         scrollTop: $(".navbar-right").offset().top

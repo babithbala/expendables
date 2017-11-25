@@ -1,7 +1,9 @@
 package com.volvo.expendables.service.impl;
 
 import com.volvo.expendables.dto.*;
+import com.volvo.expendables.service.ExpendablesService;
 import com.volvo.expendables.service.impl.mapper.PrincipalRowMapper;
+import com.volvo.expendables.service.impl.mapper.SupplierMapper;
 import com.volvo.expendables.util.ExpendablesUtil;
 import com.volvo.expendables.util.SQL;
 
@@ -24,8 +26,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.volvo.expendables.service.*;
 
 @Component
 public class ExpendablesServiceImpl implements ExpendablesService {
@@ -182,7 +182,7 @@ public class ExpendablesServiceImpl implements ExpendablesService {
      * 
      * @see
      */
-    @Override
+
     public PrincipalDTO getProfilePhoto(String userName) {
         PrincipalDTO photoDTO = new PrincipalDTO();
         ExpendablesServiceImpl.LOG.info("getProfilePhoto service layer call -------------------" + userName);
@@ -205,7 +205,6 @@ public class ExpendablesServiceImpl implements ExpendablesService {
         return photoDTO;
     }
 
-    @Override
     public List<Acknowledge> uploadProfilePhoto(PrincipalDTO user) {
         List<Acknowledge> list = new ArrayList<Acknowledge>();
         Acknowledge acknowledge = new Acknowledge();
@@ -400,6 +399,28 @@ public class ExpendablesServiceImpl implements ExpendablesService {
             return true;
         }
         return false;
+    }
+
+    @Transactional
+    public List<Supplier> getAllSuppliers() {
+        LOG.debug("getting all suppliers");
+        return jdbcTemplate.query(SQL.GET_ALL_SUPPLIERS, new SupplierMapper());
+    }
+
+    @Override
+    @Transactional
+    public void saveSupplier(Supplier supplier) {
+        LOG.debug("Saving the supplier: " + supplier);
+        jdbcTemplate.update(SQL.INSERT_SUPPLIER, new SupplierMapper());
+        LOG.debug("Saved the supplier: " + supplier);
+    }
+
+    @Override
+    @Transactional
+    public void deleteSupplier(Supplier supplier) {
+        LOG.debug("Deleting the supplier: " + supplier);
+        jdbcTemplate.update(SQL.DELETE_SUPPLIER, new SupplierMapper());
+        LOG.debug("Deleted the supplier: " + supplier);
     }
 
 }
