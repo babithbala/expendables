@@ -380,6 +380,8 @@
                                         Pizza<font color="red">&nbsp;*</font></label>
                                     <div class="col-lg-6">
                                         <input id="pizzaSpinner" name="pizzaSpinner"
+                                               maxlength="8"><br>
+                                        <input id="cokeSpinner" name="cokeSpinner"
                                                maxlength="8">
                                     </div>
                                 </div>
@@ -389,15 +391,15 @@
                                     <label for="membershipInputPassword" class="col-lg-2 col-sm-2 control-label">
                                         Pizza<font color="red">&nbsp;*</font></label>
                                     <div class="col-lg-6">
-                                        <input type="password" name="password" class="form-control"
-                                               id="membershipInputPassword" placeholder="Password">
+                                        <input type="text" name="password"
+                                               id="pizzaDate" placeholder="" class="inputTextToDataPicker">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="membershipInputConfirmPassword" class="col-lg-2 col-sm-2 control-label">Coke</label>
+                                    <label for="membershipInputPassword" class="col-lg-2 col-sm-2 control-label">
+                                        Coke<font color="red">&nbsp;*</font></label>
                                     <div class="col-lg-6">
-                                        <input type="password" name="confirmPassword" class="form-control"
-                                               id="membershipInputConfirmPassword" placeholder="Confirm Password">
+                                        <input type="text" name="confirmPassword" class="inputTextToDataPicker">
                                     </div>
                                 </div>
 
@@ -455,15 +457,19 @@
         });
 
         $(".inputTextToDataPicker").datepicker({
-            dateFormat: 'yymmdd',
+            dateFormat: 'yy-mm-dd',
             numberOfMonths: 1,
             showButtonPanel: true,
             changeMonth: true,
             changeYear: true
         });
         $(".inputTextToDataPicker").datepicker("option", "yearRange", getYearRange());
-        var pizzaSpinner = $("#pizzaSpinner").spinner();
-        var cokeSpinner = $("#cokeSpinner").spinner();
+        var pizzaSpinner = $("#pizzaSpinner").spinner({min: 0});
+        var cokeSpinner = $("#cokeSpinner").spinner({min: 0});
+
+        document.getElementById('pizzaSpinner').readOnly = true;
+        document.getElementById('cokeSpinner').readOnly = true;
+
 
         populatePrincipalDetails($("#addNewUserFullNameLabelId"), $("#addNewUserFirstNameLabelId"));
         $("#membershipInputSupplierNameDiv").hide();
