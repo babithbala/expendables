@@ -4,6 +4,7 @@ import com.volvo.expendables.dto.*;
 import com.volvo.expendables.service.impl.mapper.PrincipalRowMapper;
 import com.volvo.expendables.util.ExpendablesUtil;
 import com.volvo.expendables.util.SQL;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -18,12 +19,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import com.volvo.expendables.service.*;
 
+import com.volvo.expendables.service.*;
 
 @Component
 public class ExpendablesServiceImpl implements ExpendablesService {
@@ -43,14 +45,15 @@ public class ExpendablesServiceImpl implements ExpendablesService {
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
-
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see edu.pwr.hc.service.UserInfoService#getPrincipalDetails(java.lang.String)
      */
     public PrincipalDTO getPrincipalDetails(String userName) {
         PrincipalDTO principalInfo = new PrincipalDTO();
         try {
-            principalInfo = (PrincipalDTO) jdbcTemplate.queryForObject(SQL.GET_PRINCIPAL_DETAILS, new Object[]{userName}, new PrincipalRowMapper());
+            principalInfo = (PrincipalDTO) jdbcTemplate.queryForObject(SQL.GET_PRINCIPAL_DETAILS, new Object[] { userName }, new PrincipalRowMapper());
         } catch (EmptyResultDataAccessException e) {
             LOG.info(e.getMessage());
         }
@@ -138,7 +141,7 @@ public class ExpendablesServiceImpl implements ExpendablesService {
         };
         try {
             ExpendablesServiceImpl.LOG.info("SQL Events Search " + SQL.GET_EVENT_LIST);
-            list = jdbcTemplate.query(SQL.GET_EVENT_LIST, new Object[]{userName}, mapper);
+            list = jdbcTemplate.query(SQL.GET_EVENT_LIST, new Object[] { userName }, mapper);
             ExpendablesServiceImpl.LOG.info("SQL Events size " + list.size());
         } catch (DataAccessException e) {
             ExpendablesServiceImpl.LOG.info("Exception cause " + e.getMessage());
@@ -166,7 +169,7 @@ public class ExpendablesServiceImpl implements ExpendablesService {
         };
         try {
             ExpendablesServiceImpl.LOG.info("SQL Events Search " + SQL.GET_EVENT_LIST);
-            list = jdbcTemplate.query(SQL.GET_ALL_EVENTS_ON_SELECTED_DATE, new Object[]{selectedDate, userName}, mapper);
+            list = jdbcTemplate.query(SQL.GET_ALL_EVENTS_ON_SELECTED_DATE, new Object[] { selectedDate, userName }, mapper);
             ExpendablesServiceImpl.LOG.info("SQL Events size " + list.size());
         } catch (DataAccessException e) {
             ExpendablesServiceImpl.LOG.info("Exception cause " + e.getMessage());
@@ -174,7 +177,9 @@ public class ExpendablesServiceImpl implements ExpendablesService {
         return list;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see
      */
     @Override
@@ -184,8 +189,7 @@ public class ExpendablesServiceImpl implements ExpendablesService {
         try {
             RowMapper<PrincipalDTO> mapper = new RowMapper<PrincipalDTO>() {
 
-                public PrincipalDTO mapRow(ResultSet rs, int rowNum)
-                        throws SQLException {
+                public PrincipalDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
                     PrincipalDTO photo = new PrincipalDTO();
 
                     photo.setProfilePhoto(rs.getBinaryStream("profilePhoto"));
@@ -194,8 +198,7 @@ public class ExpendablesServiceImpl implements ExpendablesService {
                 }
 
             };
-            photoDTO = jdbcTemplate.queryForObject(
-                    "select profilePhoto from users where username=?", new Object[]{userName}, mapper);
+            photoDTO = jdbcTemplate.queryForObject("select profilePhoto from users where username=?", new Object[] { userName }, mapper);
         } catch (Exception e) {
             ExpendablesServiceImpl.LOG.info("TEST FOR IMAGE DISPLAY  LIST SIZE " + e.getMessage());
         }
@@ -231,13 +234,15 @@ public class ExpendablesServiceImpl implements ExpendablesService {
             SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(content);
             GeneratedKeyHolder key = new GeneratedKeyHolder();
 
-            jdbcTemplate.update(SQL.CREATE_CONTENT, namedParameters, key);
+            namedParameterJdbcTemplate.update(SQL.CREATE_CONTENT, namedParameters, key);
             content.setContentId(key.getKey().longValue());
+
+            jdbcTemplate.update(SQL.INSERT_SLOT_CONTENT_MAPPING, content.getSlotId(), content.getContentId());
 
             acknowledge.setMessage("Content has been created. <br/>");
             acknowledge.setId(content.getContentId());
 
-            //list.add(acknowledge);
+            // list.add(acknowledge);
         } catch (DataAccessException e) {
             String cause = e.getCause().toString();
             if (cause != null) {
@@ -256,10 +261,9 @@ public class ExpendablesServiceImpl implements ExpendablesService {
         try {
 
             SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(content);
-            GeneratedKeyHolder key = new GeneratedKeyHolder();
 
-            jdbcTemplate.update(SQL.DELETE_CONTENT_BY_ID, namedParameters, key);
-            //content.setContent_id(key.getKey().longValue());
+            namedParameterJdbcTemplate.update(SQL.UPDATE_CONTENT_BY_ID, namedParameters);
+            // content.setContent_id(key.getKey().longValue());
 
             acknowledge.setMessage("Content has been created. <br/>");
             acknowledge.setName(content.getContentName());
@@ -279,7 +283,7 @@ public class ExpendablesServiceImpl implements ExpendablesService {
     @Override
     @Transactional
     public List<Acknowledge> createNewSlot(Slot slot) {
-        List<Acknowledge> list =new ArrayList<Acknowledge>();
+        List<Acknowledge> list = new ArrayList<Acknowledge>();
         Acknowledge ack = new Acknowledge();
         try {
 
@@ -340,7 +344,7 @@ public class ExpendablesServiceImpl implements ExpendablesService {
         };
         try {
             ExpendablesServiceImpl.LOG.info("SQL Get slot " + SQL.GET_SLOT_BY_NAME);
-            slot = jdbcTemplate.queryForObject(SQL.GET_SLOT_BY_NAME, new Object[]{slotName}, mapper);
+            slot = jdbcTemplate.queryForObject(SQL.GET_SLOT_BY_NAME, new Object[] { slotName }, mapper);
             ExpendablesServiceImpl.LOG.info("SQL Slot name " + slot.getSlotName());
         } catch (DataAccessException e) {
             ExpendablesServiceImpl.LOG.info("Exception cause " + e.getMessage());
@@ -348,5 +352,54 @@ public class ExpendablesServiceImpl implements ExpendablesService {
         return slot;
     }
 
+    @Override
+    public List<DropDownDTO> getAllSlotsDropdown() {
+
+        RowMapper<DropDownDTO> mapper = new RowMapper<DropDownDTO>() {
+
+            public DropDownDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+                DropDownDTO dropdown = new DropDownDTO();
+                dropdown.setCode(rs.getString("slot_id"));
+                dropdown.setDescription(rs.getString("slot_name"));
+                return dropdown;
+            }
+
+        };
+        List<DropDownDTO> list = jdbcTemplate.query("select * from slot s ", mapper);
+        return list;
+    }
+
+    public List<ContentDTO> populateAllContentDetails(int page, int rows, String sidx, String sord, String contentName) {
+        String start = String.valueOf((page * rows) - rows);
+        ExpendablesServiceImpl.LOG.info("populateAllContentDetails -------- ");
+        RowMapper<ContentDTO> mapper = new RowMapper<ContentDTO>() {
+
+            public ContentDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+                ContentDTO user = new ContentDTO();
+                user.setPosition(rs.getString("No"));
+
+                // user.setProfilePhoto(rs.getBinaryStream("profilePhoto"));
+
+                return user;
+            }
+
+        };
+        List<ContentDTO> list = jdbcTemplate.query("select  @rownum:=@rownum+1 No,c.* , s.slot_name, s.duration from content c , "
+                + "slot s right join content_slot cs on s.slot_id=cs.slot_id where " + "c.content_name LIKE '%" + contentName + "%' and" +
+                // (checkNotNull(contentName)? " c.content_name LIKE '%"+contentName+"%' and ": " ") +
+                " c.content_id =cs.content_id  " +
+
+                "  group by c.content_name   ORDER BY " + sidx + " " + sord + " limit " + rows + " OFFSET " + start + "", mapper);
+        ExpendablesServiceImpl.LOG.info("LOGGGGGGGGGGGGGGGGGGGGGGGGGGGGG LIST SIZE " + list.size());
+
+        return list;
+    }
+
+    public static boolean checkNotNull(String str) {
+        if (str != null && !str.isEmpty()) {
+            return true;
+        }
+        return false;
+    }
 
 }

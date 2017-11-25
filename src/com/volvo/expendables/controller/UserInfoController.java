@@ -3,7 +3,9 @@ package com.volvo.expendables.controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletOutputStream;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import com.volvo.expendables.dto.ContentDTO;
 import com.volvo.expendables.dto.Slot;
+
 import net.sf.json.JSONArray;
 
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -27,6 +30,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.volvo.expendables.dto.Acknowledge;
+import com.volvo.expendables.dto.DropDownDTO;
 import com.volvo.expendables.dto.EventDTO;
 import com.volvo.expendables.dto.PrincipalDTO;
 import com.volvo.expendables.service.ExpendablesService;
@@ -298,5 +302,31 @@ public class UserInfoController {
            return "membershipRegistration";
        }
     
-    getAllSlotDetails.htm
+    
+    
+    @RequestMapping(value="/getAllSlotDetails.htm",method=RequestMethod.GET)
+    public @ResponseBody Map<String, Object> getAllSlotDetails(){
+        List<DropDownDTO> slotList = new ArrayList<DropDownDTO>();
+        Map<String,Object> map = new HashMap<String,Object>();
+        slotList  = expendablesService.getAllSlotsDropdown();
+        JSONArray data = JSONArray.fromObject(slotList);
+        map.put("mapperList", data);
+        return map;
+    }
+    
+    
+    @RequestMapping(value= "/populateAllContentDetails.htm",method=RequestMethod.POST)
+    public @ResponseBody Map<String, ? extends Object> populateAllContentDetails(@RequestParam int page,
+            int rows,String sidx,String sord,String contentName)   {
+        UserInfoController.LOG.info("populateAllContentDetails : ");
+        Map<String,Object> modelMap = new HashMap<String,Object>();
+        List<ContentDTO> list = expendablesService.populateAllContentDetails(page,rows,sidx,sord,contentName);
+                
+        long count=list.size();
+        modelMap.put("rows", list);
+        modelMap.put("page", page);
+        modelMap.put("total", count%rows>0 ?  Math.round((count)/rows)+1:Math.round((count)/rows));
+        modelMap.put("records",count);
+        return modelMap;
+    }
 }

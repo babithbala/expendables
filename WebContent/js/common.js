@@ -46,3 +46,4 @@ function getYearRange(){
     	jQuery(welcomeProfilePic).attr('src', 'http://localhost:8080/Expendables/images/defaultUser.jpg');
     }
     
+   

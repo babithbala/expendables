@@ -5,6 +5,7 @@ import java.util.List;
 import com.volvo.expendables.dto.*;
 
 
+
 public interface ExpendablesService {
 
     public abstract PrincipalDTO getPrincipalDetails(String userName);
@@ -22,4 +23,9 @@ public interface ExpendablesService {
     public void deleteSlot(String slotName);
     public List<Slot> getAllSlots();
     public Slot getSlot(String slotName);
+    
+    public abstract List<DropDownDTO> getAllSlotsDropdown();
+    
+    public abstract List<ContentDTO> populateAllContentDetails(int page, int rows,String sidx, String sord,String userName);
+
 }
