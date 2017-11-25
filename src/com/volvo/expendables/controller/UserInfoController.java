@@ -25,12 +25,10 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.volvo.expendables.service.ExpendablesService;
 import com.volvo.expendables.dto.Acknowledge;
 import com.volvo.expendables.dto.EventDTO;
 import com.volvo.expendables.dto.PrincipalDTO;
 import com.volvo.expendables.service.ExpendablesService;
-
 
 
 @Controller
@@ -248,15 +246,17 @@ public class UserInfoController {
         return "manageContent";
     }
 
+    @RequestMapping(value = "/manageSchedule.htm", method = RequestMethod.GET)
+    public String manageSchedule(Model model) {
+        //expendablesService.createContent(content);
+        return "schedule";
+    }
+
     @RequestMapping(value = "/saveOrUpdateContent.htm", method = RequestMethod.POST)
     public @ResponseBody
     String saveOrUpdateContent(@RequestBody ContentDTO contentDetails) {
         List<Acknowledge> list = new ArrayList<Acknowledge>();
         UserInfoController.LOG.info("--------------------inside saveOrUpdateContent" + contentDetails.getContentName());
-    @RequestMapping(value = "/saveOrUpdateContent.htm", method = RequestMethod.POST)
-    public @ResponseBody String saveOrUpdateContent(@RequestBody ContentDTO contentDetails){
-        List<Acknowledge>  list = new ArrayList<Acknowledge>();
-        UserInfoController.LOG.info("--------------------inside saveOrUpdateContent"+ contentDetails.getContentName());
 
         if (contentDetails.getContentId() != null && contentDetails.getContentId() > 0) {
             list = expendablesService.updateContentDetails(contentDetails);
@@ -267,7 +267,6 @@ public class UserInfoController {
         return data.toString();
     }
 
-    @Secured({"ROLE_ADMIN"})
     @RequestMapping(value = "/getAllSlots.htm", method = RequestMethod.GET)
     public String listSlots(Model model) {
         model.addAttribute("slot", new Slot());
@@ -275,7 +274,6 @@ public class UserInfoController {
         return "slot";
     }
 
-    @Secured({"ROLE_ADMIN"})
     @RequestMapping(value = "/saveOrUpdateSlot.htm", method = RequestMethod.POST)
     public @ResponseBody
     String addSlot(@RequestBody Slot slotDetails) {
@@ -288,15 +286,12 @@ public class UserInfoController {
 
     }
 
-    @Secured({"ROLE_ADMIN"})
     @RequestMapping(value = "/slot/remove/{slot_name}", method = RequestMethod.GET)
     public String deleteSlot(@PathVariable("slot_name") String slot_name) {
         this.expendablesService.deleteSlot(slot_name);
-
-        return "redirect:/getAllSlots.htm";
+        return "redirect:/slot";
     }
 
-    @Secured({"ROLE_ADMIN"})
     @RequestMapping(value = "/slot/get/{slot_name}", method = RequestMethod.GET)
     public String getSlot(Model model, @PathVariable("slot_name") String slot_name) {
         model.addAttribute("slot", new Slot());
