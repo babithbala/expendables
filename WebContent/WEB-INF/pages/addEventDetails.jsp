@@ -321,11 +321,13 @@
                         <i class="fa fa-glass"></i> <span>Simple tables</span>
                     </a>
                 </li>
-                <li>
-                    <a href="getAllSlots.htm.htm">
-                        <i class="fa fa-glass"></i> <span>Slots managment</span>
-                    </a>
-                </li>
+                <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+                    <li>
+                        <a href="getAllSlots.htm.htm">
+                            <i class="fa fa-glass"></i> <span>Slots managment</span>
+                        </a>
+                    </li>
+                </sec:authorize>
                 <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
                     <li>
                         <a href="${pageContext.request.contextPath}/demo.htm">
