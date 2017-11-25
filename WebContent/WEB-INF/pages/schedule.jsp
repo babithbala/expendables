@@ -351,7 +351,7 @@
                         </header>
                         <div class="panel-body">
                             <div id="addMembershipRegErrorMessage" style="color: red"></div>
-                            <form class="form-horizontal tasi-form" role="form" id="membershipRegForm">
+                            <form class="form-horizontal tasi-form" role="form" id="scheduleForm">
                                 <div class="form-group">
                                     <label for="membershipInputSex" class="col-lg-2 col-sm-2 control-label">
                                         Content<font color="red">&nbsp;*</font></label><br>
