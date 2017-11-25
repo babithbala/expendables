@@ -1,5 +1,6 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,6 +31,7 @@
 
     <!-- jQuery 2.0.2 -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+
     <script src="/Expendables/js/common.js"></script>
 
 </head>
@@ -347,6 +349,33 @@
 
         <!-- Main content -->
         <section class="content">
+            <div class="col-md-3">
+
+                <table class="table table-striped" id="slotTable">
+                    <thead>
+                    <tr>
+                        <th>Slot name</th>
+                        <th>Duration</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${listSlots}" var="Slot">
+                        <tr>
+                            <td>${Slot.slotName}</td>
+                            <td>${Slot.slotDuration}</td>
+                            <td>
+                                <button type=\"button\" class=\"close\" aria-label=\"Delete\"><span
+                                        aria-hidden=\"true\">&times;</span></button>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="content">
             <div class="row">
                 <div class="col-lg-12">
                     <section class="panel">
@@ -367,7 +396,7 @@
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label col-lg-2" for="addSlotInputSlotTime">
-                                       Min Duration</label>
+                                        Min Duration</label>
                                     <div class="col-lg-8">
                                         <div class="row">
                                             <div class="col-lg-6">
@@ -422,6 +451,7 @@
 <script src="/Expendables/js/Director/app.js" type="text/javascript"></script>
 
 <script type="text/javascript">
+
     $(function () {
         $("#addEventInputEventCancelButton").click(function () {
             $.ajax({
@@ -437,14 +467,14 @@
 
         populatePrincipalDetails($("#addNewEventUserFullNameLabelId"), $("#addNewEventUserFirstNameLabelId"));
 
-        var slotID=0;
+        var slotID = 0;
         var validator = $("#addSlotForm").validate({
             meta: "validate",
             rules: {
                 slotName: {
                     required: true
                 },
-                slotDuration:{
+                slotDuration: {
                     required: true,
                     integer: true
                 }
@@ -460,19 +490,19 @@
                 }
             },
             submitHandler: function () {
-                $("#addEventErrorMessage").html("");
+                $("#addSlot").html("");
                 var slotDetails = $('#addSlotForm').serializeObject();
                 $.postJSON("saveOrUpdateSlot.htm", slotDetails, function (data) {
                     $(".inputError").removeClass("inputError");
                     var messages = "";
                     for (i = 0; i < data.length; i++) {
                         messages += data[i].message;
-                        slotID= data[i].id;
+                        slotID = data[i].id;
 
                     }
                     //$("#addEventInputEventId").val(slotID);
 
-                    $("#addEventErrorMessage").html(messages);
+                    $("#addSlot").html(messages);
                 });
                 $('html,body').animate({
                         scrollTop: $(".navbar-right").offset().top

@@ -254,7 +254,7 @@ public class UserInfoController {
         return data.toString();
     }
 
-    @RequestMapping(value = "/slots", method = RequestMethod.GET)
+    @RequestMapping(value = "/getAllSlots.htm", method = RequestMethod.GET)
     public String listSlots(Model model) {
         model.addAttribute("slot", new Slot());
         model.addAttribute("listSlots", this.expendablesService.getAllSlots());
@@ -263,7 +263,7 @@ public class UserInfoController {
 
     @RequestMapping(value = "/saveOrUpdateSlot.htm", method = RequestMethod.POST)
     public @ResponseBody String addSlot(@RequestBody  Slot slotDetails) {
-        List<Acknowledge> list = new ArrayList<Acknowledge>();
+        List<Acknowledge> list;
         UserInfoController.LOG.info("--------------------inside saveOrUpdateEvent" + slotDetails.getSlotDuration());
 
         list = expendablesService.createNewSlot(slotDetails);
