@@ -305,14 +305,6 @@ public class UserInfoController {
         return "redirect:/slot";
     }
 
-    @RequestMapping(value = "/supplier.htm", method = RequestMethod.GET)
-    public String listSuppliers(Model model) {
-        model.addAttribute("supplier", new Supplier());
-        model.addAttribute("listSlots", expendablesService.getAllSuppliers());
-        return "supplier";
-    }
-
-
     @RequestMapping(value = "/membershipRegistration.htm", method = RequestMethod.GET)
     public String membershipRegistration(Model model) {
         model.addAttribute("message",
