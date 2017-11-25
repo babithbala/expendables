@@ -324,11 +324,11 @@
                     </a>
                 </li>
                 <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
-                <li>
-                    <a href="getAllSlots.htm.htm">
-                        <i class="fa fa-glass"></i> <span>Slots managment</span>
-                    </a>
-                </li>
+                    <li>
+                        <a href="getAllSlots.htm.htm">
+                            <i class="fa fa-glass"></i> <span>Slots managment</span>
+                        </a>
+                    </li>
                 </sec:authorize>
                 <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
                     <li>
@@ -381,7 +381,9 @@
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <input type="text" name="slotDuration" size="12"
-                                                       id="addSlotInputSlotTime">
+                                                       id="addEventInputEventTime" maxlength="8"
+                                                       class="form-control" value="00:00:00"
+                                                       onFocus="if(this.value=='00:00:00')this.value='';">
                                             </div>
                                         </div>
 
@@ -445,7 +447,8 @@
 <script src="/Expendables/jQuery/ui/jquery.ui.widget.js"></script>
 <script src="/Expendables/jQuery/ui/jquery.ui.dialog.js"></script>
 <script src="/Expendables/jQuery/ui/jquery.ui.datepicker.js"></script>
-<script src="/Expendables/jQuery/ui/jquery-ui-timepicker-addon.js"></script>
+<%--<script src="/Expendables/jQuery/ui/jquery-ui-timepicker-addon.js"></script>--%>
+<script src="/Expendables/js/plugins/bs-datetimepicker/bootstrap-datetimepicker.js"></script>
 <script src="/Expendables/jQuery/jquery.populate.js"></script>
 
 <script src="/Expendables/jQuery/jquery.validate.js"></script>
@@ -481,7 +484,13 @@
             });
         });
 
-        $('#addEventInputEventTime').timepicker({showSecond: true, timeFormat: 'hh:mm:ss'});
+        $('#addEventInputEventTime').datetimepicker({
+            disabledTimeIntervals: [
+                [moment().hour(0).minutes(0), moment().hour(8).minutes(30)],
+                [moment().hour(20).minutes(30), moment().hour(24).minutes(0)]
+            ]
+
+        });
 
 
         populatePrincipalDetails($("#addNewEventUserFullNameLabelId"), $("#addNewEventUserFirstNameLabelId"));
