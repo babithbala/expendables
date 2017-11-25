@@ -372,16 +372,6 @@
                                         </select>
                                     </div>
                                 </div>
-
-                                <div class="form-group" id="membershipInputSupplierNameDiv">
-                                    <label for="membershipInputSupplierName" class="col-lg-2 col-sm-2 control-label">
-                                        Supplier&nbsp;Name<font color="red">&nbsp;*</font></label>
-                                    <div class="col-lg-6">
-                                        <input name="supplierName" type="text" class="form-control"
-                                               id="membershipInputSupplierName" placeholder="Supplier Name">
-                                    </div>
-                                </div>
-
                                 <div class="form-group" id="membershipInputSupplierContactpersonNameDiv">
                                     <label for="membershipInputSupplierContactpersonName"
                                            class="col-lg-2 col-sm-2 control-label">
@@ -468,10 +458,10 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-lg-offset-2 col-lg-8">
-                                        <button type="submit" class="btn btn-info" id="memebershipRegSubmitButton">
+                                        <button type="submit" class="btn btn-info" id="membershipRegSubmitButton">
                                             Submit
                                         </button>
-                                        <button type="button" class="btn btn-danger" id="memebershipRegCancelButton">
+                                        <button type="button" class="btn btn-danger" id="membershipRegCancelButton">
                                             Cancel
                                         </button>
                                     </div>
@@ -485,7 +475,6 @@
         </section><!-- /.content -->
     </aside><!-- /.right-side -->
     <div class="footer-main">
-        Copyright &copy Babith Balarkan & Prashanth Xavier, 2017
     </div>
 </div><!-- ./wrapper -->
 
@@ -519,28 +508,25 @@
         });
 
         <!-- INITIAL STATE TO HIDE SHOW SOME ELEMENTS DEPENDING ON THE ROLE SELECTION -->
-        $("#membershipInputSupplierNameDiv").hide();
         $("#membershipInputSupplierContactpersonNameDiv").hide();
         $("#membershipInputParmaDiv").hide();
         $("#membershipInputContactPersonDiv").hide();
 
-        $("#membershipInputRole").change(function () {
-            var roleSelected = this.value;
-
-            if ("ROLE_SUPPLIER" == roleSelected) {
-                $("#membershipInputSupplierNameDiv").show();
-                $("#membershipInputSupplierContactpersonNameDiv").show();
-                $("#membershipInputParmaDiv").show();
-                $("#membershipInputContactPersonDiv").show();
-                $("#membershipInputFirstNameDiv").hide();
-                $("#membershipInputLastNameDiv").hide();
-            } else {
-                $("#membershipInputSupplierNameDiv").hide();
-                $("#membershipInputSupplierContactpersonNameDiv").hide();
-                $("#membershipInputParmaDiv").hide();
-                $("#membershipInputContactPersonDiv").hide();
-            }
-        });
+//        $("#membershipInputRole").change(function () {
+//            var roleSelected = this.value;
+//
+//            if ("ROLE_SUPPLIER" == roleSelected) {
+//                $("#membershipInputSupplierContactpersonNameDiv").show();
+//                $("#membershipInputParmaDiv").show();
+//                $("#membershipInputContactPersonDiv").show();
+//                $("#membershipInputFirstNameDiv").hide();
+//                $("#membershipInputLastNameDiv").hide();
+//            } else {
+//                $("#membershipInputSupplierContactpersonNameDiv").hide();
+//                $("#membershipInputParmaDiv").hide();
+//                $("#membershipInputContactPersonDiv").hide();
+//            }
+//        });
         var validator = $("#membershipRegForm").validate({
             meta: "validate",
             rules: {
@@ -634,11 +620,9 @@
             submitHandler: function () {
                 $("#addMembershipRegErrorMessage").html("");
                 var user = $('#membershipRegForm').serializeObject();
-                alert("user.password" + user.password);
                 user.password = trim(user.password);
                 user.confirmPassword = trim(user.confirmPassword);
-                user.dob = formatDate(user.dob);
-                $.postJSON("saveOrUpdateNewUserDetails.htm", user, function (data) {
+                $.postJSON("membershipRegistrationSubmission.htm", user, function (data) {
                     displayUserAddMsg(data);
                 });
                 $('html,body').animate({

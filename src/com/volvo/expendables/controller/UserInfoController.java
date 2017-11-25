@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +19,7 @@ import com.volvo.expendables.dto.*;
 import net.sf.json.JSONArray;
 
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.annotation.Secured;
@@ -40,7 +40,7 @@ import com.volvo.expendables.service.ExpendablesService;
 @Scope("session")
 public class UserInfoController {
 
-    private static final Logger LOG = Logger.getLogger(UserInfoController.class.getName());
+    private static final Logger logger = Logger.getLogger(UserInfoController.class.getName());
 
     private ExpendablesService expendablesService;
     private ObjectMapper jacksonObjectMapper;
@@ -73,13 +73,13 @@ public class UserInfoController {
     public @ResponseBody
     PrincipalDTO getPrincipalDetails() {
         String userName = getLoggedInUserName();
-        UserInfoController.LOG.info("--------------------inside getPrincipalDetails :" + userName);
-        LOG.info("==============================================");
-        LOG.info("==============================================");
-        LOG.info("==============================================");
-        LOG.info("==========================USERNAME=" + userName);
-        LOG.info("==============================================");
-        LOG.info("==============================================");
+        UserInfoController.logger.info("--------------------inside getPrincipalDetails :" + userName);
+        logger.info("==============================================");
+        logger.info("==============================================");
+        logger.info("==============================================");
+        logger.info("==========================USERNAME=" + userName);
+        logger.info("==============================================");
+        logger.info("==============================================");
         PrincipalDTO user = expendablesService.getPrincipalDetails(userName);
         return user;
     }
@@ -95,7 +95,7 @@ public class UserInfoController {
     public @ResponseBody
     String saveOrUpdateEvent(@RequestBody EventDTO eventDetails) {
         List<Acknowledge> list = new ArrayList<Acknowledge>();
-        UserInfoController.LOG.info("--------------------inside saveOrUpdateEvent" + eventDetails.getEventDate());
+        UserInfoController.logger.info("--------------------inside saveOrUpdateEvent" + eventDetails.getEventDate());
         eventDetails.setUserName(getLoggedInUserName());
         if (eventDetails.getEventId() != null && eventDetails.getEventId() > 0) {
             list = expendablesService.updateEventDetails(eventDetails);
@@ -109,9 +109,9 @@ public class UserInfoController {
     @RequestMapping(value = "/getUserEvents.htm", method = RequestMethod.GET)
     public @ResponseBody
     String getUserEvents() {
-        UserInfoController.LOG.info("--------------------inside getUserEvents :");
+        UserInfoController.logger.info("--------------------inside getUserEvents :");
         List<EventDTO> eventList = expendablesService.getAllUserEvents(getLoggedInUserName());
-        UserInfoController.LOG.info("--------------------inside getUserEvents size :" + eventList.size());
+        UserInfoController.logger.info("--------------------inside getUserEvents size :" + eventList.size());
         JSONArray data = JSONArray.fromObject(eventList);
         return data.toString();
     }
@@ -120,9 +120,9 @@ public class UserInfoController {
     public @ResponseBody
     String populateAllSelectedDateEvents(@RequestParam String selectedDate) {
         List<EventDTO> eventList = new ArrayList<EventDTO>();
-        UserInfoController.LOG.info("--------------------inside populateAllSelectedDateEvents :" + selectedDate);
+        UserInfoController.logger.info("--------------------inside populateAllSelectedDateEvents :" + selectedDate);
         eventList = expendablesService.getAllSelectedDateEvents(getLoggedInUserName(), selectedDate);
-        UserInfoController.LOG.info("--------------------inside populateAllSelectedDateEvents size :" + eventList.size());
+        UserInfoController.logger.info("--------------------inside populateAllSelectedDateEvents size :" + eventList.size());
         JSONArray data = JSONArray.fromObject(eventList);
         return data.toString();
     }
@@ -135,7 +135,7 @@ public class UserInfoController {
     @Secured({"ROLE_USER", "ROLE_ADMIN", "ROLE_NURSE", "ROLE_PHYSICIAN", "ROLE_PATIENT"})
     @RequestMapping(value = "/getProfilePhoto.htm", method = RequestMethod.GET)
     public ServletOutputStream profilePhotoByUserName(HttpServletRequest request, HttpServletResponse response) {
-        UserInfoController.LOG.info("getProfilePhoto getProfilePhoto method called");
+        UserInfoController.logger.info("getProfilePhoto getProfilePhoto method called");
         InputStream image = null;
         PrincipalDTO photoDTO = expendablesService.getProfilePhoto(getLoggedInUserName());
         image = photoDTO.getProfilePhoto();
@@ -145,7 +145,7 @@ public class UserInfoController {
             response.flushBuffer();
             out = response.getOutputStream();
             int length = (int) image.available();
-            UserInfoController.LOG.info("######################################################################### " + (int) image.available());
+            UserInfoController.logger.info("######################################################################### " + (int) image.available());
             int bufferSize = 1024;
             byte[] buffer = new byte[bufferSize];
             while ((length = image.read(buffer)) != -1) {
@@ -153,7 +153,7 @@ public class UserInfoController {
             }
             image.close();
         } catch (Exception e) {
-            UserInfoController.LOG.info("Exception : " + e.getMessage());
+            UserInfoController.logger.info("Exception : " + e.getMessage());
         } finally {
             try {
                 out.close();
@@ -169,7 +169,7 @@ public class UserInfoController {
     @RequestMapping(value = "/getProfilePhotoByUserName.htm", method = RequestMethod.GET)
     public ServletOutputStream profilePhotoByUserNameRequest(HttpServletRequest request, HttpServletResponse response) {
 
-        UserInfoController.LOG.info("getProfilePhotoByUserName method called" + request.getParameter("userName"));
+        UserInfoController.logger.info("getProfilePhotoByUserName method called" + request.getParameter("userName"));
         String userName = request.getParameter("userName");
         InputStream image = null;
         if (userName != null)
@@ -183,7 +183,7 @@ public class UserInfoController {
             response.flushBuffer();
             out = response.getOutputStream();
             int length = (int) image.available();
-            UserInfoController.LOG.info("######################################################################### " + (int) image.available());
+            UserInfoController.logger.info("######################################################################### " + (int) image.available());
             int bufferSize = 1024;
             byte[] buffer = new byte[bufferSize];
             while ((length = image.read(buffer)) != -1) {
@@ -191,7 +191,7 @@ public class UserInfoController {
             }
             image.close();
         } catch (Exception e) {
-            UserInfoController.LOG.info("Exception : " + e.getMessage());
+            UserInfoController.logger.info("Exception : " + e.getMessage());
         } finally {
             try {
                 out.close();
@@ -206,11 +206,11 @@ public class UserInfoController {
     @RequestMapping(value = "/profilePictureUpload.htm", method = RequestMethod.POST)
     public String create(FileUploadBean file, HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (!ServletFileUpload.isMultipartContent(request)) {
-            UserInfoController.LOG.info("Request is not multipart, please 'multipart/form-data' enctype for your form.");
+            UserInfoController.logger.info("Request is not multipart, please 'multipart/form-data' enctype for your form.");
             throw new IllegalArgumentException("Request is not multipart, please 'multipart/form-data' enctype for your form.");
         }
         HttpSession session = request.getSession(false);
-        UserInfoController.LOG.info("Upload : " + file.getFile().getOriginalFilename() + " ");
+        UserInfoController.logger.info("Upload : " + file.getFile().getOriginalFilename() + " ");
         session.setAttribute("profilePhoto", file);
         // return "success:true";
         return "uploadPhoto";
@@ -229,7 +229,7 @@ public class UserInfoController {
             session.setAttribute("profilePhoto", null);
             profileDetails.setProfilePhoto(uploadImage.getFile().getInputStream());
             profileDetails.setRequestWithImage(true);
-            UserInfoController.LOG.info("image set in dto");
+            UserInfoController.logger.info("image set in dto");
         }
         list = expendablesService.uploadProfilePhoto(profileDetails);
         JSONArray data = JSONArray.fromObject(list);
@@ -252,7 +252,7 @@ public class UserInfoController {
     public @ResponseBody
     String saveOrUpdateContent(@RequestBody ContentDTO contentDetails) {
         List<Acknowledge> list = new ArrayList<Acknowledge>();
-        UserInfoController.LOG.info("--------------------inside saveOrUpdateContent" + contentDetails.getContentName());
+        UserInfoController.logger.info("--------------------inside saveOrUpdateContent" + contentDetails.getContentName());
 
         if (contentDetails.getContentId() != null && contentDetails.getContentId() > 0) {
             list = expendablesService.updateContentDetails(contentDetails);
@@ -274,7 +274,7 @@ public class UserInfoController {
     public @ResponseBody
     String addSlot(@RequestBody Slot slotDetails) {
         List<Acknowledge> list;
-        UserInfoController.LOG.info("--------------------inside saveOrUpdateEvent" + slotDetails.getSlotDuration());
+        UserInfoController.logger.info("--------------------inside saveOrUpdateEvent" + slotDetails.getSlotDuration());
 
         list = expendablesService.createNewSlot(slotDetails);
         JSONArray data = JSONArray.fromObject(list);
@@ -297,9 +297,19 @@ public class UserInfoController {
 
     @RequestMapping(value = "/membershipRegistration.htm", method = RequestMethod.GET)
     public String membershipRegistration(Model model) {
-        model.addAttribute("message", "Hello " + getLoggedInUserName() + "\n This is protected page!.");
+        model.addAttribute("supplier", new Supplier());
+        model.addAttribute("user", new UserDTO());
 
         return "membershipRegistration";
+    }
+
+
+    @RequestMapping(value = "/membershipRegistrationSubmission.htm", method = RequestMethod.POST)
+    @ResponseBody
+    public String membershipRegistrationSubmission(@RequestBody Object object) {
+        logger.debug("inside membership registration form submission method: " + object);
+        JSONArray data = JSONArray.fromObject(new String("Done"));
+        return data.toString();
     }
 
     @RequestMapping(value = "/getAllSlotDetails.htm", method = RequestMethod.GET)
@@ -316,7 +326,7 @@ public class UserInfoController {
     @RequestMapping(value = "/populateAllContentDetails.htm", method = RequestMethod.POST)
     public @ResponseBody
     Map<String, ? extends Object> populateAllContentDetails(@RequestParam int page, int rows, String sidx, String sord, String contentName) {
-        UserInfoController.LOG.info("populateAllContentDetails : ");
+        UserInfoController.logger.info("populateAllContentDetails : ");
         Map<String, Object> modelMap = new HashMap<String, Object>();
         List<ContentDTO> list = expendablesService.populateAllContentDetails(page, rows, sidx, sord, contentName);
 
