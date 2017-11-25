@@ -192,6 +192,12 @@
 			                                <i class="fa fa-glass"></i> <span>Booking</span>
 			                            </a>
 			                        </li>
+			                        
+			                        <li>
+			                            <a href="${pageContext.request.contextPath}/calendarBooking1.htm">
+			                                <i class="fa fa-glass"></i> <span>Booking1</span>
+			                            </a>
+			                        </li>
                             </ul>
                         </section>
                         <!-- /.sidebar -->

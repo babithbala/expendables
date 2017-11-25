@@ -28,15 +28,33 @@
 		<link rel="stylesheet" href="/Expendables/jQuery/themes/bs/jquery-ui.css"> 
 		<link rel="stylesheet" href="/Expendables/css/validation.css">
 		
-        <!-- jQuery 2.0.2 -->
+		        <link type="text/css" rel="stylesheet" href="/Expendables/web2cal/css/optionalStyling.css"> 
+        <link type="text/css" rel="stylesheet" href="/Expendables/web2cal/css/web2cal.css" /> 		
+		
+		
+		
+		<!-- jQuery 2.0.2 -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
         <script src="/Expendables/js/common.js"></script>
+		
+		<!--  File Upload -->
+        <style type="text/css">
+	        input[type="file"] {
+			    display: none;
+			}
+			.custom-file-upload {
+			    border: 1px solid #ccc;
+			    display: inline-block;
+			    padding: 6px 12px;
+			    cursor: pointer;
+			}
+        </style>
         
     </head>
     <body class="skin-black">
         <!-- header logo: style can be found in header.less -->
         <header class="header">
-            <a href="home.htm" class="logo">
+            <a href="demo.htm" class="logo">
                 Expendables
             </a>
             <!-- Header Navbar: style can be found in header.less -->
@@ -64,7 +82,7 @@
                                         <li><!-- start message -->
                                             <a href="#">
                                                 <div class="pull-left">
-                                                    <img src="img/avatar5.png" class="img-circle" alt="User Image"/>
+                                                    <img src="img/avatar.png" class="img-circle" alt="User Image"/>
                                                 </div>
                                                 <h4>
                                                     Support Team
@@ -115,7 +133,7 @@
                                         <li>
                                             <a href="#">
                                                 <div class="pull-left">
-                                                    <img src="img/avatar.png" class="img-circle" alt="user image"/>
+                                                    <img src="img/avatar3.png" class="img-circle" alt="user image"/>
                                                 </div>
                                                 <h4>
                                                     Testing
@@ -206,7 +224,7 @@
 
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-user"></i>
-                                <span><label id="addNewEventUserFullNameLabelId" ></label>
+                                <span><label id="addUserProfileFullNameLabelId" ></label>
                                 	<i class="caret"></i></span>
                             </a>
                             <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
@@ -266,8 +284,8 @@
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
                         <div class="pull-left image">
-                            <img src="getProfilePhoto.htm" class="img-circle" id="addEventWelcomeProfilePic"
-                            alt="User Image" onerror="standbyPic($('#addEventWelcomeProfilePic'));"/>
+                            <img src="getProfilePhoto.htm"  class="img-circle" alt="User Image" id="addProfilePhotoFromDb"
+                            onerror="standbyPic($('#addProfilePhotoFromDb'));"/>
                         </div>
                         <div class="pull-left info">
                             <p>Hello,&nbsp;
@@ -288,43 +306,49 @@
                     <!-- /.search form -->
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
-                        <li>
-                            <a href="home.htm">
-                                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="general.htm">
-                                <i class="fa fa-gavel"></i> <span>General</span>
-                            </a>
-                        </li>
-
-                        <li class="active">
-                            <a href="basicForm.htm">
-                                <i class="fa fa-globe"></i> <span>Basic Elements</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="simple.htm">
-                                <i class="fa fa-glass"></i> <span>Simple tables</span>
-                            </a>
-                        </li>
-						<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+                                <li  class="active">
+		                            <a href="home.htm">
+		                                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+		                            </a>
+		                        </li>
+		                        <li>
+		                            <a href="general.htm">
+		                                <i class="fa fa-gavel"></i> <span>General</span>
+		                            </a>
+		                        </li>
+		
+		                        <li>
+		                            <a href="basicForm.htm">
+		                                <i class="fa fa-globe"></i> <span>Basic Elements</span>
+		                            </a>
+		                        </li>
+		
+		                        <li>
+		                            <a href="simple.htm">
+		                                <i class="fa fa-glass"></i> <span>Simple tables</span>
+		                            </a>
+		                        </li>
+		                        <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
 			                        <li>
 			                            <a href="${pageContext.request.contextPath}/demo.htm">
 			                                <i class="fa fa-glass"></i> <span>Additional</span>
 			                            </a>
 			                        </li>
                                  </sec:authorize>
-                        <sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+                                <sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
 			                        <li>
 			                            <a href="${pageContext.request.contextPath}/uploadProfilePhoto.htm">
 			                                <i class="fa fa-glass"></i> <span>Upload Photo</span>
 			                            </a>
 			                        </li>
                                  </sec:authorize>
-                    </ul>
+                                 
+                                 <li>
+			                            <a href="${pageContext.request.contextPath}/calendarBooking.htm">
+			                                <i class="fa fa-glass"></i> <span>Booking</span>
+			                            </a>
+			                        </li>
+                            </ul>
                 </section>
                 <!-- /.sidebar -->
             </aside>
@@ -337,41 +361,19 @@
                 <!-- Main content -->
                 <section class="content">
                     <div class="row">
-                      <div class="col-lg-12">
+                      <div class="col-md-12">
                           <section class="panel">
                               <header class="panel-heading">
-                                  Add New Content Details
+                                  Book Unloading Schedule
                               </header>
                               <div class="panel-body">
-                              <div id="addEventErrorMessage" style="color: red"></div>
-                                  <form class="form-horizontal tasi-form" role="form" id="addContentForm">
-                                  	 <div class="form-group">
-                                          <label for="addEventInputContentName" class="col-lg-2 col-sm-2 control-label">
-										  Content&nbsp;Name<font color="red">&nbsp;*</font></label>
-                                          <div class="col-lg-6">
-                                          	<input name="contentName" type="text" class="form-control"
-                                          		id="addEventInputContentName" placeholder="Content Name">
-                                          	<input type="hidden" id="addEventInputContentId" name="contentId">
-                                          </div>
-                                      </div>
-									
-									<div class="form-group">
-                                          <label for="addEventInputEventPriority" class="col-lg-2 col-sm-2 control-label">Slot<font color="red">&nbsp;*</font></label>
-                                          <div class="col-lg-6">
-	                                          <select class="form-control m-b-10" id="addEventInputSlot"  name="slotId">
-	                                          		  <option value="" selected="selected">Select One</option>
-	                                                 
-	                                              </select>
-                                           </div>
-                                      </div>
-                                      
-                                      <div class="form-group">
-                                          <div class="col-lg-offset-2 col-lg-10">
-                                          	  <button type="submit" class="btn btn-info" id="addEventInputEventSubmitButton">Submit</button>
-                                              <button type="button" class="btn btn-danger" id="addEventInputEventCancelButton">Cancel</button>
-                                          </div>
-                                      </div>
-                                  </form>
+                                                              
+                                  	 <!-- Calender UI-->   
+<div id="calendarContainer" style="height: 60%; width: 80%;">
+        </div>    
+                                  	  
+                                     
+                                
 
                               </div>
                           </section>
@@ -384,7 +386,14 @@
             </div>
         </div><!-- ./wrapper -->
         
-
+		<!-- jQuery 2.0.2 -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+        <!-- Bootstrap -->
+        <script src="/Expendables/js/bootstrap.min.js" type="text/javascript"></script>
+        <!-- Director App -->
+<!--         <script src="/Expendables/js/Director/app.js" type="text/javascript"></script> -->
+        
+        
         <script src="/Expendables/js/jquery.min.js" type="text/javascript"></script>
         <script src="/Expendables/jQuery/ui/jquery-ui.js"></script>
 		<script src="/Expendables/jQuery/ui/jquery.ui.core.js"></script>
@@ -398,15 +407,127 @@
 		<script src="/Expendables/jQuery/additional-methods.js"></script>
 		<script src="/Expendables/jQuery/json.min.js"></script>
 		<script src="/Expendables/jQuery/jquery.json.js"></script>
-        
-        <!-- Bootstrap -->
-        <script src="/Expendables/js/bootstrap.min.js" type="text/javascript"></script>
-        <!-- Director App -->
-        <script src="/Expendables/js/Director/app.js" type="text/javascript"></script>
-        
+		
+<!--         <script src="/Expendables/web2cal/ext/jquery-1.3.2.min.js"> </script>  -->
+        <script src="/Expendables/web2cal/js/Web2Cal-Basic-2.0-min.js">  </script>
+        <script src="/Expendables/web2cal/js/web2cal.support.js">  </script>
+        <script src="/Expendables/web2cal/js/web2cal.default.template.js">  </script>
+
+
+    
+
+
+   
+<style type="text/css" >
+   html, body{
+      margin:0px;
+      padding:0px;
+      height:100%;
+      overflow:hidden;
+   }   
+</style>
+
+		
         <script type="text/javascript">
+        
+        var ical;
+	    
+//         s
+	    /*
+	     Create the Calendar.
+	     */
+	    function drawCalendar()
+	    { 
+	    	
+	        ical = new Web2Cal('calendarContainer', {
+	            loadEvents:			loadCalendarEvents,             
+	            weekOnNewEvent:		onNewEvent,
+				agendaOnNewEvent:	onNewEvent, 
+	            monthOnNewEvent:	onNewEvent,
+				date:				new Date()
+	        });
+	        ical.build();
+	    }
+	     
+	    /*
+	     Method invoked when creating a new event, before showing the new event form.
+	     @param obj - Object containing (startTime, endTime)
+	     @param groups - List of Group objects ({groupId, name})
+	     @param allday - boolean to indicate if the event created is allday event.
+	     */
+	    function onNewEvent(obj, groups, allday)
+	    {
+	        Web2Cal.defaultPlugins.onNewEvent(obj, groups, allday); 
+	    }
+	    
+	    /*
+	     Utility function to create date object from date string and time string
+	     @param dateString - Date String mm/dd/yyyy
+	     @param timeString - Time String HH:MM AM/PM
+	     */
+	    function getDateFromStrings(dateString, timeString)
+	    {
+	        var dt = (timeString == "") ? new Date() : parseTime(timeString);
+	        var tempDate = UTC.parseDateString(dateString);
+	        
+	        dt.setMonth(tempDate.getMonth());
+	        dt.setYear(tempDate.getYear());
+	        dt.setDate(tempDate.getDate());
+	        
+	        return dt;
+	    }
+	    
+	    /**
+	     Method to get Events and display it in the calendar.
+	     If you need to make an asynchronous call, invoke ical.render in the callback method.
+	     @param startTime - Calendar Display Range start
+	     @para endTime - Calendar End Range end
+	     */
+	    function loadCalendarEvents(startTime, endTime)    
+		{  
+			eventStr = [{groupId:100, name:"Group1 Name", events: [{eventId:1, eventName:"Event Name", startTime: "2017-11-25 10:00:00", endTime: "2017-11-25 11:30:00"}] }];
+			ical.render(eventStr);
+	    }
+	    /*
+	     Click on Edit Button in preview window
+	     */
+	    function rzEditEvent()
+	    {
+	        alert("editing");
+	    }
+	    
+	    /**
+	     Clicking delete in Preview window
+	     */
+	    function rzDeleteEvent()
+	    {
+	        //alert("Delete Event in DB and invoke ical.deleteEvent({eventId: id})");
+			ical.deleteEvent({eventId: activeEvent.eventId});
+			ical.hidePreview();
+	    }
+	    
+	    /**
+	     * Click of Add in add event box.
+	     */
+	    function rzAddEvent()
+	    {
+	        var newev = Web2Cal.defaultPlugins.getNewEventObject();
+	        ical.addEvent(newev);
+	    }
+	    
+	    /**
+	     * Onclick of Close in AddEvent Box.
+	     */
+	    function rzCloseAddEvent()
+	    {
+	        ical.closeAddEvent();
+	    }
+	    
+	    
         $(function() {
-        	 $("#addEventInputEventCancelButton").click(function(){
+        	
+        	$(".leftNavGroupsList").hide();
+        	 $("#addProfilePictureCancelButton").click(function(){
               	  $.ajax({
               	       url: 'demo.htm',
               	       success: function(data) {
@@ -415,73 +536,38 @@
               	    });
               });
         	 
-        	 var contentID=0;
-        		
-        	 
-        	 $.ajax({
-        	       url: 'getAllSlotDetails.htm',
-        	       dataType: 'json',
-        		   cache: false,
-         	       success: function(data) {
-         	    	   
-         	       }
-        	    });
-        	 
-        		$(".inputTextToDataPicker").datepicker( {
-        				dateFormat: 'yymmdd',
-        				numberOfMonths : 1,
-        				showButtonPanel : true,
-        				changeMonth: true,
-        				changeYear: true
-        			});
-        		  $( ".inputTextToDataPicker" ).datepicker( "option", "yearRange", getYearRange() );
-
-        		  $('#addEventInputEventTime').timepicker({showSecond: true,timeFormat: 'hh:mm:ss'});
-
-        		  
-        		 populatePrincipalDetails($("#addNewEventUserFullNameLabelId"),$("#addNewEventUserFirstNameLabelId"));
+        		        		 
+        		 populatePrincipalDetails($("#addUserProfileFullNameLabelId"),$("#addUserProfileFirstNameLabelId"));
         		 
-        	        		 
-        			var validator = $("#addContentForm").validate({
-        				meta : "validate",
-        				rules:{  
-        							contentName : {
-        									required : true
-        								},
-        								slotId : {
-        								required : true
-        								}
-        						},
-        						
-        				messages : {
-        					contentName : {
-        									required : 'Please enter Content Name.'
-        								},
-        								slotId : {
-        									required : 'Please select one Slot.'
-        								}
-        							},
+        			var validator = $("#add_profilePhotoForm").validate({
+        				meta : "validate", 
         				submitHandler : function() {
-        					$("#addEventErrorMessage").html("");
-        					var contentDetails = $('#addContentForm').serializeObject();
-        					$.postJSON("saveOrUpdateContent.htm", contentDetails, function(data) {
-        						$(".inputError").removeClass("inputError");
-        						var i = 0;
-        						var success=true;
-        						var messages = "";
-        						for (i = 0; i < data.length; i++) {
-        							messages += data[i].message;
-        							contentID=data[i].id;
-        						}
-        						$("#addEventInputEventId").val(contentID);
-        						$("#addEventErrorMessage").html(messages);
-        				  	});
-        					$('html,body').animate({
-         				        scrollTop: $(".navbar-right").offset().top},
-         				        'slow');
-        					return false;
-        			 	}
-        			}); 
+        					$("#addProfilePhotoErrorMessage").html("");
+        					
+        					
+        					var diagrams = $('#add_profilePhotoForm').serializeObject();
+        					
+        						$.postJSON("saveProfilePhoto.htm", diagrams, function(data) {
+        							var i = 0;
+          							var success=true;
+          							var messages = "";
+    	      						for (i = 0; i < data.length; i++) {
+    	      							messages += data[i].message;
+    	      						}
+    	      						$("#addProfilePhotoErrorMessage").html(messages);							
+        						});
+        						$('html,body').animate({
+        	 				        scrollTop: $(".navbar-right").offset().top},
+        	 				        'slow');
+        				return false;
+        				}
+        			  }); 
+        			
+        			
+        			drawCalendar();
+        			
+        			
+        		    
         });
         
         </script>

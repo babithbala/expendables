@@ -75,6 +75,10 @@ public class HomeController {
         model.addAttribute(TITLE, "Booking");
         return "calendarBooking";
     }
-	
+	@RequestMapping(value = "/calendarBooking1.htm", method = RequestMethod.GET)
+    public String calendarBooking1(Model model) {
+        model.addAttribute(TITLE, "Booking");
+        return "calendarBooking1";
+    }
 	
 }

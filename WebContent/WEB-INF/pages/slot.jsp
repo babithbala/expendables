@@ -360,26 +360,19 @@
                                     <label for="addSlotInputSlotName" class="col-lg-2 col-sm-2 control-label">Slot
                                         names</label>
                                     <div class="col-lg-6">
-                                        <select class="form-control m-b-10" id="addSlotInputSlotName"
-                                                name="priority">
-                                            <option value="" selected="selected">Select slot</option>
-                                            <option value="L">Tire</option>
-                                            <option value="M">Glass</option>
-                                            <option value="H">Bolts</option>
-                                        </select>
+                                        <input type="text" name="slotName" size="12"
+                                               id="addSlotInputSlotName">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label col-lg-2" for="addSlotInputSlotTime">
-                                        Date<font color="red">&nbsp;*</font>&nbsp;&nbsp;Time</label>
+                                       Min Duration</label>
                                     <div class="col-lg-8">
                                         <div class="row">
                                             <div class="col-lg-6">
-                                                <input type="text" name="eventTime" size="12"
-                                                       id="addSlotInputSlotTime" maxlength="8"
-                                                       class="form-control" value="00:00:00"
-                                                       onFocus="if(this.value=='00:00:00')this.value='';">
+                                                <input type="text" name="slotDuration" size="12"
+                                                       id="addSlotInputSlotTime">
                                             </div>
                                         </div>
 
@@ -444,8 +437,8 @@
 
         populatePrincipalDetails($("#addNewEventUserFullNameLabelId"), $("#addNewEventUserFirstNameLabelId"));
 
-
-        var validator = $("#addEventForm").validate({
+        var slotID=0;
+        var validator = $("#addSlotForm").validate({
             meta: "validate",
             rules: {
                 slotName: {
@@ -462,23 +455,23 @@
                     required: 'Please enter Slot Name.'
                 },
                 slotDuration: {
-                    required: 'Please enter duration.',
+                    required: 'Please enter slotDuration.',
                     integer: "Please enter a valid number."
                 }
             },
             submitHandler: function () {
                 $("#addEventErrorMessage").html("");
                 var slotDetails = $('#addSlotForm').serializeObject();
-                $.postJSON("saveOrUpdateEvent.htm", slotDetails, function (data) {
+                $.postJSON("saveOrUpdateSlot.htm", slotDetails, function (data) {
                     $(".inputError").removeClass("inputError");
                     var messages = "";
                     for (i = 0; i < data.length; i++) {
                         messages += data[i].message;
-                        eventID = data[i].id;
+                        slotID= data[i].id;
 
                     }
-                    $("#addEventInputEventId").val(eventID);
-                    $("#addSlotInputSlotName").val(addressID);
+                    //$("#addEventInputEventId").val(slotID);
+
                     $("#addEventErrorMessage").html(messages);
                 });
                 $('html,body').animate({

@@ -203,6 +203,14 @@
 			                                <i class="fa fa-glass"></i> <span>Booking</span>
 			                            </a>
 			                        </li>
+			                        
+			                        <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+			                        <li>
+			                            <a href="${pageContext.request.contextPath}/membershipRegistration.htm">
+			                                <i class="fa fa-glass"></i> <span>Register</span>
+			                            </a>
+			                        </li>
+                                 </sec:authorize>
                             </ul>
                         </section>
                         <!-- /.sidebar -->

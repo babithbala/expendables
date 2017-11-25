@@ -244,7 +244,7 @@ public class UserInfoController {
         return "manageContent";
     }
 
-    @RequestMapping(value = "/saveOrUpdateContent", method = RequestMethod.POST)
+    @RequestMapping(value = "/saveOrUpdateContent.htm", method = RequestMethod.POST)
     public @ResponseBody String saveOrUpdateContent(@RequestBody ContentDTO contentDetails){
         List<Acknowledge>  list = new ArrayList<Acknowledge>();
         UserInfoController.LOG.info("--------------------inside saveOrUpdateContent"+ contentDetails.getContentName());
@@ -265,12 +265,10 @@ public class UserInfoController {
         return "slot";
     }
 
-    @RequestMapping(value = "/slot/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/saveOrUpdateSlot.htm", method = RequestMethod.POST)
     public @ResponseBody String addSlot(@RequestBody  Slot slotDetails) {
-
-
         List<Acknowledge> list = new ArrayList<Acknowledge>();
-        UserInfoController.LOG.info("--------------------inside saveOrUpdateEvent" + slotDetails.getDuration());
+        UserInfoController.LOG.info("--------------------inside saveOrUpdateEvent" + slotDetails.getSlotDuration());
 
         list = expendablesService.createNewSlot(slotDetails);
         JSONArray data = JSONArray.fromObject(list);
@@ -290,4 +288,15 @@ public class UserInfoController {
         this.expendablesService.getSlot(slot_name);
         return "redirect:/slot";
     }
+    
+    
+    @RequestMapping(value = "/membershipRegistration.htm", method = RequestMethod.GET)
+    public String membershipRegistration(Model model) {
+           model.addAttribute("message",
+                   "Hello " + getLoggedInUserName()+ "\n This is protected page!.");
+
+           return "membershipRegistration";
+       }
+    
+    getAllSlotDetails.htm
 }

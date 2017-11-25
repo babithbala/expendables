@@ -2,48 +2,48 @@ package com.volvo.expendables.dto;
 
 public class Slot {
 
-    private int slot_id;
-    private String slot_name;
-    int duration;
+    private int slotId;
+    private String slotName;
+    int slotDuration;
 
     public Slot() {
     }
 
     public Slot(String slot_name, int duration) {
-        this.slot_name = slot_name;
-        this.duration = duration;
+        this.slotName = slot_name;
+        this.slotDuration = duration;
     }
 
-    public int getSlot_id() {
-        return slot_id;
+    public int getSlotId() {
+        return slotId;
     }
 
-    public void setSlot_id(int slot_id) {
-        this.slot_id = slot_id;
+    public void setSlotId(int slotId) {
+        this.slotId = slotId;
     }
 
-    public String getSlot_name() {
-        return slot_name;
+    public String getSlotName() {
+        return slotName;
     }
 
-    public void setSlot_name(String slot_name) {
-        this.slot_name = slot_name;
+    public void setSlotName(String slotName) {
+        this.slotName = slotName;
     }
 
-    public int getDuration() {
-        return duration;
+    public int getSlotDuration() {
+        return slotDuration;
     }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
+    public void setSlotDuration(int slotDuration) {
+        this.slotDuration = slotDuration;
     }
 
     @Override
     public String toString() {
         return "Slot{" +
-                "slot_id=" + slot_id +
-                ", slot_name='" + slot_name + '\'' +
-                ", duration=" + duration +
+                "slotId=" + slotId +
+                ", slotName='" + slotName + '\'' +
+                ", slotDuration=" + slotDuration +
                 '}';
     }
 }
