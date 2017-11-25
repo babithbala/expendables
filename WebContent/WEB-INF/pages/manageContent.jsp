@@ -381,7 +381,7 @@
 											color="red">&nbsp;*</font></label>
 										<div class="col-lg-6">
 											<select class="form-control m-b-10" id="addEventInputSlot"
-												name="slotIds[]">
+												name="slotId">
 												<option value="" selected="selected">Select One</option>
 
 											</select>
@@ -527,6 +527,7 @@
 						dataSource : data.mapperList,
 						textKey : "description",
 						valueKey : "code",
+						dropDownOnFocus : true,
 						multiSelection : {
 							enabled : true,
 							showCheckboxes : true
@@ -593,6 +594,8 @@
 												contentID);
 										$("#addEventErrorMessage").html(
 												messages);
+
+										reloadContentStore();
 									});
 							$('html,body').animate({
 								scrollTop : $(".navbar-right").offset().top

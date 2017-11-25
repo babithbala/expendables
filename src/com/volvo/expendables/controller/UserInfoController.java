@@ -3,6 +3,7 @@ package com.volvo.expendables.controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,10 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.volvo.expendables.dto.ContentDTO;
-import com.volvo.expendables.dto.Slot;
-
 import com.volvo.expendables.dto.*;
+
 import net.sf.json.JSONArray;
 
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -68,10 +67,9 @@ public class UserInfoController {
         return "uploadPhoto";
     }
 
-    @Secured({"ROLE_USER", "ROLE_ADMIN"})
+    @Secured({ "ROLE_USER", "ROLE_ADMIN" })
     @RequestMapping(value = "getPrincipalDetails.htm", method = RequestMethod.GET)
-    public @ResponseBody
-    PrincipalDTO getPrincipalDetails() {
+    public @ResponseBody PrincipalDTO getPrincipalDetails() {
         String userName = getLoggedInUserName();
         UserInfoController.logger.info("--------------------inside getPrincipalDetails :" + userName);
         logger.info("==============================================");
@@ -92,8 +90,7 @@ public class UserInfoController {
     }
 
     @RequestMapping(value = "/saveOrUpdateEvent.htm", method = RequestMethod.POST)
-    public @ResponseBody
-    String saveOrUpdateEvent(@RequestBody EventDTO eventDetails) {
+    public @ResponseBody String saveOrUpdateEvent(@RequestBody EventDTO eventDetails) {
         List<Acknowledge> list = new ArrayList<Acknowledge>();
         UserInfoController.logger.info("--------------------inside saveOrUpdateEvent" + eventDetails.getEventDate());
         eventDetails.setUserName(getLoggedInUserName());
@@ -107,8 +104,7 @@ public class UserInfoController {
     }
 
     @RequestMapping(value = "/getUserEvents.htm", method = RequestMethod.GET)
-    public @ResponseBody
-    String getUserEvents() {
+    public @ResponseBody String getUserEvents() {
         UserInfoController.logger.info("--------------------inside getUserEvents :");
         List<EventDTO> eventList = expendablesService.getAllUserEvents(getLoggedInUserName());
         UserInfoController.logger.info("--------------------inside getUserEvents size :" + eventList.size());
@@ -117,8 +113,7 @@ public class UserInfoController {
     }
 
     @RequestMapping(value = "/populateAllSelectedDateEvents.htm", method = RequestMethod.GET)
-    public @ResponseBody
-    String populateAllSelectedDateEvents(@RequestParam String selectedDate) {
+    public @ResponseBody String populateAllSelectedDateEvents(@RequestParam String selectedDate) {
         List<EventDTO> eventList = new ArrayList<EventDTO>();
         UserInfoController.logger.info("--------------------inside populateAllSelectedDateEvents :" + selectedDate);
         eventList = expendablesService.getAllSelectedDateEvents(getLoggedInUserName(), selectedDate);
@@ -132,7 +127,7 @@ public class UserInfoController {
         return userName;
     }
 
-    @Secured({"ROLE_USER", "ROLE_ADMIN", "ROLE_NURSE", "ROLE_PHYSICIAN", "ROLE_PATIENT"})
+    @Secured({ "ROLE_USER", "ROLE_ADMIN" })
     @RequestMapping(value = "/getProfilePhoto.htm", method = RequestMethod.GET)
     public ServletOutputStream profilePhotoByUserName(HttpServletRequest request, HttpServletResponse response) {
         UserInfoController.logger.info("getProfilePhoto getProfilePhoto method called");
@@ -165,7 +160,7 @@ public class UserInfoController {
         return out;
     }
 
-    @Secured({"ROLE_USER", "ROLE_ADMIN", "ROLE_NURSE", "ROLE_PHYSICIAN", "ROLE_PATIENT"})
+    @Secured({ "ROLE_USER", "ROLE_ADMIN" })
     @RequestMapping(value = "/getProfilePhotoByUserName.htm", method = RequestMethod.GET)
     public ServletOutputStream profilePhotoByUserNameRequest(HttpServletRequest request, HttpServletResponse response) {
 
@@ -216,10 +211,8 @@ public class UserInfoController {
         return "uploadPhoto";
     }
 
-    @Secured({"ROLE_ADMIN", "ROLE_NURSE", "ROLE_PHYSICIAN", "ROLE_PATIENT"})
     @RequestMapping(value = "saveProfilePhoto.htm", method = RequestMethod.POST)
-    public @ResponseBody
-    String saveProfilePhoto(HttpServletRequest request, @RequestBody PrincipalDTO profileDetails) throws IOException {
+    public @ResponseBody String saveProfilePhoto(HttpServletRequest request, @RequestBody PrincipalDTO profileDetails) throws IOException {
         List<Acknowledge> list = new ArrayList<Acknowledge>();
         String userName = getLoggedInUserName();
         profileDetails.setUserName(userName);
@@ -249,11 +242,17 @@ public class UserInfoController {
     }
 
     @RequestMapping(value = "/saveOrUpdateContent.htm", method = RequestMethod.POST)
-    public @ResponseBody
-    String saveOrUpdateContent(@RequestBody ContentDTO contentDetails) {
+    public @ResponseBody String saveOrUpdateContent(@RequestBody ContentDTO contentDetails) {
         List<Acknowledge> list = new ArrayList<Acknowledge>();
         UserInfoController.logger.info("--------------------inside saveOrUpdateContent" + contentDetails.getContentName());
+        if (contentDetails.getSlotId().contains(",")) {
+            UserInfoController.logger.info("--------------------inside ''''''");
 
+            contentDetails.setSlotIds(new ArrayList<String>(Arrays.asList(contentDetails.getSlotId().split(","))));
+        } else {
+            contentDetails.getSlotIds().add(contentDetails.getSlotId());
+        }
+        UserInfoController.logger.info("--------------------inside saveOrUpdateContent" + contentDetails.getSlotIds().size());
         if (contentDetails.getContentId() != null && contentDetails.getContentId() > 0) {
             list = expendablesService.updateContentDetails(contentDetails);
         } else {
@@ -271,8 +270,7 @@ public class UserInfoController {
     }
 
     @RequestMapping(value = "/saveOrUpdateSlot.htm", method = RequestMethod.POST)
-    public @ResponseBody
-    String addSlot(@RequestBody Slot slotDetails) {
+    public @ResponseBody String addSlot(@RequestBody Slot slotDetails) {
         List<Acknowledge> list;
         UserInfoController.logger.info("--------------------inside saveOrUpdateEvent" + slotDetails.getSlotDuration());
 
@@ -303,7 +301,6 @@ public class UserInfoController {
         return "membershipRegistration";
     }
 
-
     @RequestMapping(value = "/membershipRegistrationSubmission.htm", method = RequestMethod.POST)
     @ResponseBody
     public String membershipRegistrationSubmission(@RequestBody Object object) {
@@ -313,8 +310,7 @@ public class UserInfoController {
     }
 
     @RequestMapping(value = "/getAllSlotDetails.htm", method = RequestMethod.GET)
-    public @ResponseBody
-    Map<String, Object> getAllSlotDetails() {
+    public @ResponseBody Map<String, Object> getAllSlotDetails() {
         List<DropDownDTO> slotList = new ArrayList<DropDownDTO>();
         Map<String, Object> map = new HashMap<String, Object>();
         slotList = expendablesService.getAllSlotsDropdown();
@@ -324,8 +320,7 @@ public class UserInfoController {
     }
 
     @RequestMapping(value = "/populateAllContentDetails.htm", method = RequestMethod.POST)
-    public @ResponseBody
-    Map<String, ? extends Object> populateAllContentDetails(@RequestParam int page, int rows, String sidx, String sord, String contentName) {
+    public @ResponseBody Map<String, ? extends Object> populateAllContentDetails(@RequestParam int page, int rows, String sidx, String sord, String contentName) {
         UserInfoController.logger.info("populateAllContentDetails : ");
         Map<String, Object> modelMap = new HashMap<String, Object>();
         List<ContentDTO> list = expendablesService.populateAllContentDetails(page, rows, sidx, sord, contentName);

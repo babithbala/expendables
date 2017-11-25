@@ -13,7 +13,7 @@ public class ContentDTO implements Serializable {
     private String contentName;
     private String slotId;
 
-    private List<String> slotIds;    
+    private List<String> slotIds;
     private String position;
     private String slotName;
     private String duration;

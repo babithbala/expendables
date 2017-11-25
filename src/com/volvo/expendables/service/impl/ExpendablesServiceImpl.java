@@ -236,13 +236,13 @@ public class ExpendablesServiceImpl implements ExpendablesService {
 
             namedParameterJdbcTemplate.update(SQL.CREATE_CONTENT, namedParameters, key);
             content.setContentId(key.getKey().longValue());
-
-            jdbcTemplate.update(SQL.INSERT_SLOT_CONTENT_MAPPING, content.getSlotId(), content.getContentId());
-
+            for (int i = 0; i < content.getSlotIds().size(); i++) {
+                jdbcTemplate.update(SQL.INSERT_SLOT_CONTENT_MAPPING, content.getSlotIds().get(i), content.getContentId());
+            }
             acknowledge.setMessage("Content has been created. <br/>");
             acknowledge.setId(content.getContentId());
 
-            // list.add(acknowledge);
+            list.add(acknowledge);
         } catch (DataAccessException e) {
             String cause = e.getCause().toString();
             if (cause != null) {
@@ -366,10 +366,10 @@ public class ExpendablesServiceImpl implements ExpendablesService {
 
         };
         List<DropDownDTO> list = jdbcTemplate.query("select * from slot s ", mapper);
-        DropDownDTO select = new DropDownDTO();
-        select.setDescription("Select");
-        select.setCode("");
-        list.add(0, select);
+        // DropDownDTO select = new DropDownDTO();
+        // select.setDescription("Select");
+        // select.setCode("");
+        // list.add(0, select);
         return list;
     }
 
@@ -397,7 +397,7 @@ public class ExpendablesServiceImpl implements ExpendablesService {
                 // (checkNotNull(contentName)? " c.content_name LIKE '%"+contentName+"%' and ": " ") +
                 " c.content_id =cs.content_id  " +
 
-                "  group by c.content_name   ORDER BY " + sidx + " " + sord + " limit " + rows + " OFFSET " + start + "", mapper);
+                "  ORDER BY " + sidx + " " + sord + " limit " + rows + " OFFSET " + start + "", mapper);
         ExpendablesServiceImpl.LOG.info("LOGGGGGGGGGGGGGGGGGGGGGGGGGGGGG LIST SIZE " + list.size());
 
         return list;
