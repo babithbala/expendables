@@ -344,10 +344,10 @@
                               </header>
                               <div class="panel-body">
                               <div id="addEventErrorMessage" style="color: red"></div>
-                                  <form class="form-horizontal tasi-form" role="form" id="addContentForm" action="saveOrUpdateContent" method="POST">
+                                  <form class="form-horizontal tasi-form" role="form" id="addContentForm" >
                                   	 <div class="form-group">
                                           <label for="addEventInputEventName" class="col-lg-2 col-sm-2 control-label">
-										  Event&nbsp;Name<font color="red">&nbsp;*</font></label>
+										  Content&nbsp;Name<font color="red">&nbsp;*</font></label>
                                           <div class="col-lg-6">
                                           	<input name="contentName" type="text" class="form-control"
                                           		id="addEventInputEventName" placeholder="Content Name">
@@ -406,7 +406,7 @@
               	    });
               });
         	 
-        	 var eventID=0, addressID=0;
+        	 var contentID=0;
         		
         		$(".inputTextToDataPicker").datepicker( {
         				dateFormat: 'yymmdd',
@@ -423,101 +423,32 @@
         		 populatePrincipalDetails($("#addNewEventUserFullNameLabelId"),$("#addNewEventUserFirstNameLabelId"));
         		 
         	        		 
-        			var validator = $("#addEventForm").validate({
+        			var validator = $("#addContentForm").validate({
         				meta : "validate",
-        				rules:{  
-        							eventName : {
+        				rules:{
+        							contentName : {
         									required : true
-        								},
-        							eventDate : {
-        								required : true,
-        								dateBS:true
-        								},
-        							eventTime:{
-        								timeValBS:true
-        								},
-        								streetNo : {
-        	 								required :function() {
-        	 											return  $.trim($('#addEventInputStreetName').val()) != "" ||
-        	 													$.trim($('#addEventInputCityName').val()) != "" ||
-        	 													$.trim($('#addEventInputCountryCode').val()) != "" ||
-        	 													$.trim($('#addEventInputStateName').val())!="" ;
-        	 			            				  }
-        	 								},
-        	 							streetName : {
-        	 								required :function() {
-        	 											return  $.trim($('#addEventInputStreetNo').val()) != "" || 
-        	 													$.trim($('#addEventInputCityName').val()) != "" ||
-        	 													$.trim($('#addEventInputCountryCode').val()) != "" ||
-        	 													$.trim($('#addEventInputStateName').val())!="" ;
-        	 			            				  }
-        	 								},
-        	 							city : {
-        	 								required :function() {
-        	 											return  $.trim($('#addEventInputStreetNo').val()) != "" || 
-        	 													$.trim($('#addEventInputStreetName').val()) != "" ||
-        	 													$.trim($('#addEventInputCountryCode').val()) != "" ||
-        	 													$.trim($('#addEventInputStateName').val())!="" ;
-        	 			            				  }
-        	 								},
-        	 							state : {
-        	 								required :function() {
-        	 											return  $.trim($('#addEventInputStreetNo').val()) != "" || 
-        	 													$.trim($('#addEventInputStreetName').val()) != "" ||
-        	 													$.trim($('#addEventInputCountryCode').val()) != "" ||
-        	 													$.trim($('#addEventInputCityName').val())!="" ;
-        	 			            				  }
-        	 								},
-        	 								country : {
-        	 	 								required :function() {
-        												return  $.trim($('#addEventInputStreetNo').val()) != "" || 
-        														$.trim($('#addEventInputStreetName').val()) != "" ||
-        														$.trim($('#addEventInputStateName').val()) != "" ||
-        														$.trim($('#addEventInputCityName').val())!="" ;
-        				            				  }
-        									}
+        								}
         						},
         						
         				messages : {
-        								eventName : {
-        									required : 'Please enter Event Name.'
-        								},
-        								eventDate : {
-        									required : 'Please enter Event Date.',
-        									dateBS: "Please enter a valid Event Date."
-        								},
-        								eventTime:{
-        									timeValBS:"Please enter valid Event Time"
-        									},
-        									streetNo : {
-        		 								required :"Please enter Street No."
-        		 								},
-        		 							streetName : {
-        		 								required :"Please enter Street Name."
-        		 								},
-        		 							city : {
-        		 								required :"Please enter City."
-        		 								},
-        		 							state : {
-        		 								required :"Please enter State."
-        		 								},
-        		 							country : {
-        		 								required :"Please enter Country."
-        										}
+                            contentName : {
+        									required : 'Please enter Content Name.'
+        								}
         							},
         				submitHandler : function() {
         					$("#addEventErrorMessage").html("");
-        					var eventDetails = $('#addEventForm').serializeObject();
-        					eventDetails.eventDate = formatDate(eventDetails.eventDate);
-        					$.postJSON("saveOrUpdateEvent.htm", eventDetails, function(data) {
+        					var contentDetails = $('#addContentForm').serializeObject();
+
+        					$.postJSON("saveOrUpdateContent.htm", contentDetails, function(data) {
         						$(".inputError").removeClass("inputError");
         						var i = 0;
         						var success=true;
         						var messages = "";
         						for (i = 0; i < data.length; i++) {
         							messages += data[i].message;
-        							eventID=data[i].id;
-        							addressID = data[i].idNext;
+                                    contentID=data[i].id;
+
         						}
         						$("#addEventInputEventId").val(eventID);
         						$("#addEventInputAddressId").val(addressID);

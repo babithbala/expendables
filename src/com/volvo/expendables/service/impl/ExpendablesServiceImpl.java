@@ -4,6 +4,7 @@ import com.volvo.expendables.dto.Acknowledge;
 import com.volvo.expendables.dto.ContentDTO;
 import com.volvo.expendables.dto.EventDTO;
 import com.volvo.expendables.dto.PrincipalDTO;
+import com.volvo.expendables.service.ExpendablesService;
 import com.volvo.expendables.service.impl.mapper.PrincipalRowMapper;
 import com.volvo.expendables.util.ExpendablesUtil;
 import com.volvo.expendables.util.SQL;
@@ -28,7 +29,7 @@ import java.util.List;
 
 
 @Component
-public class ExpendablesServiceImpl implements com.volvo.expendables.service.impl.ExpendablesService {
+public class ExpendablesServiceImpl implements ExpendablesService {
 
     private static final Logger LOG = Logger.getLogger(ExpendablesServiceImpl.class.getName());
 
@@ -179,7 +180,7 @@ public class ExpendablesServiceImpl implements com.volvo.expendables.service.imp
     /* (non-Javadoc)
      * @see
      */
-    @Override
+
     public PrincipalDTO getProfilePhoto(String userName) {
         PrincipalDTO photoDTO = new PrincipalDTO();
         ExpendablesServiceImpl.LOG.info("getProfilePhoto service layer call -------------------" + userName);
@@ -204,7 +205,7 @@ public class ExpendablesServiceImpl implements com.volvo.expendables.service.imp
         return photoDTO;
     }
 
-    @Override
+
     public List<Acknowledge> uploadProfilePhoto(PrincipalDTO user) {
         List<Acknowledge> list = new ArrayList<Acknowledge>();
         Acknowledge acknowledge = new Acknowledge();
@@ -237,6 +238,7 @@ public class ExpendablesServiceImpl implements com.volvo.expendables.service.imp
             content.setContentId(key.getKey().longValue());
 
             acknowledge.setMessage("Content has been created. <br/>");
+
             acknowledge.setId(content.getContentId());
 
             //list.add(acknowledge);
@@ -258,13 +260,11 @@ public class ExpendablesServiceImpl implements com.volvo.expendables.service.imp
         try {
 
             SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(content);
-            GeneratedKeyHolder key = new GeneratedKeyHolder();
-
-            jdbcTemplate.update(SQL.DELETE_CONTENT_BY_ID, namedParameters, key);
+            jdbcTemplate.update(SQL.UPDATE_CONTENT_BY_ID, namedParameters);
             //content.setContent_id(key.getKey().longValue());
 
-            acknowledge.setMessage("Content has been created. <br/>");
-            acknowledge.setName(content.getContentName());
+            acknowledge.setMessage("Content has been updated. <br/>");
+
 
             list.add(acknowledge);
         } catch (DataAccessException e) {

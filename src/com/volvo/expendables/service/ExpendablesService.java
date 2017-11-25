@@ -1,4 +1,4 @@
-package com.volvo.expendables.service.impl;
+package com.volvo.expendables.service;
 
 import java.util.List;
 

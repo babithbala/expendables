@@ -32,7 +32,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.volvo.expendables.dto.Acknowledge;
 import com.volvo.expendables.dto.EventDTO;
 import com.volvo.expendables.dto.PrincipalDTO;
-import com.volvo.expendables.service.impl.ExpendablesService;
+import com.volvo.expendables.service.ExpendablesService;
 
 
 
@@ -247,7 +247,7 @@ public class UserInfoController {
         return "manageContent";
     }
 
-    @RequestMapping(value = "/saveOrUpdateContent", method = RequestMethod.POST)
+    @RequestMapping(value = "/saveOrUpdateContent.htm", method = RequestMethod.POST)
     public @ResponseBody String saveOrUpdateContent(@RequestBody ContentDTO contentDetails){
         List<Acknowledge>  list = new ArrayList<Acknowledge>();
         UserInfoController.LOG.info("--------------------inside saveOrUpdateContent"+ contentDetails.getContentName());
