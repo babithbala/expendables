@@ -11,8 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.volvo.expendables.dto.ContentDTO;
-import com.volvo.expendables.dto.Slot;
+import com.volvo.expendables.dto.*;
 import net.sf.json.JSONArray;
 
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -26,9 +25,6 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.volvo.expendables.dto.Acknowledge;
-import com.volvo.expendables.dto.EventDTO;
-import com.volvo.expendables.dto.PrincipalDTO;
 import com.volvo.expendables.service.ExpendablesService;
 
 
@@ -288,8 +284,15 @@ public class UserInfoController {
         this.expendablesService.getSlot(slot_name);
         return "redirect:/slot";
     }
-    
-    
+
+    @RequestMapping(value = "/supplier.htm", method = RequestMethod.GET)
+    public String listSuppliers(Model model) {
+        model.addAttribute("supplier", new Supplier());
+        model.addAttribute("listSlots", expendablesService.getAllSuppliers());
+        return "supplier";
+    }
+
+
     @RequestMapping(value = "/membershipRegistration.htm", method = RequestMethod.GET)
     public String membershipRegistration(Model model) {
            model.addAttribute("message",
@@ -297,6 +300,5 @@ public class UserInfoController {
 
            return "membershipRegistration";
        }
-    
-    getAllSlotDetails.htm
+
 }

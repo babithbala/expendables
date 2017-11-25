@@ -22,4 +22,8 @@ public interface ExpendablesService {
     public void deleteSlot(String slotName);
     public List<Slot> getAllSlots();
     public Slot getSlot(String slotName);
+    List<Supplier> getAllSuppliers();
+    void saveSupplier(Supplier supplier);
+    void deleteSupplier(Supplier supplier);
+
 }
