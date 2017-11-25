@@ -2,11 +2,7 @@ package com.volvo.expendables.service;
 
 import java.util.List;
 
-import com.volvo.expendables.dto.Acknowledge;
-import com.volvo.expendables.dto.ContentDTO;
-import com.volvo.expendables.dto.EventDTO;
-import com.volvo.expendables.dto.PrincipalDTO;
-
+import com.volvo.expendables.dto.*;
 
 
 public interface ExpendablesService {
@@ -21,5 +17,13 @@ public interface ExpendablesService {
 
     public abstract List<Acknowledge> updateContentDetails(ContentDTO content);
     public abstract List<Acknowledge> saveContentDetails(ContentDTO content);
+
+    public List<Acknowledge> createNewSlot(Slot slot);
+    public void deleteSlot(String slotName);
+    public List<Slot> getAllSlots();
+    public Slot getSlot(String slotName);
+    List<Supplier> getAllSuppliers();
+    void saveSupplier(Supplier supplier);
+    void deleteSupplier(Supplier supplier);
 
 }

@@ -17,6 +17,10 @@
        <intercept-url pattern="/simple.htm" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" />
        <intercept-url pattern="/basicForm.htm" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" />
        <intercept-url pattern="/general.htm" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" />
+       <intercept-url pattern="/calendarBooking.htm" access="hasAnyRole('ROLE_ADMIN','ROLE_SUPPLIER')" />
+       <intercept-url pattern="/calendarBooking1.htm" access="hasAnyRole('ROLE_ADMIN','ROLE_SUPPLIER')" />
+       <intercept-url pattern="/manageContent.htm" access="hasAnyRole('ROLE_ADMIN')" />
+       
        <access-denied-handler error-page="/403.htm" />
  
        <form-login login-page='/login.htm' login-processing-url="/j_spring_security_check"

@@ -344,7 +344,7 @@
                               </header>
                               <div class="panel-body">
                               <div id="addEventErrorMessage" style="color: red"></div>
-                                  <form class="form-horizontal tasi-form" role="form" id="addContentForm" >
+                                  <form class="form-horizontal tasi-form" role="form" id="addContentForm">
                                   	 <div class="form-group">
                                           <label for="addEventInputEventName" class="col-lg-2 col-sm-2 control-label">
 										  Content&nbsp;Name<font color="red">&nbsp;*</font></label>
@@ -406,7 +406,7 @@
               	    });
               });
         	 
-        	 var contentID=0;
+        	 var eventID=0, addressID=0;
         		
         		$(".inputTextToDataPicker").datepicker( {
         				dateFormat: 'yymmdd',
@@ -432,9 +432,31 @@
         						},
         						
         				messages : {
-                            contentName : {
-        									required : 'Please enter Content Name.'
-        								}
+        								eventName : {
+        									required : 'Please enter Event Name.'
+        								},
+        								eventDate : {
+        									required : 'Please enter Event Date.',
+        									dateBS: "Please enter a valid Event Date."
+        								},
+        								eventTime:{
+        									timeValBS:"Please enter valid Event Time"
+        									},
+        									streetNo : {
+        		 								required :"Please enter Street No."
+        		 								},
+        		 							streetName : {
+        		 								required :"Please enter Street Name."
+        		 								},
+        		 							city : {
+        		 								required :"Please enter City."
+        		 								},
+        		 							state : {
+        		 								required :"Please enter State."
+        		 								},
+        		 							country : {
+        		 								required :"Please enter Country."
+        										}
         							},
         				submitHandler : function() {
         					$("#addEventErrorMessage").html("");
@@ -447,8 +469,8 @@
         						var messages = "";
         						for (i = 0; i < data.length; i++) {
         							messages += data[i].message;
-                                    contentID=data[i].id;
-
+        							eventID=data[i].id;
+        							addressID = data[i].idNext;
         						}
         						$("#addEventInputEventId").val(eventID);
         						$("#addEventInputAddressId").val(addressID);

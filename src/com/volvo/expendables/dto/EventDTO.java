@@ -148,8 +148,6 @@ public class EventDTO {
 	public void setAddressId(Long addressId) {
 		this.addressId = addressId;
 	}
-	
-	
-	
+
 	
 }

@@ -1,11 +1,9 @@
 package com.volvo.expendables.service.impl;
 
-import com.volvo.expendables.dto.Acknowledge;
-import com.volvo.expendables.dto.ContentDTO;
-import com.volvo.expendables.dto.EventDTO;
-import com.volvo.expendables.dto.PrincipalDTO;
+import com.volvo.expendables.dto.*;
 import com.volvo.expendables.service.ExpendablesService;
 import com.volvo.expendables.service.impl.mapper.PrincipalRowMapper;
+import com.volvo.expendables.service.impl.mapper.SupplierMapper;
 import com.volvo.expendables.util.ExpendablesUtil;
 import com.volvo.expendables.util.SQL;
 import org.apache.log4j.Logger;
@@ -26,6 +24,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.volvo.expendables.service.*;
 
 
 @Component
@@ -238,7 +238,6 @@ public class ExpendablesServiceImpl implements ExpendablesService {
             content.setContentId(key.getKey().longValue());
 
             acknowledge.setMessage("Content has been created. <br/>");
-
             acknowledge.setId(content.getContentId());
 
             //list.add(acknowledge);
@@ -260,11 +259,13 @@ public class ExpendablesServiceImpl implements ExpendablesService {
         try {
 
             SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(content);
-            jdbcTemplate.update(SQL.UPDATE_CONTENT_BY_ID, namedParameters);
+            GeneratedKeyHolder key = new GeneratedKeyHolder();
+
+            jdbcTemplate.update(SQL.DELETE_CONTENT_BY_ID, namedParameters, key);
             //content.setContent_id(key.getKey().longValue());
 
-            acknowledge.setMessage("Content has been updated. <br/>");
-
+            acknowledge.setMessage("Content has been created. <br/>");
+            acknowledge.setName(content.getContentName());
 
             list.add(acknowledge);
         } catch (DataAccessException e) {
@@ -276,6 +277,101 @@ public class ExpendablesServiceImpl implements ExpendablesService {
             ExpendablesServiceImpl.LOG.info(e.getMessage());
         }
         return list;
+    }
+
+    @Override
+    @Transactional
+    public List<Acknowledge> createNewSlot(Slot slot) {
+        List<Acknowledge> list =new ArrayList<Acknowledge>();
+        Acknowledge ack = new Acknowledge();
+        try {
+
+            ExpendablesServiceImpl.LOG.info("Add slot " + SQL.ADD_SLOT);
+            jdbcTemplate.update(SQL.ADD_SLOT, slot.getSlotName(), slot.getSlotDuration());
+            ExpendablesServiceImpl.LOG.info("Added slot: " + slot);
+            ack.setMessage("Slot Added ");
+        } catch (DataAccessException e) {
+            ExpendablesServiceImpl.LOG.info("Exception cause " + e.getMessage());
+            ack.setMessage(e.getMessage());
+        }
+        list.add(ack);
+        return list;
+    }
+
+    @Override
+    @Transactional
+    public void deleteSlot(String slotName) {
+        try {
+            ExpendablesServiceImpl.LOG.info("Delete slot " + SQL.DELETE_SLOT);
+            jdbcTemplate.update(SQL.DELETE_SLOT, slotName);
+            ExpendablesServiceImpl.LOG.info("Deleted slot: " + slotName);
+        } catch (DataAccessException e) {
+            ExpendablesServiceImpl.LOG.info("Exception cause " + e.getMessage());
+        }
+
+    }
+
+    @Override
+    @Transactional
+    public List<Slot> getAllSlots() {
+        List<Slot> list = new ArrayList<Slot>();
+        RowMapper<Slot> mapper = new RowMapper<Slot>() {
+
+            public Slot mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return new Slot(rs.getString("slot_name"), rs.getInt("duration"));
+            }
+        };
+        try {
+            ExpendablesServiceImpl.LOG.info("SQL all get slots " + SQL.GET_ALL_SLOTS);
+            list = jdbcTemplate.query(SQL.GET_ALL_SLOTS, mapper);
+            ExpendablesServiceImpl.LOG.info("SQL Events size " + list.size());
+        } catch (DataAccessException e) {
+            ExpendablesServiceImpl.LOG.info("Exception cause " + e.getMessage());
+        }
+        return list;
+    }
+
+    @Override
+    @Transactional
+    public Slot getSlot(String slotName) {
+        Slot slot = null;
+        RowMapper<Slot> mapper = new RowMapper<Slot>() {
+
+            public Slot mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return new Slot(rs.getString("slot_name"), rs.getInt("duration"));
+            }
+        };
+        try {
+            ExpendablesServiceImpl.LOG.info("SQL Get slot " + SQL.GET_SLOT_BY_NAME);
+            slot = jdbcTemplate.queryForObject(SQL.GET_SLOT_BY_NAME, new Object[]{slotName}, mapper);
+            ExpendablesServiceImpl.LOG.info("SQL Slot name " + slot.getSlotName());
+        } catch (DataAccessException e) {
+            ExpendablesServiceImpl.LOG.info("Exception cause " + e.getMessage());
+        }
+        return slot;
+    }
+
+    @Override
+    @Transactional
+    public List<Supplier> getAllSuppliers() {
+        LOG.debug("getting all suppliers");
+        return jdbcTemplate.query(SQL.GET_ALL_SUPPLIERS, new SupplierMapper());
+    }
+
+    @Override
+    @Transactional
+    public void saveSupplier(Supplier supplier) {
+        LOG.debug("Saving the supplier: " + supplier);
+        jdbcTemplate.update(SQL.INSERT_SUPPLIER, new SupplierMapper());
+        LOG.debug("Saved the supplier: " + supplier);
+    }
+
+    @Override
+    @Transactional
+    public void deleteSupplier(Supplier supplier) {
+        LOG.debug("Deleting the supplier: " + supplier);
+        jdbcTemplate.update(SQL.DELETE_SUPPLIER, new SupplierMapper());
+        LOG.debug("Deleted the supplier: " + supplier);
     }
 
 }

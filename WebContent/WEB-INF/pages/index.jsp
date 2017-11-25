@@ -30,7 +30,8 @@
     <!-- Theme style -->
     <link href="/Expendables/css/style.css" rel="stylesheet" type="text/css" />
 
-
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+        <script src="/Expendables/js/common.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -171,21 +172,32 @@
 		                                <i class="fa fa-glass"></i> <span>Simple tables</span>
 		                            </a>
 		                        </li>
-		                        
-								<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+		                        <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
 			                        <li>
 			                            <a href="${pageContext.request.contextPath}/demo.htm">
 			                                <i class="fa fa-glass"></i> <span>Additional</span>
 			                            </a>
 			                        </li>
                                  </sec:authorize>
-								<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+                                <sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
 			                        <li>
 			                            <a href="${pageContext.request.contextPath}/uploadProfilePhoto.htm">
 			                                <i class="fa fa-glass"></i> <span>Upload Photo</span>
 			                            </a>
 			                        </li>
                                  </sec:authorize>
+                                 
+                                 <li>
+			                            <a href="${pageContext.request.contextPath}/calendarBooking.htm">
+			                                <i class="fa fa-glass"></i> <span>Booking</span>
+			                            </a>
+			                        </li>
+			                        
+			                        <li>
+			                            <a href="${pageContext.request.contextPath}/calendarBooking1.htm">
+			                                <i class="fa fa-glass"></i> <span>Booking1</span>
+			                            </a>
+			                        </li>
                             </ul>
                         </section>
                         <!-- /.sidebar -->
