@@ -381,7 +381,7 @@
 											color="red">&nbsp;*</font></label>
 										<div class="col-lg-6">
 											<select class="form-control m-b-10" id="addEventInputSlot"
-												name="slotId">
+												name="slotIds[]">
 												<option value="" selected="selected">Select One</option>
 
 											</select>
@@ -510,6 +510,7 @@
 					$("#addEventInputSlot").get(0).options.length = 0;
 					$("#addEventInputSlot").get(0).options[0] = new Option(
 							"Select ", "");
+
 					/*$
 							.each(
 									data.mapperList,
@@ -523,9 +524,9 @@
 
 					$("#addEventInputSlot").igCombo({
 						width : 300,
-						dataSource : colors,
-						textKey : "Name",
-						valueKey : "Name",
+						dataSource : data.mapperList,
+						textKey : "description",
+						valueKey : "code",
 						multiSelection : {
 							enabled : true,
 							showCheckboxes : true

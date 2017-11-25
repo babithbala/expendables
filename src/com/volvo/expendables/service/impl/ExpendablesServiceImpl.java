@@ -366,6 +366,10 @@ public class ExpendablesServiceImpl implements ExpendablesService {
 
         };
         List<DropDownDTO> list = jdbcTemplate.query("select * from slot s ", mapper);
+        DropDownDTO select = new DropDownDTO();
+        select.setDescription("Select");
+        select.setCode("");
+        list.add(0, select);
         return list;
     }
 
