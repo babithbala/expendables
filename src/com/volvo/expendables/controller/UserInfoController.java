@@ -13,13 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-<<<<<<< HEAD
 import com.volvo.expendables.dto.ContentDTO;
 import com.volvo.expendables.dto.Slot;
 
-=======
 import com.volvo.expendables.dto.*;
->>>>>>> ff23940750377965990fba9d14b597b895c7bf84
 import net.sf.json.JSONArray;
 
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -324,12 +321,7 @@ public class UserInfoController {
         return "membershipRegistration";
     }
 
-<<<<<<< HEAD
-           return "membershipRegistration";
-       }
-    
-    
-    
+
     @RequestMapping(value="/getAllSlotDetails.htm",method=RequestMethod.GET)
     public @ResponseBody Map<String, Object> getAllSlotDetails(){
         List<DropDownDTO> slotList = new ArrayList<DropDownDTO>();
@@ -355,6 +347,4 @@ public class UserInfoController {
         modelMap.put("records",count);
         return modelMap;
     }
-=======
->>>>>>> ff23940750377965990fba9d14b597b895c7bf84
 }
