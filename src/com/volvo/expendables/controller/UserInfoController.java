@@ -36,7 +36,6 @@ import com.volvo.expendables.dto.EventDTO;
 import com.volvo.expendables.dto.PrincipalDTO;
 import com.volvo.expendables.service.ExpendablesService;
 
-
 @Controller
 @Scope("session")
 public class UserInfoController {
@@ -45,7 +44,6 @@ public class UserInfoController {
 
     private ExpendablesService expendablesService;
     private ObjectMapper jacksonObjectMapper;
-
 
     public ObjectMapper getJacksonObjectMapper() {
         return jacksonObjectMapper;
@@ -65,16 +63,14 @@ public class UserInfoController {
         this.expendablesService = expendablesService;
     }
 
-
     @RequestMapping(value = "/uploadProfilePhoto.htm", method = RequestMethod.GET)
     public String uploadProfilePhoto() {
         return "uploadPhoto";
     }
 
-    @Secured({"ROLE_USER", "ROLE_ADMIN"})
+    @Secured({ "ROLE_USER", "ROLE_ADMIN" })
     @RequestMapping(value = "getPrincipalDetails.htm", method = RequestMethod.GET)
-    public @ResponseBody
-    PrincipalDTO getPrincipalDetails() {
+    public @ResponseBody PrincipalDTO getPrincipalDetails() {
         String userName = getLoggedInUserName();
         UserInfoController.LOG.info("--------------------inside getPrincipalDetails :" + userName);
         LOG.info("==============================================");
@@ -89,15 +85,13 @@ public class UserInfoController {
 
     @RequestMapping(value = "/addEvent.htm", method = RequestMethod.GET)
     public String addEvent(Model model) {
-        model.addAttribute("message",
-                "Hello " + getLoggedInUserName() + "\n This is protected page!.");
+        model.addAttribute("message", "Hello " + getLoggedInUserName() + "\n This is protected page!.");
 
         return "addEventDetails";
     }
 
     @RequestMapping(value = "/saveOrUpdateEvent.htm", method = RequestMethod.POST)
-    public @ResponseBody
-    String saveOrUpdateEvent(@RequestBody EventDTO eventDetails) {
+    public @ResponseBody String saveOrUpdateEvent(@RequestBody EventDTO eventDetails) {
         List<Acknowledge> list = new ArrayList<Acknowledge>();
         UserInfoController.LOG.info("--------------------inside saveOrUpdateEvent" + eventDetails.getEventDate());
         eventDetails.setUserName(getLoggedInUserName());
@@ -111,8 +105,7 @@ public class UserInfoController {
     }
 
     @RequestMapping(value = "/getUserEvents.htm", method = RequestMethod.GET)
-    public @ResponseBody
-    String getUserEvents() {
+    public @ResponseBody String getUserEvents() {
         UserInfoController.LOG.info("--------------------inside getUserEvents :");
         List<EventDTO> eventList = expendablesService.getAllUserEvents(getLoggedInUserName());
         UserInfoController.LOG.info("--------------------inside getUserEvents size :" + eventList.size());
@@ -120,10 +113,8 @@ public class UserInfoController {
         return data.toString();
     }
 
-
     @RequestMapping(value = "/populateAllSelectedDateEvents.htm", method = RequestMethod.GET)
-    public @ResponseBody
-    String populateAllSelectedDateEvents(@RequestParam String selectedDate) {
+    public @ResponseBody String populateAllSelectedDateEvents(@RequestParam String selectedDate) {
         List<EventDTO> eventList = new ArrayList<EventDTO>();
         UserInfoController.LOG.info("--------------------inside populateAllSelectedDateEvents :" + selectedDate);
         eventList = expendablesService.getAllSelectedDateEvents(getLoggedInUserName(), selectedDate);
@@ -133,13 +124,11 @@ public class UserInfoController {
     }
 
     private String getLoggedInUserName() {
-        String userName = (String) RequestContextHolder.currentRequestAttributes()
-                .getAttribute("userName", RequestAttributes.SCOPE_SESSION);
+        String userName = (String) RequestContextHolder.currentRequestAttributes().getAttribute("userName", RequestAttributes.SCOPE_SESSION);
         return userName;
     }
 
-
-    @Secured({"ROLE_USER", "ROLE_ADMIN", "ROLE_NURSE", "ROLE_PHYSICIAN", "ROLE_PATIENT"})
+    @Secured({ "ROLE_USER", "ROLE_ADMIN", "ROLE_NURSE", "ROLE_PHYSICIAN", "ROLE_PATIENT" })
     @RequestMapping(value = "/getProfilePhoto.htm", method = RequestMethod.GET)
     public ServletOutputStream profilePhotoByUserName(HttpServletRequest request, HttpServletResponse response) {
         UserInfoController.LOG.info("getProfilePhoto getProfilePhoto method called");
@@ -172,7 +161,7 @@ public class UserInfoController {
         return out;
     }
 
-    @Secured({"ROLE_USER", "ROLE_ADMIN", "ROLE_NURSE", "ROLE_PHYSICIAN", "ROLE_PATIENT"})
+    @Secured({ "ROLE_USER", "ROLE_ADMIN", "ROLE_NURSE", "ROLE_PHYSICIAN", "ROLE_PATIENT" })
     @RequestMapping(value = "/getProfilePhotoByUserName.htm", method = RequestMethod.GET)
     public ServletOutputStream profilePhotoByUserNameRequest(HttpServletRequest request, HttpServletResponse response) {
 
@@ -210,7 +199,6 @@ public class UserInfoController {
         return out;
     }
 
-
     @RequestMapping(value = "/profilePictureUpload.htm", method = RequestMethod.POST)
     public String create(FileUploadBean file, HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (!ServletFileUpload.isMultipartContent(request)) {
@@ -220,15 +208,13 @@ public class UserInfoController {
         HttpSession session = request.getSession(false);
         UserInfoController.LOG.info("Upload : " + file.getFile().getOriginalFilename() + " ");
         session.setAttribute("profilePhoto", file);
-        //return "success:true";
+        // return "success:true";
         return "uploadPhoto";
     }
 
-    @Secured({"ROLE_ADMIN", "ROLE_NURSE", "ROLE_PHYSICIAN", "ROLE_PATIENT"})
+    @Secured({ "ROLE_ADMIN", "ROLE_NURSE", "ROLE_PHYSICIAN", "ROLE_PATIENT" })
     @RequestMapping(value = "saveProfilePhoto.htm", method = RequestMethod.POST)
-    public @ResponseBody
-    String saveProfilePhoto(HttpServletRequest request,
-                            @RequestBody PrincipalDTO profileDetails) throws IOException {
+    public @ResponseBody String saveProfilePhoto(HttpServletRequest request, @RequestBody PrincipalDTO profileDetails) throws IOException {
         List<Acknowledge> list = new ArrayList<Acknowledge>();
         String userName = getLoggedInUserName();
         profileDetails.setUserName(userName);
@@ -245,22 +231,20 @@ public class UserInfoController {
         return data.toString();
     }
 
-
     @RequestMapping(value = "/manageContent.htm", method = RequestMethod.GET)
     public String createContent(Model model) {
-        //expendablesService.createContent(content);
+        // expendablesService.createContent(content);
         return "manageContent";
     }
 
     @RequestMapping(value = "/manageSchedule.htm", method = RequestMethod.GET)
     public String manageSchedule(Model model) {
-        //expendablesService.createContent(content);
+        // expendablesService.createContent(content);
         return "schedule";
     }
 
     @RequestMapping(value = "/saveOrUpdateContent.htm", method = RequestMethod.POST)
-    public @ResponseBody
-    String saveOrUpdateContent(@RequestBody ContentDTO contentDetails) {
+    public @ResponseBody String saveOrUpdateContent(@RequestBody ContentDTO contentDetails) {
         List<Acknowledge> list = new ArrayList<Acknowledge>();
         UserInfoController.LOG.info("--------------------inside saveOrUpdateContent" + contentDetails.getContentName());
 
@@ -281,8 +265,7 @@ public class UserInfoController {
     }
 
     @RequestMapping(value = "/saveOrUpdateSlot.htm", method = RequestMethod.POST)
-    public @ResponseBody
-    String addSlot(@RequestBody Slot slotDetails) {
+    public @ResponseBody String addSlot(@RequestBody Slot slotDetails) {
         List<Acknowledge> list;
         UserInfoController.LOG.info("--------------------inside saveOrUpdateEvent" + slotDetails.getSlotDuration());
 
@@ -307,36 +290,32 @@ public class UserInfoController {
 
     @RequestMapping(value = "/membershipRegistration.htm", method = RequestMethod.GET)
     public String membershipRegistration(Model model) {
-        model.addAttribute("message",
-                "Hello " + getLoggedInUserName() + "\n This is protected page!.");
+        model.addAttribute("message", "Hello " + getLoggedInUserName() + "\n This is protected page!.");
 
         return "membershipRegistration";
     }
 
-
-    @RequestMapping(value="/getAllSlotDetails.htm",method=RequestMethod.GET)
-    public @ResponseBody Map<String, Object> getAllSlotDetails(){
+    @RequestMapping(value = "/getAllSlotDetails.htm", method = RequestMethod.GET)
+    public @ResponseBody Map<String, Object> getAllSlotDetails() {
         List<DropDownDTO> slotList = new ArrayList<DropDownDTO>();
-        Map<String,Object> map = new HashMap<String,Object>();
-        slotList  = expendablesService.getAllSlotsDropdown();
+        Map<String, Object> map = new HashMap<String, Object>();
+        slotList = expendablesService.getAllSlotsDropdown();
         JSONArray data = JSONArray.fromObject(slotList);
         map.put("mapperList", data);
         return map;
     }
-    
-    
-    @RequestMapping(value= "/populateAllContentDetails.htm",method=RequestMethod.POST)
-    public @ResponseBody Map<String, ? extends Object> populateAllContentDetails(@RequestParam int page,
-            int rows,String sidx,String sord,String contentName)   {
+
+    @RequestMapping(value = "/populateAllContentDetails.htm", method = RequestMethod.POST)
+    public @ResponseBody Map<String, ? extends Object> populateAllContentDetails(@RequestParam int page, int rows, String sidx, String sord, String contentName) {
         UserInfoController.LOG.info("populateAllContentDetails : ");
-        Map<String,Object> modelMap = new HashMap<String,Object>();
-        List<ContentDTO> list = expendablesService.populateAllContentDetails(page,rows,sidx,sord,contentName);
-                
-        long count=list.size();
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<ContentDTO> list = expendablesService.populateAllContentDetails(page, rows, sidx, sord, contentName);
+
+        long count = list.size();
         modelMap.put("rows", list);
         modelMap.put("page", page);
-        modelMap.put("total", count%rows>0 ?  Math.round((count)/rows)+1:Math.round((count)/rows));
-        modelMap.put("records",count);
+        modelMap.put("total", count % rows > 0 ? Math.round((count) / rows) + 1 : Math.round((count) / rows));
+        modelMap.put("records", count);
         return modelMap;
     }
 }

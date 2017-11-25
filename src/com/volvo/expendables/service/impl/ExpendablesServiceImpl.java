@@ -375,12 +375,16 @@ public class ExpendablesServiceImpl implements ExpendablesService {
         RowMapper<ContentDTO> mapper = new RowMapper<ContentDTO>() {
 
             public ContentDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-                ContentDTO user = new ContentDTO();
-                user.setPosition(rs.getString("No"));
+                ContentDTO content = new ContentDTO();
+                content.setPosition(rs.getString("No"));
+                content.setContentId(rs.getLong("content_id"));
+                content.setContentName(rs.getString("content_name"));
+                content.setSlotName(rs.getString("slot_name"));
+                content.setDuration(rs.getString("duration"));
 
                 // user.setProfilePhoto(rs.getBinaryStream("profilePhoto"));
 
-                return user;
+                return content;
             }
 
         };
