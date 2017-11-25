@@ -275,7 +275,7 @@ public class UserInfoController {
     @RequestMapping(value = "/slot/remove/{slot_name}", method = RequestMethod.GET)
     public String deleteSlot(@PathVariable("slot_name") String slot_name) {
         this.expendablesService.deleteSlot(slot_name);
-        return "redirect:/slot";
+        return "redirect:/getAllSlots.htm";
     }
 
     @RequestMapping(value = "/slot/get/{slot_name}", method = RequestMethod.GET)
