@@ -360,7 +360,6 @@
                                                id="membershipInputUserName" placeholder="User's Unique Name">
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     <label for="membershipInputRole" class="col-lg-2 col-sm-2 control-label">
                                         Role<font color="red">&nbsp;*</font></label>
@@ -369,7 +368,6 @@
                                             <option value="" selected="selected">Select Role</option>
                                             <option value="ROLE_ADMIN">Admin</option>
                                             <option value="ROLE_SUPPLIER">Supplier</option>
-                                            <!-- 	                                                  <option value="ROLE_CARRIER">Carrier</option> -->
                                             <option value="ROLE_USER">User</option>
                                         </select>
                                     </div>
@@ -394,8 +392,7 @@
                                                placeholder="Supplier Name">
                                     </div>
                                 </div>
-
-                                <div class="form-group">
+                                <div class="form-group" id="membershipInputFirstNameDiv">
                                     <label for="membershipInputFirstName" class="col-lg-2 col-sm-2 control-label">
                                         First&nbsp;Name<font color="red">&nbsp;*</font></label>
                                     <div class="col-lg-6">
@@ -403,7 +400,23 @@
                                                id="membershipInputFirstName" placeholder="First Name">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="membershipInputParmaDiv">
+                                    <label for="membershipInputParma" class="col-lg-2 col-sm-2 control-label">
+                                        Parma<font color="red">&nbsp;*</font></label>
+                                    <div class="col-lg-6">
+                                        <input name="parma" type="text" class="form-control"
+                                               id="membershipInputParma" placeholder="Parma">
+                                    </div>
+                                </div>
+                                <div class="form-group" id="membershipInputContactPersonDiv">
+                                    <label for="membershipInputContactPerson" class="col-lg-2 col-sm-2 control-label">
+                                        Contact Person<font color="red">&nbsp;*</font></label>
+                                    <div class="col-lg-6">
+                                        <input name="parma" type="text" class="form-control"
+                                               id="membershipInputContactPerson" placeholder="Contact Person">
+                                    </div>
+                                </div>
+                                <div class="form-group" id="membershipInputLastNameDiv">
                                     <label for="membershipInputLastName" class="col-lg-2 col-sm-2 control-label">
                                         Last&nbsp;Name<font color="red">&nbsp;*</font></label>
                                     <div class="col-lg-6">
@@ -411,51 +424,30 @@
                                                id="membershipInputLastName" placeholder="Last Name">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="membershipInputSex" class="col-lg-2 col-sm-2 control-label">
-                                        Sex<font color="red">&nbsp;*</font></label>
-                                    <div class="col-lg-8">
-                                        <div class="row">
-                                            <div class="col-lg-3">
-                                                <select class="form-control" id="membershipInputSex" name="sex">
-                                                    <option value="" selected="selected">Select One</option>
-                                                    <option value="M">Male</option>
-                                                    <option value="F">Female</option>
-                                                    <option value="U">Unknown</option>
-                                                </select>
-                                            </div>
-                                            <label for="membershipInputDoB" class="col-lg-2 col-sm-2 control-label">
-                                                DOB<font color="red">&nbsp;*</font></label>
-                                            <div class="col-lg-4">
-                                                <input type="text" id="membershipInputDoB" name="dob"
-                                                       class="inputTextToDataPicker form-control " maxlength="8">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label col-lg-2"
-                                           for="membershipInputStreetNo">Address</label>
+                                           for="membershipInputAddress">Address<font color="red">&nbsp;*</font></label>
                                     <div class="col-lg-6">
-                                        <input type="text" name="address" class="form-control"
-                                               id="membershipInputAddress" placeholder="Address">
+                                        <textarea row="5" name="address" class="form-control"
+                                                  id="membershipInputAddress" placeholder="Address"></textarea>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1" class="col-lg-2 col-sm-2 control-label">Email&nbsp;address</label>
+                                    <label for="membershipInputEmail1" class="col-lg-2 col-sm-2 control-label">Email&nbsp;address<font
+                                            color="red">&nbsp;*</font></label>
                                     <div class="col-lg-6">
                                         <input type="email" name="email" class="form-control"
                                                id="membershipInputEmail1" placeholder="Enter email">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="membershipInputMobileNo" class="col-lg-2 col-sm-2 control-label">Phone&nbsp;No</label>
+                                    <label for="membershipInputMobileNo" class="col-lg-2 col-sm-2 control-label">Phone&nbsp;No<font
+                                            color="red">&nbsp;*</font></label>
                                     <div class="col-lg-6">
                                         <input name="mobileNo" type="text" class="form-control"
-                                               id="membershipInputMobileNo" placeholder="(+CountryCode)PhoneNo">
+                                               id="membershipInputMobileNo" placeholder="(+CountryCode) PhoneNo">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -467,21 +459,13 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="membershipInputConfirmPassword" class="col-lg-2 col-sm-2 control-label">Confirm&nbsp;Password</label>
+                                    <label for="membershipInputConfirmPassword" class="col-lg-2 col-sm-2 control-label">Confirm&nbsp;Password<font
+                                            color="red">&nbsp;*</font></label>
                                     <div class="col-lg-6">
                                         <input type="password" name="confirmPassword" class="form-control"
                                                id="membershipInputConfirmPassword" placeholder="Confirm Password">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="exampleInputFile" class="col-lg-2 col-sm-2 control-label">Upload&nbsp;Photo</label>
-                                    <div class="col-lg-6">
-                                        <input type="file" id="membershipInputProfileFile" name="profilePhoto">
-                                        <p class="help-block">Example block-level help text here.</p>
-                                    </div>
-                                </div>
-
-
                                 <div class="form-group">
                                     <div class="col-lg-offset-2 col-lg-8">
                                         <button type="submit" class="btn btn-info" id="memebershipRegSubmitButton">
@@ -534,18 +518,11 @@
             });
         });
 
-        $(".inputTextToDataPicker").datepicker({
-            dateFormat: 'yymmdd',
-            numberOfMonths: 1,
-            showButtonPanel: true,
-            changeMonth: true,
-            changeYear: true
-        });
-        $(".inputTextToDataPicker").datepicker("option", "yearRange", getYearRange());
-
-        populatePrincipalDetails($("#addNewUserFullNameLabelId"), $("#addNewUserFirstNameLabelId"));
+        <!-- INITIAL STATE TO HIDE SHOW SOME ELEMENTS DEPENDING ON THE ROLE SELECTION -->
         $("#membershipInputSupplierNameDiv").hide();
         $("#membershipInputSupplierContactpersonNameDiv").hide();
+        $("#membershipInputParmaDiv").hide();
+        $("#membershipInputContactPersonDiv").hide();
 
         $("#membershipInputRole").change(function () {
             var roleSelected = this.value;
@@ -553,9 +530,15 @@
             if ("ROLE_SUPPLIER" == roleSelected) {
                 $("#membershipInputSupplierNameDiv").show();
                 $("#membershipInputSupplierContactpersonNameDiv").show();
+                $("#membershipInputParmaDiv").show();
+                $("#membershipInputContactPersonDiv").show();
+                $("#membershipInputFirstNameDiv").hide();
+                $("#membershipInputLastNameDiv").hide();
             } else {
                 $("#membershipInputSupplierNameDiv").hide();
                 $("#membershipInputSupplierContactpersonNameDiv").hide();
+                $("#membershipInputParmaDiv").hide();
+                $("#membershipInputContactPersonDiv").hide();
             }
         });
         var validator = $("#membershipRegForm").validate({
@@ -589,55 +572,16 @@
                     maxlength: 15,
                     equalTo: "#membershipInputPassword"
                 },
-                sex: {
-                    required: true
-                },
-                dob: {
-                    dateBS: true,
-                    required: true
-                },
                 email: {
                     email: true
                 },
-                streetNo: {
-                    required: function () {
-                        return $.trim($('#membershipInputStreetName').val()) != "" ||
-                            $.trim($('#membershipInputCityName').val()) != "" ||
-                            $.trim($('#membershipInputCountryCode').val()) != "" ||
-                            $.trim($('#membershipInputStateName').val()) != "";
-                    }
+                mobileNo: {
+                    required: true
                 },
-                streetName: {
-                    required: function () {
-                        return $.trim($('#membershipInputStreetNo').val()) != "" ||
-                            $.trim($('#membershipInputCityName').val()) != "" ||
-                            $.trim($('#membershipInputCountryCode').val()) != "" ||
-                            $.trim($('#membershipInputStateName').val()) != "";
-                    }
-                },
-                city: {
-                    required: function () {
-                        return $.trim($('#membershipInputStreetNo').val()) != "" ||
-                            $.trim($('#membershipInputStreetName').val()) != "" ||
-                            $.trim($('#membershipInputCountryCode').val()) != "" ||
-                            $.trim($('#membershipInputStateName').val()) != "";
-                    }
-                },
-                state: {
-                    required: function () {
-                        return $.trim($('#membershipInputStreetNo').val()) != "" ||
-                            $.trim($('#membershipInputStreetName').val()) != "" ||
-                            $.trim($('#membershipInputCountryCode').val()) != "" ||
-                            $.trim($('#membershipInputCityName').val()) != "";
-                    }
-                },
-                country: {
-                    required: function () {
-                        return $.trim($('#membershipInputStreetNo').val()) != "" ||
-                            $.trim($('#membershipInputStreetName').val()) != "" ||
-                            $.trim($('#membershipInputStateName').val()) != "" ||
-                            $.trim($('#membershipInputCityName').val()) != "";
-                    }
+                address: {
+                    required: true,
+                    minlength: 4,
+                    maxlength: 15
                 },
                 role: {
                     required: true
@@ -672,30 +616,16 @@
                     maxlength: "Must be maximum 15 characters.",
                     equalTo: "Password and Confirm Password do not Match."
                 },
-                sex: {
-                    required: "Please select Sex."
-                },
-                dob: {
-                    dateBS: "Please enter a valid DOB.",
-                    required: "Please enter DOB."
-                },
                 email: {
                     email: "Enter a valid Email."
                 },
-                streetNo: {
-                    required: "Please enter Street No."
+                address: {
+                    required: "Please enter your address.",
+                    minlength: "Address must be minimum 4 characters.",
+                    maxlength: "Address must be maximum 15 characters."
                 },
-                streetName: {
-                    required: "Please enter Street Name."
-                },
-                city: {
-                    required: "Please enter City."
-                },
-                state: {
-                    required: "Please enter State."
-                },
-                country: {
-                    required: "Please enter Country."
+                mobileNo: {
+                    required: "Please enter your phone number."
                 },
                 role: {
                     required: "Please select User Role."
@@ -729,7 +659,7 @@
             $("#addMembershipRegErrorMessage").html(messages);
         }
 
-        populatePrincipalDetails();
+//        populatePrincipalDetails();
     });
 
 </script>
