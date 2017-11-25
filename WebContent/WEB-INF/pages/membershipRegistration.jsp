@@ -498,7 +498,7 @@
 
 <script type="text/javascript">
     $(function () {
-        $("#memebershipRegCancelButton").click(function () {
+        $("#membershipRegCancelButton").click(function () {
             $.ajax({
                 url: 'userHome.htm',
                 success: function (data) {
@@ -512,21 +512,22 @@
         $("#membershipInputParmaDiv").hide();
         $("#membershipInputContactPersonDiv").hide();
 
-//        $("#membershipInputRole").change(function () {
-//            var roleSelected = this.value;
-//
-//            if ("ROLE_SUPPLIER" == roleSelected) {
-//                $("#membershipInputSupplierContactpersonNameDiv").show();
-//                $("#membershipInputParmaDiv").show();
-//                $("#membershipInputContactPersonDiv").show();
-//                $("#membershipInputFirstNameDiv").hide();
-//                $("#membershipInputLastNameDiv").hide();
-//            } else {
-//                $("#membershipInputSupplierContactpersonNameDiv").hide();
-//                $("#membershipInputParmaDiv").hide();
-//                $("#membershipInputContactPersonDiv").hide();
-//            }
-//        });
+        $("#membershipInputRole").change(function () {
+            var roleSelected = this.value;
+
+            if ("ROLE_SUPPLIER" == roleSelected) {
+                $("#membershipInputSupplierContactpersonNameDiv").show();
+                $("#membershipInputParmaDiv").show();
+                $("#membershipInputContactPersonDiv").show();
+                $("#membershipInputFirstNameDiv").hide();
+                $("#membershipInputLastNameDiv").hide();
+            } else {
+                $("#membershipInputSupplierContactpersonNameDiv").hide();
+                $("#membershipInputParmaDiv").hide();
+                $("#membershipInputContactPersonDiv").hide();
+            }
+        });
+        
         var validator = $("#membershipRegForm").validate({
             meta: "validate",
             rules: {
@@ -633,7 +634,6 @@
             }
         });
 
-
         function displayUserAddMsg(data) {
             var i = 0;
             var messages = "";
@@ -642,8 +642,6 @@
             }
             $("#addMembershipRegErrorMessage").html(messages);
         }
-
-//        populatePrincipalDetails();
     });
 
 </script>
