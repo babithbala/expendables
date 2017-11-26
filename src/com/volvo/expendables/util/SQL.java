@@ -88,10 +88,12 @@ public class SQL {
     public static final String UPDATE_CONTENT_BY_ID ="update content set content_name=:contentName where content_id=:contentId";
     
     public static final String GET_ALL_SLOTS = "select * from slot";
-    public static final String GET_SLOT_BY_NAME = "select slot_name, duration from slot where slot_name=?";
+    public static final String GET_SLOT_BY_NAME = "select * from slot where slot_name=?";
     public static final String DELETE_SLOT = "DELETE FROM slot WHERE slot_name=?";
     public static final String ADD_SLOT = "INSERT INTO slot (slot_name, duration) VALUES (?, ?)";
     public final static String GET_ALL_CONTENTS="select * from content";
+    public final static String INSERT_BOOKING = "insert into booking (booking_date, booked_from, booked_to, slot, supplier_name) VALUES (?, ?, ?, ?, ?)";
+    public final static String GET_BOOKING_BY_SLOT_AND_DATE = "select * from booking where booking_date=? and slot=?";
     private SQL() {
 
     }
