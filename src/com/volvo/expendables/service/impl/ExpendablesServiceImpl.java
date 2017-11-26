@@ -4,6 +4,7 @@ import com.volvo.expendables.dto.*;
 import com.volvo.expendables.service.ExpendablesService;
 import com.volvo.expendables.dto.*;
 import com.volvo.expendables.service.impl.mapper.PrincipalRowMapper;
+import com.volvo.expendables.service.impl.mapper.SlotMapper;
 import com.volvo.expendables.service.impl.mapper.SupplierMapper;
 import com.volvo.expendables.util.ExpendablesUtil;
 import com.volvo.expendables.util.SQL;
@@ -54,7 +55,7 @@ public class ExpendablesServiceImpl implements ExpendablesService {
     public PrincipalDTO getPrincipalDetails(String userName) {
         PrincipalDTO principalInfo = new PrincipalDTO();
         try {
-            principalInfo = (PrincipalDTO) jdbcTemplate.queryForObject(SQL.GET_PRINCIPAL_DETAILS, new Object[] { userName }, new PrincipalRowMapper());
+            principalInfo = (PrincipalDTO) jdbcTemplate.queryForObject(SQL.GET_PRINCIPAL_DETAILS, new Object[]{userName}, new PrincipalRowMapper());
         } catch (EmptyResultDataAccessException e) {
             LOG.info(e.getMessage());
         }
@@ -142,7 +143,7 @@ public class ExpendablesServiceImpl implements ExpendablesService {
         };
         try {
             ExpendablesServiceImpl.LOG.info("SQL Events Search " + SQL.GET_EVENT_LIST);
-            list = jdbcTemplate.query(SQL.GET_EVENT_LIST, new Object[] { userName }, mapper);
+            list = jdbcTemplate.query(SQL.GET_EVENT_LIST, new Object[]{userName}, mapper);
             ExpendablesServiceImpl.LOG.info("SQL Events size " + list.size());
         } catch (DataAccessException e) {
             ExpendablesServiceImpl.LOG.info("Exception cause " + e.getMessage());
@@ -316,15 +317,9 @@ public class ExpendablesServiceImpl implements ExpendablesService {
     @Transactional
     public List<Slot> getAllSlots() {
         List<Slot> list = new ArrayList<Slot>();
-        RowMapper<Slot> mapper = new RowMapper<Slot>() {
-
-            public Slot mapRow(ResultSet rs, int rowNum) throws SQLException {
-                return new Slot(rs.getString("slot_name"), rs.getInt("duration"));
-            }
-        };
         try {
             ExpendablesServiceImpl.LOG.info("SQL all get slots " + SQL.GET_ALL_SLOTS);
-            list = jdbcTemplate.query(SQL.GET_ALL_SLOTS, mapper);
+            list = jdbcTemplate.query(SQL.GET_ALL_SLOTS, new SlotMapper());
             ExpendablesServiceImpl.LOG.info("SQL Events size " + list.size());
         } catch (DataAccessException e) {
             ExpendablesServiceImpl.LOG.info("Exception cause " + e.getMessage());
@@ -336,15 +331,10 @@ public class ExpendablesServiceImpl implements ExpendablesService {
     @Transactional
     public Slot getSlot(String slotName) {
         Slot slot = null;
-        RowMapper<Slot> mapper = new RowMapper<Slot>() {
 
-            public Slot mapRow(ResultSet rs, int rowNum) throws SQLException {
-                return new Slot(rs.getString("slot_name"), rs.getInt("duration"));
-            }
-        };
         try {
             ExpendablesServiceImpl.LOG.info("SQL Get slot " + SQL.GET_SLOT_BY_NAME);
-            slot = jdbcTemplate.queryForObject(SQL.GET_SLOT_BY_NAME, new Object[]{slotName}, mapper);
+            slot = jdbcTemplate.queryForObject(SQL.GET_SLOT_BY_NAME, new Object[]{slotName}, new SlotMapper());
             ExpendablesServiceImpl.LOG.info("SQL Slot name " + slot.getSlotName());
         } catch (DataAccessException e) {
             ExpendablesServiceImpl.LOG.info("Exception cause " + e.getMessage());
@@ -449,7 +439,7 @@ public class ExpendablesServiceImpl implements ExpendablesService {
     public List<Acknowledge> saveMemberDetails(UserDTO user) {
         List<Acknowledge> list = new ArrayList<Acknowledge>();
         Acknowledge acknowledge = new Acknowledge();
-        if(!userAvailable(user.getUserName())) {
+        if (!userAvailable(user.getUserName())) {
             try {
                 SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(user);
                 GeneratedKeyHolder key = new GeneratedKeyHolder();
@@ -459,7 +449,7 @@ public class ExpendablesServiceImpl implements ExpendablesService {
                 namedParameterJdbcTemplate.update(SQL.SAVE_USER_ROLE, namedParameters);
                 acknowledge.setMessage("User details saved. <br/>");
 
-                if("ROLE_SUPPLIER".equals(user.getRole())){
+                if ("ROLE_SUPPLIER".equals(user.getRole())) {
                     namedParameterJdbcTemplate.update(SQL.INSERT_SUPPLIER, namedParameters);
                     acknowledge.setMessage("Supplier details saved. <br/>");
 
@@ -473,7 +463,7 @@ public class ExpendablesServiceImpl implements ExpendablesService {
                 }
                 ExpendablesServiceImpl.LOG.info(e.getMessage());
             }
-        }else {
+        } else {
             acknowledge.setMessage("Username already used. Provide different username");
             list.add(acknowledge);
         }
@@ -488,9 +478,9 @@ public class ExpendablesServiceImpl implements ExpendablesService {
         } catch (EmptyResultDataAccessException e) {
             LOG.info(e.getMessage());
         }
-        if(userName !=null && userName !=""){
+        if (userName != null && userName != "") {
             userExists = true;
-        }else {
+        } else {
             userExists = false;
         }
         return userExists;
