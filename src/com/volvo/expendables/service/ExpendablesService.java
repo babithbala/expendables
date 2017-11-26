@@ -1,5 +1,6 @@
 package com.volvo.expendables.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.volvo.expendables.dto.*;
@@ -29,10 +30,10 @@ public interface ExpendablesService {
     //void saveSupplier(Supplier supplier);
     void deleteSupplier(Supplier supplier);
    // List<Content> getAllContents();
-    
-    
+
     public abstract List<Slot> populateAllSlotDetails(int page, int rows,String sidx, String sord,String slotname);
     
+    public List<Booking> getBookingByBookingDateAndSlotName(Date bookedDate, String slot);
 
     public abstract  List<Acknowledge> saveMemberDetails(UserDTO user);
 

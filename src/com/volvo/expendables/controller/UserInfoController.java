@@ -237,6 +237,7 @@ public class UserInfoController {
 
     @RequestMapping(value = "/manageSchedule.htm", method = RequestMethod.GET)
     public String manageSchedule(Model model) {
+        model.addAttribute("slots", expendablesService.getAllSlots());
         return "schedule";
     }
 
@@ -348,5 +349,16 @@ public class UserInfoController {
         modelMap.put("total", count % rows > 0 ? Math.round((count) / rows) + 1 : Math.round((count) / rows));
         modelMap.put("records", count);
         return modelMap;
+    }
+    
+    @RequestMapping(value = "/getSlotData.htm", method = RequestMethod.POST)
+    public @ResponseBody String getSlotData(@RequestBody String slotName) {
+        logger.debug("getting slot data:  " + slotName);
+        slotName = slotName.replace("\"", "");
+        Slot slot = expendablesService.getSlot(slotName);
+
+        Map<Slot, List<Booking>> map = new HashMap<Slot, List<Booking>>();
+        JSONArray data = JSONArray.fromObject(map);
+        return data.toString();
     }
 }

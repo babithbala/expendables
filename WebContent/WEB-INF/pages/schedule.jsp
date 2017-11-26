@@ -368,13 +368,13 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label col-lg-2" for="contents">Contents</label>
                                     <div class="col-lg-10">
-                                        <c:forEach var="content" items="${contents}">
+                                        <c:forEach var="slot" items="${slots}">
                                             <label class="checkbox-inline">
                                                 <input type="checkbox"
-                                                       value="${content.content_name}"
+                                                       value="${slot.slotName}"
                                                        onclick="contentCheckBox(event)"
                                                        name="contentCheckbox"><c:out
-                                                    value=" ${content.content_name}"/>
+                                                    value=" ${slot.slotName}"/>
                                             </label>
                                         </c:forEach>
                                     </div>
@@ -461,55 +461,43 @@
     var appointments = new Array();
     var appointment1 = {
         id: "id1",
-        description: "George brings projector for presentations.",
         location: "",
         subject: "Quarterly Project Review Meeting",
-        calendar: "Room 1",
         start: new Date(2015, 10, 23, 9, 0, 0),
         end: new Date(2015, 10, 23, 16, 0, 0)
     }
     var appointment2 = {
         id: "id2",
-        description: "",
         location: "",
         subject: "IT Group Mtg.",
-        calendar: "Room 2",
         start: new Date(2015, 10, 24, 10, 0, 0),
         end: new Date(2015, 10, 24, 15, 0, 0)
     }
     var appointment3 = {
         id: "id3",
-        description: "",
         location: "",
         subject: "Course Social Media",
-        calendar: "Room 3",
         start: new Date(2015, 10, 27, 11, 0, 0),
         end: new Date(2015, 10, 27, 13, 0, 0)
     }
     var appointment4 = {
         id: "id4",
-        description: "",
         location: "",
         subject: "New Projects Planning",
-        calendar: "Room 2",
         start: new Date(2015, 10, 23, 16, 0, 0),
         end: new Date(2015, 10, 23, 18, 0, 0)
     }
     var appointment5 = {
         id: "id5",
-        description: "",
         location: "",
         subject: "Interview with James",
-        calendar: "Room 1",
         start: new Date(2015, 10, 25, 15, 0, 0),
         end: new Date(2015, 10, 25, 17, 0, 0)
     }
     var appointment6 = {
         id: "id6",
-        description: "",
         location: "",
         subject: "Interview with Nancy",
-        calendar: "Room 4",
         start: new Date(2015, 10, 26, 14, 0, 0),
         end: new Date(2015, 10, 26, 16, 0, 0)
     }
@@ -541,8 +529,9 @@
         width: 700,
         height: 500,
         source: adapter,
+        toolbarHeight: 0,
         view: 'dayView',
-        showLegend: false,
+        showLegend: true,
         ready: function () {
             $("#scheduler").jqxScheduler('ensureAppointmentVisible', 'id1');
         },
@@ -564,23 +553,42 @@
             },
         views:
             [
-                'dayView',
-                'weekView',
-                'monthView'
+                'dayView'
             ]
     });
 
 
     var selectedCheckboxesArray = [];
+    var selectedSlotData = [];
 
     function proceedToBook(ev) {
         var checkedValue = document.getElementById("proceedToBookingCheckbox").checked;
         if (checkedValue) {
             $("#bookingSlotsDiv").show();
+            getSlotsDataSets();
             printPackagesDatesDivData();
         } else {
             $("#bookingSlotsDiv").hide();
         }
+    }
+
+    function getSlotsDataSets(){
+        for(var i = 0; i < selectedCheckboxesArray.length; i++){
+            var value = selectedCheckboxesArray[i].value;
+            $.postJSON("getSlotData.htm",
+                value, function(data) {
+                    var success = true;
+                   // var messages = "";
+                    for (var c = 0; c < data.length; c++) {
+                        //messages += data[i].message;
+                        //  contentID = data[i].id;
+                        console.log(data[c]);
+                        selectedSlotData.push(data[c]);
+                    }
+
+                });
+        }
+
     }
 
     function contentCheckBox(ev) {

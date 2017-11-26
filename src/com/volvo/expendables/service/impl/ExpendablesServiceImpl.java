@@ -3,6 +3,7 @@ package com.volvo.expendables.service.impl;
 import com.volvo.expendables.dto.*;
 import com.volvo.expendables.service.ExpendablesService;
 import com.volvo.expendables.dto.*;
+import com.volvo.expendables.service.impl.mapper.BookingRowMapper;
 import com.volvo.expendables.service.impl.mapper.PrincipalRowMapper;
 import com.volvo.expendables.service.impl.mapper.SlotMapper;
 import com.volvo.expendables.service.impl.mapper.SupplierMapper;
@@ -27,6 +28,7 @@ import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -420,6 +422,13 @@ public class ExpendablesServiceImpl implements ExpendablesService {
         LOG.debug("Deleting the supplier: " + supplier);
         jdbcTemplate.update(SQL.DELETE_SUPPLIER, new SupplierMapper());
         LOG.debug("Deleted the supplier: " + supplier);
+    }
+
+    @Override
+    @Transactional
+    public List<Booking> getBookingByBookingDateAndSlotName(Date bookedDate, String slot) {
+        LOG.debug("getting booking date " + bookedDate + " slot: " + slot);
+        return jdbcTemplate.query(SQL.GET_BOOKING_BY_SLOT_AND_DATE, new Object[]{bookedDate, slot}, new BookingRowMapper());
     }
 
 //    @Override
