@@ -27,24 +27,11 @@ public class UserResultSetExtractor implements ResultSetExtractor<UserDTO> {
 		//user.setConfirmPassword(rs.getString("password"));
 		user.setFirstName(rs.getString("firstName"));
 		user.setLastName(rs.getString("lastName"));
-		user.setSex(rs.getString("sex"));
-		user.setDob(rs.getDate("dob"));
 		//user.setProfilePhoto(rs.getBinaryStream("profilePhoto"));
 		user.setRole(rs.getString("role"));
-		user.setHeight(rs.getString("height"));
-		user.setWeight(rs.getString("weight"));
 		
-		//address part
-		user.setAddressId(rs.getLong("addressId"));
-		user.setStreetNo(rs.getString("streetNo"));
-		user.setStreetName(rs.getString("streetName"));
-		user.setCityName(rs.getString("cityName"));
-		user.setState(rs.getString("state"));
-		user.setZipCode(rs.getString("zipCode"));
-		user.setCountry(rs.getString("country"));
-	
+		
 		//contact details
-		user.setContactId(rs.getLong("contactId"));
 		user.setEmail(rs.getString("emailId"));
 		user.setMobileNo(rs.getString("mobileNo"));
 		return user;

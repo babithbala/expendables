@@ -81,7 +81,8 @@ public class SQL {
     
     public static final String INSERT_SLOT_CONTENT_MAPPING = "insert into content_slot (slot_id ,content_id ) values (?,?)";
 	public static final String DELETE_SUPPLIER = "delete from supplier where sup_id = ?";
-    public static final String INSERT_SUPPLIER = "insert into supplier (supplier_name, parma, address, supplier_email, supplier_phone, contact_person) VALUES (?, ?, ?, ?, ?, ?)";
+    public static final String INSERT_SUPPLIER = "insert into supplier (supplier_name, parma, address, supplier_email, supplier_phone, contact_person) "
+            + "VALUES (:supplierName, :parma,:address, :email, :mobileNo, :contactPerson)";
 
     public static final String DELETE_CONTENT_BY_ID = "delete from content where content_id=:content_id ";
     public static final String UPDATE_CONTENT_BY_ID ="update content set content_name=:contentName where content_id=:contentId";
@@ -94,4 +95,8 @@ public class SQL {
     private SQL() {
 
     }
+    
+    public static final String ADD_NORMAL_MEMBER= "insert into users (username,password,firstName,lastName,address,email,mobileNo) "
+            + "values (:userName,:password,:firstName,:lastName,:address,:email,:mobileNo)";
+    
 }

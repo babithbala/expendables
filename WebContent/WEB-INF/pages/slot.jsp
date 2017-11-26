@@ -32,6 +32,9 @@
     <!-- jQuery 2.0.2 -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     <script src="/Expendables/js/common.js"></script>
 
 </head>
@@ -301,49 +304,67 @@
             <!-- /.search form -->
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
-                <li>
-                    <a href="home.htm">
-                        <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="general.htm">
-                        <i class="fa fa-gavel"></i> <span>General</span>
-                    </a>
-                </li>
-
-                <li class="active">
-                    <a href="basicForm.htm">
-                        <i class="fa fa-globe"></i> <span>Basic Elements</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="simple.htm">
-                        <i class="fa fa-glass"></i> <span>Simple tables</span>
-                    </a>
-                </li>
-                <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
-                    <li>
-                        <a href="getAllSlots.htm.htm">
-                            <i class="fa fa-glass"></i> <span>Slots managment</span>
-                        </a>
-                    </li>
-                </sec:authorize>
-                <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
-                    <li>
-                        <a href="${pageContext.request.contextPath}/demo.htm">
-                            <i class="fa fa-glass"></i> <span>Additional</span>
-                        </a>
-                    </li>
-                </sec:authorize>
-                <sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
-                    <li>
-                        <a href="${pageContext.request.contextPath}/uploadProfilePhoto.htm">
-                            <i class="fa fa-glass"></i> <span>Upload Photo</span>
-                        </a>
-                    </li>
-                </sec:authorize>
+                <li  >
+		                            <a href="home.htm">
+		                                <i class="fa fa-dashboard"></i> <span>Home</span>
+		                            </a>
+		                        </li>
+		                        <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+		                        <li>
+		                            <a href="${pageContext.request.contextPath}/membershipRegistration.htm">
+		                                <i class="fa fa-gavel"></i> <span>Register</span>
+		                            </a>
+		                        </li>
+								</sec:authorize>
+								<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+		                        <li>
+		                            <a href="${pageContext.request.contextPath}/manageContent.htm">
+		                                <i class="fa fa-globe"></i> <span>Contents</span>
+		                            </a>
+		                        </li>
+								</sec:authorize>
+								<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+		                        <li  class="active">
+		                            <a href="${pageContext.request.contextPath}/getAllSlots.htm">
+		                                <i class="fa fa-glass"></i> <span>Slots</span>
+		                            </a>
+		                        </li>   
+		                        </sec:authorize>
+		                        <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+			                        <li>
+			                            <a href="${pageContext.request.contextPath}/manageSchedule.htm">
+			                                <i class="fa fa-dashboard"></i> <span>Booking</span>
+			                            </a>
+			                        </li>
+                                 </sec:authorize>
+                                 
+                                 <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+			                        <li>
+			                            <a href="${pageContext.request.contextPath}/reschedule.htm">
+			                                <i class="fa fa-gavel"></i> <span>Reschedule</span>
+			                            </a>
+			                        </li>
+                                 </sec:authorize>
+                                 
+                                 <sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_SUPPLIER')">
+                                 <li>
+			                            <a href="${pageContext.request.contextPath}/slotsQueue.htm">
+			                                <i class="fa fa-globe"></i> <span>Slots Queue</span>
+			                            </a>
+			                        </li>
+			                        </sec:authorize>
+			                        <sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_SUPPLIER')">
+			                        <li>
+			                            <a href="${pageContext.request.contextPath}/queueStatus.htm">
+			                                <i class="fa fa-glass"></i> <span>Queue Status</span>
+			                            </a>
+			                        </li>
+			                        </sec:authorize>
+			                        <li>
+			                            <a href="${pageContext.request.contextPath}/uploadProfilePhoto.htm">
+			                                <i class="fa fa-dashboard"></i> <span>Upload Photo</span>
+			                            </a>
+			                        </li>
             </ul>
         </section>
         <!-- /.sidebar -->
@@ -378,16 +399,20 @@
                                     <label class="col-sm-2 control-label col-lg-2" for="addSlotInputSlotTime">
                                         Min Duration</label>
                                     <div class="col-lg-8">
+                                        <input type="text" name="slotDuration" id="addSlotInputSlotTime">
+                                    </div>
+
+                                    <%--<div class="col-lg-8">
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <input type="text" name="slotDuration" size="12"
-                                                       id="addEventInputEventTime" maxlength="8"
+                                                       id="addSlotInputSlotTime" maxlength="8"
                                                        class="form-control" value="00:00:00"
                                                        onFocus="if(this.value=='00:00:00')this.value='';">
                                             </div>
                                         </div>
 
-                                    </div>
+                                    </div>--%>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-lg-offset-2 col-lg-10">
@@ -447,7 +472,6 @@
 <script src="/Expendables/jQuery/ui/jquery.ui.widget.js"></script>
 <script src="/Expendables/jQuery/ui/jquery.ui.dialog.js"></script>
 <script src="/Expendables/jQuery/ui/jquery.ui.datepicker.js"></script>
-<%--<script src="/Expendables/jQuery/ui/jquery-ui-timepicker-addon.js"></script>--%>
 <script src="/Expendables/js/plugins/bs-datetimepicker/bootstrap-datetimepicker.js"></script>
 <script src="/Expendables/jQuery/jquery.populate.js"></script>
 
@@ -484,13 +508,21 @@
             });
         });
 
-        $('#addEventInputEventTime').datetimepicker({
+        $('#addSlotInputSlotTime').spinner({
+            spin: function( event, ui ) {
+                if ( ui.value < 0 ) {
+                    $( this ).spinner( "slotDuration", 0 );
+                    return false;
+                }
+            }
+        });
+        /*$('#addEventInputEventTime').datetimepicker({
             disabledTimeIntervals: [
                 [moment().hour(0).minutes(0), moment().hour(8).minutes(30)],
                 [moment().hour(20).minutes(30), moment().hour(24).minutes(0)]
             ]
 
-        });
+        });*/
 
 
         populatePrincipalDetails($("#addNewEventUserFullNameLabelId"), $("#addNewEventUserFirstNameLabelId"));
