@@ -292,48 +292,58 @@
             <!-- /.search form -->
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
-                <li class="active">
-                    <a href="home.htm">
-                        <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="general.htm">
-                        <i class="fa fa-gavel"></i> <span>General</span>
-                    </a>
-                </li>
+                <li><a href="home.htm"> <i class="fa fa-dashboard"></i> <span>Home</span>
+					</a></li>
+					<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+						<li><a
+							href="${pageContext.request.contextPath}/membershipRegistration.htm">
+								<i class="fa fa-gavel"></i> <span>Register</span>
+						</a></li>
+					</sec:authorize>
+					<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+						<li ><a
+							href="${pageContext.request.contextPath}/manageContent.htm">
+								<i class="fa fa-globe"></i> <span>Contents</span>
+						</a></li>
+					</sec:authorize>
+					<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+						<li><a
+							href="${pageContext.request.contextPath}/getAllSlots.htm"> <i
+								class="fa fa-glass"></i> <span>Slots</span>
+						</a></li>
+					</sec:authorize>
+					<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+						<li class="active"><a
+							href="${pageContext.request.contextPath}/manageSchedule.htm">
+								<i class="fa fa-dashboard"></i> <span>Booking</span>
+						</a></li>
+					</sec:authorize>
 
-                <li>
-                    <a href="basicForm.htm">
-                        <i class="fa fa-globe"></i> <span>Basic Elements</span>
-                    </a>
-                </li>
+					<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+						<li><a
+							href="${pageContext.request.contextPath}/reschedule.htm"> <i
+								class="fa fa-gavel"></i> <span>Reschedule</span>
+						</a></li>
+					</sec:authorize>
 
-                <li>
-                    <a href="simple.htm">
-                        <i class="fa fa-glass"></i> <span>Simple tables</span>
-                    </a>
-                </li>
-                <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
-                    <li>
-                        <a href="${pageContext.request.contextPath}/demo.htm">
-                            <i class="fa fa-glass"></i> <span>Additional</span>
-                        </a>
-                    </li>
-                </sec:authorize>
-                <sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
-                    <li>
-                        <a href="${pageContext.request.contextPath}/uploadProfilePhoto.htm">
-                            <i class="fa fa-glass"></i> <span>Upload Photo</span>
-                        </a>
-                    </li>
-                </sec:authorize>
-
-                <li>
-                    <a href="${pageContext.request.contextPath}/calendarBooking.htm">
-                        <i class="fa fa-glass"></i> <span>Booking</span>
-                    </a>
-                </li>
+					<sec:authorize
+						access="hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_SUPPLIER')">
+						<li><a
+							href="${pageContext.request.contextPath}/slotsQueue.htm"> <i
+								class="fa fa-globe"></i> <span>Slots Queue</span>
+						</a></li>
+					</sec:authorize>
+					<sec:authorize
+						access="hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_SUPPLIER')">
+						<li><a
+							href="${pageContext.request.contextPath}/queueStatus.htm"> <i
+								class="fa fa-glass"></i> <span>Queue Status</span>
+						</a></li>
+					</sec:authorize>
+					<li><a
+						href="${pageContext.request.contextPath}/uploadProfilePhoto.htm">
+							<i class="fa fa-dashboard"></i> <span>Upload Photo</span>
+					</a></li>
             </ul>
         </section>
         <!-- /.sidebar -->
@@ -661,7 +671,7 @@
 
     $(function () {
 
-        <!-- INITIALLY HIDE SOME AREAS -->
+        
         $("#packagesDiv").hide();
         $("#packagesDateDiv").hide();
         $("#proceedToBookingDiv").hide();
