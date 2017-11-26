@@ -4,14 +4,19 @@ public class Slot {
 
     private int slotId;
     private String slotName;
-    int slotDuration;
+    private int slotDuration;
+    private String open_from;
+    private String open_to;
 
     public Slot() {
     }
 
-    public Slot(String slot_name, int duration) {
-        this.slotName = slot_name;
-        this.slotDuration = duration;
+    public Slot(int slotId, String slotName, int slotDuration, String open_from, String open_to) {
+        this.slotId = slotId;
+        this.slotName = slotName;
+        this.slotDuration = slotDuration;
+        this.open_from = open_from;
+        this.open_to = open_to;
     }
 
     public int getSlotId() {
@@ -38,12 +43,30 @@ public class Slot {
         this.slotDuration = slotDuration;
     }
 
+    public String getOpen_from() {
+        return open_from;
+    }
+
+    public void setOpen_from(String open_from) {
+        this.open_from = open_from;
+    }
+
+    public String getOpen_to() {
+        return open_to;
+    }
+
+    public void setOpen_to(String open_to) {
+        this.open_to = open_to;
+    }
+
     @Override
     public String toString() {
         return "Slot{" +
                 "slotId=" + slotId +
                 ", slotName='" + slotName + '\'' +
                 ", slotDuration=" + slotDuration +
+                ", open_from='" + open_from + '\'' +
+                ", open_to='" + open_to + '\'' +
                 '}';
     }
 }
