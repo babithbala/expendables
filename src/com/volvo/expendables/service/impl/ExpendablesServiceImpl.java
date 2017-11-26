@@ -432,18 +432,18 @@ public class ExpendablesServiceImpl implements ExpendablesService {
         LOG.debug("Deleted the supplier: " + supplier);
     }
 
-    @Override
-    @Transactional
-    public List<Content> getAllContents() {
-        LOG.debug("getting all content objects");
-        RowMapper<Content> rowMapper = new RowMapper<Content>() {
-            @Override
-            public Content mapRow(ResultSet rs, int rowNum) throws SQLException {
-                return new Content(rs.getInt("content_id"), rs.getString("content_name"));
-            }
-        };
-        return jdbcTemplate.query(SQL.GET_ALL_CONTENTS, rowMapper);
-    }
+//    @Override
+//    @Transactional
+//    public List<Content> getAllContents() {
+//        LOG.debug("getting all content objects");
+//        RowMapper<Content> rowMapper = new RowMapper<Content>() {
+//            @Override
+//            public Content mapRow(ResultSet rs, int rowNum) throws SQLException {
+//                return new Content(rs.getInt("content_id"), rs.getString("content_name"));
+//            }
+//        };
+//        return jdbcTemplate.query(SQL.GET_ALL_CONTENTS, rowMapper);
+//    }
 
     @Override
     public List<Acknowledge> saveMemberDetails(UserDTO user) {
