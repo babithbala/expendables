@@ -86,11 +86,11 @@ public class SQL {
     public static final String DELETE_CONTENT_BY_ID = "delete from content where content_id=:content_id ";
     public static final String UPDATE_CONTENT_BY_ID ="update content set content_name=:contentName where content_id=:contentId";
     
-    public static final String GET_ALL_SLOTS = "select slot_name, duration from slot";
+    public static final String GET_ALL_SLOTS = "select * from slot";
     public static final String GET_SLOT_BY_NAME = "select slot_name, duration from slot where slot_name=?";
     public static final String DELETE_SLOT = "DELETE FROM slot WHERE slot_name=?";
     public static final String ADD_SLOT = "INSERT INTO slot (slot_name, duration) VALUES (?, ?)";
-
+    public final static String GET_ALL_CONTENTS="select * from content";
     private SQL() {
 
     }

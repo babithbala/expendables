@@ -237,7 +237,7 @@ public class UserInfoController {
 
     @RequestMapping(value = "/manageSchedule.htm", method = RequestMethod.GET)
     public String manageSchedule(Model model) {
-        // expendablesService.createContent(content);
+        model.addAttribute("contents", expendablesService.getAllContents());
         return "schedule";
     }
 

@@ -54,7 +54,7 @@ public class ExpendablesServiceImpl implements ExpendablesService {
     public PrincipalDTO getPrincipalDetails(String userName) {
         PrincipalDTO principalInfo = new PrincipalDTO();
         try {
-            principalInfo = (PrincipalDTO) jdbcTemplate.queryForObject(SQL.GET_PRINCIPAL_DETAILS, new Object[] { userName }, new PrincipalRowMapper());
+            principalInfo = (PrincipalDTO) jdbcTemplate.queryForObject(SQL.GET_PRINCIPAL_DETAILS, new Object[]{userName}, new PrincipalRowMapper());
         } catch (EmptyResultDataAccessException e) {
             LOG.info(e.getMessage());
         }
@@ -142,7 +142,7 @@ public class ExpendablesServiceImpl implements ExpendablesService {
         };
         try {
             ExpendablesServiceImpl.LOG.info("SQL Events Search " + SQL.GET_EVENT_LIST);
-            list = jdbcTemplate.query(SQL.GET_EVENT_LIST, new Object[] { userName }, mapper);
+            list = jdbcTemplate.query(SQL.GET_EVENT_LIST, new Object[]{userName}, mapper);
             ExpendablesServiceImpl.LOG.info("SQL Events size " + list.size());
         } catch (DataAccessException e) {
             ExpendablesServiceImpl.LOG.info("Exception cause " + e.getMessage());
@@ -170,7 +170,7 @@ public class ExpendablesServiceImpl implements ExpendablesService {
         };
         try {
             ExpendablesServiceImpl.LOG.info("SQL Events Search " + SQL.GET_EVENT_LIST);
-            list = jdbcTemplate.query(SQL.GET_ALL_EVENTS_ON_SELECTED_DATE, new Object[] { selectedDate, userName }, mapper);
+            list = jdbcTemplate.query(SQL.GET_ALL_EVENTS_ON_SELECTED_DATE, new Object[]{selectedDate, userName}, mapper);
             ExpendablesServiceImpl.LOG.info("SQL Events size " + list.size());
         } catch (DataAccessException e) {
             ExpendablesServiceImpl.LOG.info("Exception cause " + e.getMessage());
@@ -199,7 +199,7 @@ public class ExpendablesServiceImpl implements ExpendablesService {
                 }
 
             };
-            photoDTO = jdbcTemplate.queryForObject("select profilePhoto from users where username=?", new Object[] { userName }, mapper);
+            photoDTO = jdbcTemplate.queryForObject("select profilePhoto from users where username=?", new Object[]{userName}, mapper);
         } catch (Exception e) {
             ExpendablesServiceImpl.LOG.info("TEST FOR IMAGE DISPLAY  LIST SIZE " + e.getMessage());
         }
@@ -344,7 +344,7 @@ public class ExpendablesServiceImpl implements ExpendablesService {
         };
         try {
             ExpendablesServiceImpl.LOG.info("SQL Get slot " + SQL.GET_SLOT_BY_NAME);
-            slot = jdbcTemplate.queryForObject(SQL.GET_SLOT_BY_NAME, new Object[] { slotName }, mapper);
+            slot = jdbcTemplate.queryForObject(SQL.GET_SLOT_BY_NAME, new Object[]{slotName}, mapper);
             ExpendablesServiceImpl.LOG.info("SQL Slot name " + slot.getSlotName());
         } catch (DataAccessException e) {
             ExpendablesServiceImpl.LOG.info("Exception cause " + e.getMessage());
@@ -430,6 +430,19 @@ public class ExpendablesServiceImpl implements ExpendablesService {
         LOG.debug("Deleting the supplier: " + supplier);
         jdbcTemplate.update(SQL.DELETE_SUPPLIER, new SupplierMapper());
         LOG.debug("Deleted the supplier: " + supplier);
+    }
+
+    @Override
+    @Transactional
+    public List<Content> getAllContents() {
+        LOG.debug("getting all content objects");
+        RowMapper<Content> rowMapper = new RowMapper<Content>() {
+            @Override
+            public Content mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return new Content(rs.getInt("content_id"), rs.getString("content_name"));
+            }
+        };
+        return jdbcTemplate.query(SQL.GET_ALL_CONTENTS, rowMapper);
     }
 
 }

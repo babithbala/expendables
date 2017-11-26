@@ -1,5 +1,6 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,6 +22,8 @@
 
     <link rel="stylesheet" href="/Expendables/jQuery/themes/bs/jquery-ui.css">
     <link rel="stylesheet" href="/Expendables/css/validation.css">
+
+    <link rel="stylesheet" href="/Expendables/jqwidgets/styles/jqx.base.css" type="text/css"/>
 
     <!-- jQuery 2.0.2 -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
@@ -351,59 +354,37 @@
                         </header>
                         <div class="panel-body">
                             <div id="addMembershipRegErrorMessage" style="color: red"></div>
-                            <form class="form-horizontal tasi-form" role="form" id="scheduleForm">
+                            <form class="form-horizontal tasi-form" role="form" id="scheduleForm" name="scheduleForm">
                                 <div class="form-group">
-                                    <label for="membershipInputSex" class="col-lg-2 col-sm-2 control-label">
-                                        Content<font color="red">&nbsp;*</font></label><br>
-                                    <div class="col-lg-8">
-                                        <div class="row">
-                                            <label for="membershipInputDoB" class="col-lg-2 col-sm-2 control-label">
-                                                Pizza<font color="red">&nbsp;*</font></label>
-                                            <div class="col-lg-4">
-                                                <input type="checkbox" id="membershipInputDoB" name="dob"
-                                                       maxlength="8">
-                                            </div>
-                                            <label for="membershipInputDoB" class="col-lg-2 col-sm-2 control-label">
-                                                Coke<font color="red">&nbsp;*</font></label>
-                                            <div class="col-lg-4">
-                                                <input type="checkbox" id="membershipInputDoB" name="dob"
-                                                       maxlength="8">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-
-                                <div class="form-group">
-                                    <label for="membershipInputRole" class="col-lg-2 col-sm-2 control-label">
-                                        Pizza<font color="red">&nbsp;*</font></label>
-                                    <div class="col-lg-6">
-                                        <input id="pizzaSpinner" name="pizzaSpinner"
-                                               maxlength="8"><br>
-                                        <input id="cokeSpinner" name="cokeSpinner"
-                                               maxlength="8">
+                                    <label class="col-sm-2 control-label col-lg-2" for="contents">Contents</label>
+                                    <div class="col-lg-10">
+                                        <c:forEach var="content" items="${contents}">
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox"
+                                                       value="${content.content_name}"
+                                                       onclick="contentCheckBox(event)"
+                                                       name="contentCheckbox"><c:out
+                                                    value=" ${content.content_name}"/>
+                                            </label>
+                                        </c:forEach>
                                     </div>
                                 </div>
-
-
-                                <div class="form-group">
-                                    <label for="membershipInputPassword" class="col-lg-2 col-sm-2 control-label">
-                                        Pizza<font color="red">&nbsp;*</font></label>
-                                    <div class="col-lg-6">
-                                        <input type="text" name="password"
-                                               id="pizzaDate" placeholder="" class="inputTextToDataPicker">
+                                <div id="packagesDiv" class="form-group"></div>
+                                <div id="packagesDateDiv" class="form-group"></div>
+                                <div id="proceedToBookingDiv" class="form-group">
+                                    <label class="col-sm-2 control-label col-lg-2">&nbsp;</label>
+                                    <div class="col-lg-10">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" value="proceed_to_book"
+                                                   id="proceedToBookingCheckbox"
+                                                   onclick="proceedToBook(event)">Proceed to book
+                                        </label>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="membershipInputPassword" class="col-lg-2 col-sm-2 control-label">
-                                        Coke<font color="red">&nbsp;*</font></label>
-                                    <div class="col-lg-6">
-                                        <input type="text" name="confirmPassword" class="inputTextToDataPicker">
-                                    </div>
+                                <div id="bookingSlotsDiv">BOOKING SLOTS:)
+                                    <div id="scheduler"></div>
                                 </div>
-
-
+                                <p>
                                 <div class="form-group">
                                     <div class="col-lg-offset-2 col-lg-8">
                                         <button type="submit" class="btn btn-info" id="memebershipRegSubmitButton">
@@ -423,7 +404,6 @@
         </section><!-- /.content -->
     </aside><!-- /.right-side -->
     <div class="footer-main">
-        Copyright &copy Babith Balarkan & Prashanth Xavier, 2017
     </div>
 </div><!-- ./wrapper -->
 
@@ -444,9 +424,249 @@
 <script src="/Expendables/jQuery/additional-methods.js"></script>
 <script src="/Expendables/jQuery/json.min.js"></script>
 <script src="/Expendables/jQuery/jquery.json.js"></script>
+<script type="text/javascript" src="/Expendables/jqwidgets/jqxcore.js"></script>
+<script type="text/javascript" src="/Expendables/jqwidgets/jqxbuttons.js"></script>
+<script type="text/javascript" src="/Expendables/jqwidgets/jqxscrollbar.js"></script>
+<script type="text/javascript" src="/Expendables/jqwidgets/jqxdata.js"></script>
+<script type="text/javascript" src="/Expendables/jqwidgets/jqxdate.js"></script>
+<script type="text/javascript" src="/Expendables/jqwidgets/jqxscheduler.js"></script>
+<script type="text/javascript" src="/Expendables/jqwidgets/jqxscheduler.api.js"></script>
+<script type="text/javascript" src="/Expendables/jqwidgets/jqxdatetimeinput.js"></script>
+<script type="text/javascript" src="/Expendables/jqwidgets/jqxmenu.js"></script>
+<script type="text/javascript" src="/Expendables/jqwidgets/jqxcalendar.js"></script>
+<script type="text/javascript" src="/Expendables/jqwidgets/jqxtooltip.js"></script>
+<script type="text/javascript" src="/Expendables/jqwidgets/jqxwindow.js"></script>
+<script type="text/javascript" src="/Expendables/jqwidgets/jqxcheckbox.js"></script>
+<script type="text/javascript" src="/Expendables/jqwidgets/jqxlistbox.js"></script>
+<script type="text/javascript" src="/Expendables/jqwidgets/jqxdropdownlist.js"></script>
+<script type="text/javascript" src="/Expendables/jqwidgets/jqxnumberinput.js"></script>
+<script type="text/javascript" src="/Expendables/jqwidgets/jqxradiobutton.js"></script>
+<script type="text/javascript" src="/Expendables/jqwidgets/jqxinput.js"></script>
+<script type="text/javascript" src="/Expendables/jqwidgets/globalization/globalize.js"></script>
+<script type="text/javascript" src="/Expendables/jqwidgets/globalization/globalize.culture.de-DE.js"></script>
+<script type="text/javascript" src="/Expendables/scripts/demos.js"></script>
 
 <script type="text/javascript">
+
+    var appointments = new Array();
+    var appointment1 = {
+        id: "id1",
+        description: "George brings projector for presentations.",
+        location: "",
+        subject: "Quarterly Project Review Meeting",
+        calendar: "Room 1",
+        start: new Date(2015, 10, 23, 9, 0, 0),
+        end: new Date(2015, 10, 23, 16, 0, 0)
+    }
+    var appointment2 = {
+        id: "id2",
+        description: "",
+        location: "",
+        subject: "IT Group Mtg.",
+        calendar: "Room 2",
+        start: new Date(2015, 10, 24, 10, 0, 0),
+        end: new Date(2015, 10, 24, 15, 0, 0)
+    }
+    var appointment3 = {
+        id: "id3",
+        description: "",
+        location: "",
+        subject: "Course Social Media",
+        calendar: "Room 3",
+        start: new Date(2015, 10, 27, 11, 0, 0),
+        end: new Date(2015, 10, 27, 13, 0, 0)
+    }
+    var appointment4 = {
+        id: "id4",
+        description: "",
+        location: "",
+        subject: "New Projects Planning",
+        calendar: "Room 2",
+        start: new Date(2015, 10, 23, 16, 0, 0),
+        end: new Date(2015, 10, 23, 18, 0, 0)
+    }
+    var appointment5 = {
+        id: "id5",
+        description: "",
+        location: "",
+        subject: "Interview with James",
+        calendar: "Room 1",
+        start: new Date(2015, 10, 25, 15, 0, 0),
+        end: new Date(2015, 10, 25, 17, 0, 0)
+    }
+    var appointment6 = {
+        id: "id6",
+        description: "",
+        location: "",
+        subject: "Interview with Nancy",
+        calendar: "Room 4",
+        start: new Date(2015, 10, 26, 14, 0, 0),
+        end: new Date(2015, 10, 26, 16, 0, 0)
+    }
+    appointments.push(appointment1);
+    appointments.push(appointment2);
+    appointments.push(appointment3);
+    appointments.push(appointment4);
+    appointments.push(appointment5);
+    appointments.push(appointment6);
+    // prepare the data
+    var source =
+        {
+            dataType: "array",
+            dataFields: [
+                { name: 'id', type: 'string' },
+                { name: 'description', type: 'string' },
+                { name: 'location', type: 'string' },
+                { name: 'subject', type: 'string' },
+                { name: 'calendar', type: 'string' },
+                { name: 'start', type: 'date' },
+                { name: 'end', type: 'date' }
+            ],
+            id: 'id',
+            localData: appointments
+        };
+    var adapter = new $.jqx.dataAdapter(source);
+    $("#scheduler").jqxScheduler({
+        date: new $.jqx.date(2015, 11, 23),
+        width: 700,
+        height: 500,
+        source: adapter,
+        view: 'dayView',
+        showLegend: false,
+        ready: function () {
+            $("#scheduler").jqxScheduler('ensureAppointmentVisible', 'id1');
+        },
+        resources:
+            {
+                colorScheme: "scheme05",
+                dataField: "calendar",
+                source: new $.jqx.dataAdapter(source)
+            },
+        appointmentDataFields:
+            {
+                from: "start",
+                to: "end",
+                id: "id",
+                description: "description",
+                location: "place",
+                subject: "subject",
+                resourceId: "calendar"
+            },
+        views:
+            [
+                'dayView',
+                'weekView',
+                'monthView'
+            ]
+    });
+
+
+    var selectedCheckboxesArray = [];
+
+    function proceedToBook(ev) {
+        var checkedValue = document.getElementById("proceedToBookingCheckbox").checked;
+        if (checkedValue) {
+            $("#bookingSlotsDiv").show();
+            printPackagesDatesDivData();
+        } else {
+            $("#bookingSlotsDiv").hide();
+        }
+    }
+
+    function contentCheckBox(ev) {
+        selectedCheckboxesArray = [];
+        var group = document.getElementsByName("contentCheckbox");
+
+        for (var i = 0; i < group.length; i++) {
+            var current = group[i];
+            var currElementCheckVal = current.checked;
+            if (currElementCheckVal && !selectedCheckboxesArray.includes(current)) {
+                selectedCheckboxesArray.push(current);
+            } else {
+                var removeIndex = selectedCheckboxesArray.indexOf(current);
+                if (removeIndex > 0) {
+                    selectedCheckboxesArray.splice(removeIndex, 1);
+                }
+            }
+        }
+        //hide&display other div elements
+        if (selectedCheckboxesArray.length > 0) {
+            //display the packagesDiv content
+            printpackagesDivData();
+        } else {
+            $("#packagesDiv").hide();
+            $("#packagesDateDiv").hide();
+            $("#proceedToBookingDiv").hide();
+            $("#bookingSlotsDiv").hide();
+            checkedValue = document.getElementById("proceedToBookingCheckbox").checked = false;
+        }
+    }
+
+
+    function printpackagesDivData() {
+        $("#packagesDiv").show();
+        $("#packagesDiv").empty();
+        var parentDiv = document.getElementById('packagesDiv');
+        var title = document.createElement('label');
+        title.setAttribute('class', 'col-sm-2 control-label col-lg-2');
+        title.innerHTML = 'Packages';
+        parentDiv.appendChild(title);
+        var childDiv = document.createElement('div');
+        childDiv.setAttribute('class', 'col-lg-10');
+        parentDiv.appendChild(childDiv);
+        for (var i = 0; i < selectedCheckboxesArray.length; i++) {
+            var currElementVal = selectedCheckboxesArray[i].value;
+            var childLabel = document.createElement('label');
+            childLabel.setAttribute('class', 'col-lg-2 col-sm-2 control-label');
+            childLabel.innerHTML = currElementVal;
+            childDiv.appendChild(childLabel);
+            var childTextField = document.createElement('INPUT');
+            childTextField.setAttribute('type', 'text');
+            childTextField.setAttribute('class', 'form-control round-input');
+            childDiv.appendChild(childTextField);
+        }
+        printPackagesDatesDivData();
+    }
+
+    function printPackagesDatesDivData() {
+        $("#proceedToBookingDiv").show();
+        $("#packagesDateDiv").show();
+        $("#packagesDateDiv").empty();
+        var parentDiv = document.getElementById('packagesDateDiv');
+        var title = document.createElement('label');
+        title.setAttribute('class', 'col-sm-2 control-label col-lg-2');
+        title.innerHTML = 'Booking Date';
+        parentDiv.appendChild(title);
+        var childDiv = document.createElement('div');
+        childDiv.setAttribute('class', 'col-lg-10');
+        parentDiv.appendChild(childDiv);
+        for (var i = 0; i < selectedCheckboxesArray.length; i++) {
+            var currElementVal = selectedCheckboxesArray[i].value;
+            var div = document.createElement('div');
+            var childLabel = document.createElement('label');
+            childLabel.setAttribute('class', 'col-lg-2 col-sm-2 control-label');
+            childLabel.innerHTML = currElementVal;
+            childDiv.appendChild(childLabel);
+            var childTextField = document.createElement('INPUT');
+            childTextField.setAttribute('type', 'text');
+            childTextField.setAttribute('class', 'form-control round-input');
+            childTextField.setAttribute('readonly', 'true');
+            childTextField.setAttribute('id', 'datepicker_' + currElementVal);
+            childDiv.appendChild(childTextField);
+            $("#datepicker_" + currElementVal).datepicker({
+                dateFormat: "dd-mm-yy"
+            });
+        }
+    }
+
     $(function () {
+
+        <!-- INITIALLY HIDE SOME AREAS -->
+        $("#packagesDiv").hide();
+        $("#packagesDateDiv").hide();
+        $("#proceedToBookingDiv").hide();
+        $("#bookingSlotsDiv").hide();
+
         $("#memebershipRegCancelButton").click(function () {
             $.ajax({
                 url: 'userHome.htm',
@@ -456,36 +676,7 @@
             });
         });
 
-        $(".inputTextToDataPicker").datepicker({
-            dateFormat: 'yy-mm-dd',
-            numberOfMonths: 1,
-            showButtonPanel: true,
-            changeMonth: true,
-            changeYear: true
-        });
-        $(".inputTextToDataPicker").datepicker("option", "yearRange", getYearRange());
-        var pizzaSpinner = $("#pizzaSpinner").spinner({min: 0});
-        var cokeSpinner = $("#cokeSpinner").spinner({min: 0});
 
-        document.getElementById('pizzaSpinner').readOnly = true;
-        document.getElementById('cokeSpinner').readOnly = true;
-
-
-        populatePrincipalDetails($("#addNewUserFullNameLabelId"), $("#addNewUserFirstNameLabelId"));
-        $("#membershipInputSupplierNameDiv").hide();
-        $("#membershipInputSupplierContactpersonNameDiv").hide();
-
-        $("#membershipInputRole").change(function () {
-            var roleSelected = this.value;
-
-            if ("ROLE_SUPPLIER" == roleSelected) {
-                $("#membershipInputSupplierNameDiv").show();
-                $("#membershipInputSupplierContactpersonNameDiv").show();
-            } else {
-                $("#membershipInputSupplierNameDiv").hide();
-                $("#membershipInputSupplierContactpersonNameDiv").hide();
-            }
-        });
         var validator = $("#membershipRegForm").validate({
             meta: "validate",
             rules: {
@@ -657,7 +848,6 @@
             $("#addMembershipRegErrorMessage").html(messages);
         }
 
-        populatePrincipalDetails();
     });
 
 </script>

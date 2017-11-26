@@ -28,5 +28,5 @@ public interface ExpendablesService {
     List<Supplier> getAllSuppliers();
     void saveSupplier(Supplier supplier);
     void deleteSupplier(Supplier supplier);
-
+    List<Content> getAllContents();
 }
