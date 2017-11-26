@@ -17,6 +17,10 @@ public class BookingRowMapper implements RowMapper<Booking> {
         booking.setBooked_to(rs.getString("booked_to"));
         booking.setSlot(rs.getString("slot"));
         booking.setSupplier_name(rs.getString("supplier_name"));
+        booking.setVehicle_reg_number(rs.getString("vehicle_reg_number"));
+        booking.setCustoms_deliver(rs.getInt("customs_deliver"));
+        booking.setPackaging_units(rs.getInt("packaging_units"));
+        booking.setDriver_phone_number(rs.getString("driver_phone_number"));
         return booking;
     }
 }

@@ -92,7 +92,7 @@ public class SQL {
     public static final String DELETE_SLOT = "DELETE FROM slot WHERE slot_name=?";
     public static final String ADD_SLOT = "INSERT INTO slot (slot_name, duration) VALUES (?, ?)";
     public final static String GET_ALL_CONTENTS="select * from content";
-    public final static String INSERT_BOOKING = "insert into booking (booking_date, booked_from, booked_to, slot, supplier_name) VALUES (?, ?, ?, ?, ?)";
+    public final static String INSERT_BOOKING = "insert into booking (booking_date, booked_from, booked_to, slot, supplier_name, vehicle_reg_number, customs_deliver, packaging_units, driver_phone_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     public final static String GET_BOOKING_BY_SLOT_AND_DATE = "select * from booking where booking_date=? and slot=?";
     private SQL() {
 

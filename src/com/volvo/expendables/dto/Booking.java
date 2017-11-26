@@ -9,17 +9,12 @@ public class Booking {
     private String booked_to;
     private String slot;
     private String supplier_name;
+    private String vehicle_reg_number;
+    private int customs_deliver;
+    private int packaging_units;
+    private String driver_phone_number;
 
     public Booking() {
-    }
-
-    public Booking(int booking_id, Date booking_date, String booked_from, String booked_to, String slot, String supplier_name) {
-        this.booking_id = booking_id;
-        this.booking_date = booking_date;
-        this.booked_from = booked_from;
-        this.booked_to = booked_to;
-        this.slot = slot;
-        this.supplier_name = supplier_name;
     }
 
     public int getBooking_id() {
@@ -70,6 +65,38 @@ public class Booking {
         this.supplier_name = supplier_name;
     }
 
+    public String getVehicle_reg_number() {
+        return vehicle_reg_number;
+    }
+
+    public void setVehicle_reg_number(String vehicle_reg_number) {
+        this.vehicle_reg_number = vehicle_reg_number;
+    }
+
+    public int getCustoms_deliver() {
+        return customs_deliver;
+    }
+
+    public void setCustoms_deliver(int customs_deliver) {
+        this.customs_deliver = customs_deliver;
+    }
+
+    public int getPackaging_units() {
+        return packaging_units;
+    }
+
+    public void setPackaging_units(int packaging_units) {
+        this.packaging_units = packaging_units;
+    }
+
+    public String getDriver_phone_number() {
+        return driver_phone_number;
+    }
+
+    public void setDriver_phone_number(String driver_phone_number) {
+        this.driver_phone_number = driver_phone_number;
+    }
+
     @Override
     public String toString() {
         return "Booking{" +
@@ -79,6 +106,10 @@ public class Booking {
                 ", booked_to='" + booked_to + '\'' +
                 ", slot='" + slot + '\'' +
                 ", supplier_name='" + supplier_name + '\'' +
+                ", vehicle_reg_number='" + vehicle_reg_number + '\'' +
+                ", customs_deliver=" + customs_deliver +
+                ", packaging_units=" + packaging_units +
+                ", driver_phone_number='" + driver_phone_number + '\'' +
                 '}';
     }
 }
