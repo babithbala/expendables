@@ -416,13 +416,13 @@ public class ExpendablesServiceImpl implements ExpendablesService {
         return jdbcTemplate.query(SQL.GET_ALL_SUPPLIERS, new SupplierMapper());
     }
 
-    @Override
-    @Transactional
-    public void saveSupplier(Supplier supplier) {
-        LOG.debug("Saving the supplier: " + supplier);
-        jdbcTemplate.update(SQL.INSERT_SUPPLIER, new SupplierMapper());
-        LOG.debug("Saved the supplier: " + supplier);
-    }
+//    @Override
+//    @Transactional
+//    public void saveSupplier(Supplier supplier) {
+//        LOG.debug("Saving the supplier: " + supplier);
+//        jdbcTemplate.update(SQL.INSERT_SUPPLIER, new SupplierMapper());
+//        LOG.debug("Saved the supplier: " + supplier);
+//    }
 
     @Override
     @Transactional
@@ -430,6 +430,57 @@ public class ExpendablesServiceImpl implements ExpendablesService {
         LOG.debug("Deleting the supplier: " + supplier);
         jdbcTemplate.update(SQL.DELETE_SUPPLIER, new SupplierMapper());
         LOG.debug("Deleted the supplier: " + supplier);
+    }
+
+    @Override
+    public List<Acknowledge> saveMemberDetails(UserDTO user) {
+        List<Acknowledge> list = new ArrayList<Acknowledge>();
+        Acknowledge acknowledge = new Acknowledge();
+        if(!userAvailable(user.getUserName())) {
+            try {
+                SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(user);
+                GeneratedKeyHolder key = new GeneratedKeyHolder();
+    
+                
+                namedParameterJdbcTemplate.update(SQL.ADD_NORMAL_MEMBER, namedParameters, key);
+                namedParameterJdbcTemplate.update(SQL.SAVE_USER_ROLE, namedParameters);
+                acknowledge.setMessage("User details saved. <br/>");
+                
+                if("ROLE_SUPPLIER".equals(user.getRole())){
+                    namedParameterJdbcTemplate.update(SQL.INSERT_SUPPLIER, namedParameters);
+                    acknowledge.setMessage("Supplier details saved. <br/>");
+                    
+                }
+                list.add(acknowledge);
+            } catch (DataAccessException e) {
+                String cause = e.getCause().toString();
+                if (cause != null) {
+                    acknowledge.setMessage(cause.substring(cause.indexOf(":") + 1, cause.length()) + "<br/>");
+                    list.add(acknowledge);
+                }
+                ExpendablesServiceImpl.LOG.info(e.getMessage());
+            }
+        }else {
+            acknowledge.setMessage("Username already used. Provide different username");
+            list.add(acknowledge);
+        }
+        return list;
+    }
+    
+    private boolean userAvailable(String name) {
+        boolean userExists = false;
+        String userName = "";
+        try {
+            userName = (String) jdbcTemplate.queryForObject(SQL.CHECK_FOR_USER_NAME, new Object[]{name}, String.class);
+        } catch (EmptyResultDataAccessException e) {
+            LOG.info(e.getMessage());
+        }
+        if(userName !=null && userName !=""){
+            userExists = true;
+        }else {
+            userExists = false;
+        }
+        return userExists;
     }
 
 }

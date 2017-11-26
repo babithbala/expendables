@@ -26,7 +26,9 @@ public interface ExpendablesService {
     public abstract List<DropDownDTO> getAllSlotsDropdown();
     public abstract List<ContentDTO> populateAllContentDetails(int page, int rows,String sidx, String sord,String userName);
     List<Supplier> getAllSuppliers();
-    void saveSupplier(Supplier supplier);
+    //void saveSupplier(Supplier supplier);
     void deleteSupplier(Supplier supplier);
+    
+    public abstract  List<Acknowledge> saveMemberDetails(UserDTO user);
 
 }

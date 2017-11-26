@@ -295,17 +295,19 @@ public class UserInfoController {
 
     @RequestMapping(value = "/membershipRegistration.htm", method = RequestMethod.GET)
     public String membershipRegistration(Model model) {
-        model.addAttribute("supplier", new Supplier());
-        model.addAttribute("user", new UserDTO());
+//        model.addAttribute("supplier", new Supplier());
+//        model.addAttribute("user", new UserDTO());
 
         return "membershipRegistration";
     }
 
     @RequestMapping(value = "/membershipRegistrationSubmission.htm", method = RequestMethod.POST)
     @ResponseBody
-    public String membershipRegistrationSubmission(@RequestBody Object object) {
-        logger.debug("inside membership registration form submission method: " + object);
-        JSONArray data = JSONArray.fromObject(new String("Done"));
+    public String membershipRegistrationSubmission(@RequestBody UserDTO user) {
+        List<Acknowledge> list = new ArrayList<Acknowledge>();
+        UserInfoController.logger.info("--------------------inside saveOrUpdateEvent" +  user.getUserName());
+            list = expendablesService.saveMemberDetails(user);
+        JSONArray data = JSONArray.fromObject(list);
         return data.toString();
     }
 
