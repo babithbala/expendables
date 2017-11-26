@@ -32,6 +32,9 @@
     <!-- jQuery 2.0.2 -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     <script src="/Expendables/js/common.js"></script>
 
 </head>
@@ -378,16 +381,20 @@
                                     <label class="col-sm-2 control-label col-lg-2" for="addSlotInputSlotTime">
                                         Min Duration</label>
                                     <div class="col-lg-8">
+                                        <input type="text" name="slotDuration" id="addSlotInputSlotTime">
+                                    </div>
+
+                                    <%--<div class="col-lg-8">
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <input type="text" name="slotDuration" size="12"
-                                                       id="addEventInputEventTime" maxlength="8"
+                                                       id="addSlotInputSlotTime" maxlength="8"
                                                        class="form-control" value="00:00:00"
                                                        onFocus="if(this.value=='00:00:00')this.value='';">
                                             </div>
                                         </div>
 
-                                    </div>
+                                    </div>--%>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-lg-offset-2 col-lg-10">
@@ -447,7 +454,6 @@
 <script src="/Expendables/jQuery/ui/jquery.ui.widget.js"></script>
 <script src="/Expendables/jQuery/ui/jquery.ui.dialog.js"></script>
 <script src="/Expendables/jQuery/ui/jquery.ui.datepicker.js"></script>
-<%--<script src="/Expendables/jQuery/ui/jquery-ui-timepicker-addon.js"></script>--%>
 <script src="/Expendables/js/plugins/bs-datetimepicker/bootstrap-datetimepicker.js"></script>
 <script src="/Expendables/jQuery/jquery.populate.js"></script>
 
@@ -484,13 +490,21 @@
             });
         });
 
-        $('#addEventInputEventTime').datetimepicker({
+        $('#addSlotInputSlotTime').spinner({
+            spin: function( event, ui ) {
+                if ( ui.value < 0 ) {
+                    $( this ).spinner( "slotDuration", 0 );
+                    return false;
+                }
+            }
+        });
+        /*$('#addEventInputEventTime').datetimepicker({
             disabledTimeIntervals: [
                 [moment().hour(0).minutes(0), moment().hour(8).minutes(30)],
                 [moment().hour(20).minutes(30), moment().hour(24).minutes(0)]
             ]
 
-        });
+        });*/
 
 
         populatePrincipalDetails($("#addNewEventUserFullNameLabelId"), $("#addNewEventUserFirstNameLabelId"));
