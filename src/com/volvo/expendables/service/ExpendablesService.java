@@ -29,6 +29,10 @@ public interface ExpendablesService {
     //void saveSupplier(Supplier supplier);
     void deleteSupplier(Supplier supplier);
    // List<Content> getAllContents();
+    
+    
+    public abstract List<Slot> populateAllSlotDetails(int page, int rows,String sidx, String sord,String slotname);
+    
 
     public abstract  List<Acknowledge> saveMemberDetails(UserDTO user);
 

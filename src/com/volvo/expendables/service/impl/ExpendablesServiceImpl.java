@@ -289,7 +289,7 @@ public class ExpendablesServiceImpl implements ExpendablesService {
         try {
 
             ExpendablesServiceImpl.LOG.info("Add slot " + SQL.ADD_SLOT);
-            jdbcTemplate.update(SQL.ADD_SLOT, slot.getSlotName(), slot.getSlotDuration());
+            jdbcTemplate.update(SQL.ADD_SLOT, slot.getSlotName(), slot.getSlotDuration(),slot.getOpen_from(),slot.getOpen_to());
             ExpendablesServiceImpl.LOG.info("Added slot: " + slot);
             ack.setMessage("Slot Added ");
         } catch (DataAccessException e) {
@@ -485,5 +485,38 @@ public class ExpendablesServiceImpl implements ExpendablesService {
         }
         return userExists;
     }
+
+    @Override
+    public List<Slot> populateAllSlotDetails(int page, int rows, String sidx, String sord, String slotname) {
+        // TODO Auto-generated method stub
+            String start = String.valueOf((page * rows) - rows);
+            ExpendablesServiceImpl.LOG.info("populateAllSlotDetails -------- ");
+            RowMapper<Slot> mapper = new RowMapper<Slot>() {
+
+                public Slot mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    Slot content = new Slot();
+                    content.setSlotId(rs.getInt("slot_id"));
+                    content.setSlotName(rs.getString("slot_name"));
+                    content.setSlotDuration(rs.getInt("duration"));
+                    content.setOpen_from(rs.getString("open_from"));
+                    content.setOpen_to(rs.getString("open_to"));
+                    // user.setProfilePhoto(rs.getBinaryStream("profilePhoto"));
+
+                    return content;
+                }
+
+            };
+            String sql="";
+            if(slotname.trim().length()>0){
+                sql ="select * from slot where slot_name like '%"+slotname+"%'";
+            }else{
+                sql="select * from slot ";
+            }
+            List<Slot> list = jdbcTemplate.query(sql+
+                    "  ORDER BY " + sidx + " " + sord + " limit " + rows + " OFFSET " + start + "", mapper);
+            ExpendablesServiceImpl.LOG.info("LOGGGGGGGGGGGGGGGGGGGGGGGGGGGGG LIST SIZE " + list.size());
+
+            return list;
+        }
 
 }

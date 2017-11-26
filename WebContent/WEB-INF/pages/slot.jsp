@@ -32,11 +32,35 @@
     <!-- jQuery 2.0.2 -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+     <link rel="stylesheet" href="/Expendables/jQuery/themes/bs/jquery-ui.css">
+    <link rel="stylesheet" href="/Expendables/css/validation.css">
+
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script src="/Expendables/js/common.js"></script>
+<!-- jqGrid CSS -->
+<link rel="stylesheet" type="text/css" media="screen"
+	href="/Expendables/jqGrid/css/ui.jqgrid.css" />
 
+<style type="text/css">
+.ui-jqgrid tr.jqgrow td {
+	word-wrap: break-word; /* IE 5.5+ and CSS3 */
+	white-space: pre-wrap; /* CSS3 */
+	white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+	white-space: -pre-wrap; /* Opera 4-6 */
+	white-space: -o-pre-wrap; /* Opera 7 */
+	overflow: hidden;
+	height: auto;
+	vertical-align: middle;
+	padding-top: 3px;
+	padding-bottom: 3px
+}
+
+.myAltRowClass {
+	background-color: #DDDDDD;
+	background-image: none;
+}
+</style>
 </head>
 <body class="skin-black">
 <!-- header logo: style can be found in header.less -->
@@ -401,19 +425,42 @@
                                     <div class="col-lg-8">
                                         <input type="text" name="slotDuration" id="addSlotInputSlotTime">
                                     </div>
-
-                                    <%--<div class="col-lg-8">
+								</div>
+                                    <div class="form-group">
+                                    <label class="col-sm-2 control-label col-lg-2" for="addSlotInputStartDate">
+                                        Start Time</label>
+                                    <div class="col-lg-8">
                                         <div class="row">
-                                            <div class="col-lg-6">
-                                                <input type="text" name="slotDuration" size="12"
-                                                       id="addSlotInputSlotTime" maxlength="8"
+                                            
+
+                                            <div class="col-lg-3">
+                                                <input type="text" name="open_from" size="12"
+                                                       id="addSlotInputStartDate" maxlength="8"
                                                        class="form-control" value="00:00:00"
                                                        onFocus="if(this.value=='00:00:00')this.value='';">
                                             </div>
                                         </div>
 
-                                    </div>--%>
+                                    </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label col-lg-2" for="addSlotInputEndDate">
+                                        End Time</label>
+                                    <div class="col-lg-8">
+                                        <div class="row">
+                                            
+
+                                            <div class="col-lg-3">
+                                                <input type="text" name="open_to" size="12"
+                                                       id="addSlotInputEndDate" maxlength="8"
+                                                       class="form-control" value="00:00:00"
+                                                       onFocus="if(this.value=='00:00:00')this.value='';">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                
                                 <div class="form-group">
                                     <div class="col-lg-offset-2 col-lg-10">
                                         <button type="submit" class="btn btn-info" id="addEventInputEventSubmitButton">
@@ -430,35 +477,51 @@
                     </section>
                 </div>
             </div>
-            <c:if test="${listSlots.size()>0}">
-                <div class="col-md-3">
-                    <table class="table table-striped" id="slotTable">
-                        <thead>
-                        <tr>
-                            <th>Slot name</th>
-                            <th>Duration</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach items="${listSlots}" var="Slot">
-                            <tr>
-                                <td id="tableSlotName">${Slot.slotName}</td>
-                                <td>${Slot.slotDuration}</td>
-                                <td>
-                                    <form action="/Expendables/slot/remove/${Slot.slotName}" method="get">
-                                        <button type="submit" class="close" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
-                </div>
-            </c:if>
+            
         </section><!-- /.content -->
+        
+        <section class="content">
+				<div class="row">
+					<div class="col-lg-12">
+						<section class="panel">
+							<header class="panel-heading"> Find All Slots </header>
+							<div class="panel-body">
+								<div id="addEventErrorMessage1" style="color: red"></div>
+								<form class="form-horizontal tasi-form" role="form"
+									id="searchContentForm">
+									<div class="form-group">
+										<label for="serachEventInputContentName"
+											class="col-lg-2 col-sm-2 control-label">
+											Slot&nbsp;Name<font color="red">&nbsp;*</font>
+										</label>
+										<div class="col-lg-6">
+											<input name="slotName" type="text" class="form-control"
+												id="serachEventInputSlotName" placeholder="Slot Name">
+										</div>
+									</div>
+
+
+
+									<div class="form-group">
+										<div class="col-lg-offset-2 col-lg-10">
+											<button type="button" class="btn btn-info"
+												id="searchEventInputEventSubmitButton">Search</button>
+										</div>
+									</div>
+								</form>
+
+							</div>
+							<div class="panel-body" id="user-game-point-box">
+								<div id="add_SlotListJQGTableWrapper">
+									<table id="add_SlotListJQGTable"></table>
+									<div id="add_SlotListJQGTablePagingToolbar"></div>
+								</div>
+							</div>
+
+						</section>
+					</div>
+				</div>
+			</section>
     </aside><!-- /.right-side -->
     <div class="footer-main">
         Copyright &copy The Expendables, 2017
@@ -472,14 +535,22 @@
 <script src="/Expendables/jQuery/ui/jquery.ui.widget.js"></script>
 <script src="/Expendables/jQuery/ui/jquery.ui.dialog.js"></script>
 <script src="/Expendables/jQuery/ui/jquery.ui.datepicker.js"></script>
-<script src="/Expendables/js/plugins/bs-datetimepicker/bootstrap-datetimepicker.js"></script>
+<!-- <script src="/Expendables/js/plugins/bs-datetimepicker/bootstrap-datetimepicker.js"></script> -->
 <script src="/Expendables/jQuery/jquery.populate.js"></script>
+<script src="/Expendables/jQuery/ui/jquery-ui-timepicker-addon.js"></script>
+
 
 <script src="/Expendables/jQuery/jquery.validate.js"></script>
 <script src="/Expendables/jQuery/additional-methods.js"></script>
 <script src="/Expendables/jQuery/json.min.js"></script>
 <script src="/Expendables/jQuery/jquery.json.js"></script>
 
+
+<!-- jqGrid JS -->
+	<script src="/Expendables/jqGrid/i18n/grid.locale-en.js"
+		type="text/javascript"></script>
+	<script src="/Expendables/jqGrid/jquery.jqGrid.min.js"
+		type="text/javascript"></script>
 <!-- Bootstrap -->
 <script src="/Expendables/js/bootstrap.min.js" type="text/javascript"></script>
 <!-- Director App -->
@@ -508,21 +579,20 @@
             });
         });
 
-        $('#addSlotInputSlotTime').spinner({
-            spin: function( event, ui ) {
-                if ( ui.value < 0 ) {
-                    $( this ).spinner( "slotDuration", 0 );
-                    return false;
-                }
-            }
-        });
-        /*$('#addEventInputEventTime').datetimepicker({
-            disabledTimeIntervals: [
-                [moment().hour(0).minutes(0), moment().hour(8).minutes(30)],
-                [moment().hour(20).minutes(30), moment().hour(24).minutes(0)]
-            ]
+//         $('#addSlotInputSlotTime').spinner({
+//             spin: function( event, ui ) {
+//                 if ( ui.value < 0 ) {
+//                     $( this ).spinner( "slotDuration", 0 );
+//                     return false;
+//                 }
+//             }
+//         });
+        
+         
+        $('#addSlotInputStartDate').timepicker({showSecond: true, timeFormat: 'hh:mm:ss'});
 
-        });*/
+        $('#addSlotInputEndDate').timepicker({showSecond: true, timeFormat: 'hh:mm:ss'});
+
 
 
         populatePrincipalDetails($("#addNewEventUserFullNameLabelId"), $("#addNewEventUserFirstNameLabelId"));
@@ -552,6 +622,7 @@
             submitHandler: function () {
                 $("#addSlot").html("");
                 var slotDetails = $('#addSlotForm').serializeObject();
+                slotName=  $("#addSlotInputSlotName").val();
                 $.postJSON("saveOrUpdateSlot.htm", slotDetails, function (data) {
                     $(".inputError").removeClass("inputError");
                     var messages = "";
@@ -563,7 +634,7 @@
                     //$("#addEventInputEventId").val(slotID);
 
                     $("#addSlot").html(messages);
-                    location.reload();
+                    //location.reload();
                 });
                 $('html,body').animate({
                         scrollTop: $(".navbar-right").offset().top
@@ -572,6 +643,108 @@
                 return false;
             }
         });
+        
+        
+        
+        
+        var contentGrid = jQuery("#add_SlotListJQGTable").jqGrid(
+				{
+					url : 'populateAllSlotDetails.htm',
+					mtype : "POST",
+					jsonReader : {
+						repeatitems : false,
+						id : "slotId"
+					},
+					datatype : "local",
+					colNames : [ "Slot", 'Slot name', 'Slot Min Duration',
+							'Open From', 'Open To' ],
+					colModel : [ {
+						name : 'slotId',
+						index : 'slotId',
+						width : 10,
+						sortable : false,
+						hidden:true
+					}, {
+						name : 'slotName',
+						index : 'slot_name',
+						width : 90
+					}, {
+						name : 'slotDuration',
+						index : 'duration',
+						width : 100
+					}, {
+						name : 'open_from',
+						index : 'open_from',
+						width : 100,
+						sortable : true
+					}, {
+						name : 'open_to',
+						index : 'open_to',
+						sortable : true,
+						width : 100
+					} ],
+					rowNum : 6,
+					rowList : [ 6, 10, 25 ],
+					pager : '#add_SlotListJQGTablePagingToolbar',
+					sortname : 'slot_name',
+					viewrecords : true,
+					loadonce : false,
+					sortorder : "desc",
+					height : 309,
+					autowidth : true,
+					caption : "Slot List",
+					altclass : 'myAltRowClass',
+					hidegrid : false,//to hide the collapse icon of grid
+					loadtext : 'Loading....',
+					emptyrecords : "There are no results to display",
+					pgtext : "Page {0} of {1}",
+					gridComplete : function() {
+						var recs = $("#add_SlotListJQGTable")
+								.getGridParam("records");
+						if (recs == 0) {
+							$("#add_SlotListJQGTableWrapper").hide();
+
+						} else {
+							$("#add_SlotListJQGTableWrapper").show();
+						}
+					},
+					onSelectRow : function(rowid, status, e) {
+						if (status) {
+							var ret = jQuery("#add_SlotListJQGTable")
+									.jqGrid('getRowData', rowid);
+						}
+					}
+				});
+
+		var htable = jQuery("table.ui-jqgrid-htable", jQuery("#gview_list"));
+		htable.css("height", 30);
+
+		$("#searchEventInputEventSubmitButton").click(function() {
+			reloadContentStore();
+		});
+var slotName="";
+		function reloadContentStore() {
+			jQuery("#add_SlotListJQGTable").jqGrid('setGridParam', {
+				datatype : 'json',
+				url : "populateAllSlotDetails.htm",
+				postData : {
+					slotName : slotName
+				},
+				page : 1
+			}).trigger("reloadGrid");
+
+		}
+		jQuery("#add_SlotListJQGTable").jqGrid('navGrid',
+				'#add_SlotListJQGTablePagingToolbar', {
+					edit : false,
+					add : false,
+					del : false
+				});
+
+		$("#userHomeGameUsersSearchButton").click(function() {
+			slotName = $("#serachEventInputSlotName").val();
+			reloadContentStore();
+		});
     });
 
 </script>

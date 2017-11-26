@@ -237,7 +237,6 @@ public class UserInfoController {
 
     @RequestMapping(value = "/manageSchedule.htm", method = RequestMethod.GET)
     public String manageSchedule(Model model) {
-        model.addAttribute("contents", expendablesService.getAllContents());
         return "schedule";
     }
 
@@ -326,6 +325,22 @@ public class UserInfoController {
         UserInfoController.logger.info("populateAllContentDetails : ");
         Map<String, Object> modelMap = new HashMap<String, Object>();
         List<ContentDTO> list = expendablesService.populateAllContentDetails(page, rows, sidx, sord, contentName);
+
+        long count = list.size();
+        modelMap.put("rows", list);
+        modelMap.put("page", page);
+        modelMap.put("total", count % rows > 0 ? Math.round((count) / rows) + 1 : Math.round((count) / rows));
+        modelMap.put("records", count);
+        return modelMap;
+    }
+    
+    
+    
+    @RequestMapping(value = "/populateAllSlotDetails.htm", method = RequestMethod.POST)
+    public @ResponseBody Map<String, ? extends Object> populateAllSlotDetails(@RequestParam int page, int rows, String sidx, String sord, String slotName) {
+        UserInfoController.logger.info("populateAllSlotDetails : ");
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<Slot> list = expendablesService.populateAllSlotDetails(page, rows, sidx, sord,slotName);
 
         long count = list.size();
         modelMap.put("rows", list);

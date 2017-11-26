@@ -90,7 +90,7 @@ public class SQL {
     public static final String GET_ALL_SLOTS = "select * from slot";
     public static final String GET_SLOT_BY_NAME = "select slot_name, duration from slot where slot_name=?";
     public static final String DELETE_SLOT = "DELETE FROM slot WHERE slot_name=?";
-    public static final String ADD_SLOT = "INSERT INTO slot (slot_name, duration) VALUES (?, ?)";
+    public static final String ADD_SLOT = "INSERT INTO slot (slot_name, duration,open_from,open_to) VALUES (?, ?,?,?)";
     public final static String GET_ALL_CONTENTS="select * from content";
     private SQL() {
 

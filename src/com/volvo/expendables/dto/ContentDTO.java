@@ -1,6 +1,7 @@
 package com.volvo.expendables.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ContentDTO implements Serializable {
@@ -13,7 +14,7 @@ public class ContentDTO implements Serializable {
     private String contentName;
     private String slotId;
 
-    private List<String> slotIds;
+    private List<String> slotIds = new ArrayList<String>();
     private String position;
     private String slotName;
     private String duration;

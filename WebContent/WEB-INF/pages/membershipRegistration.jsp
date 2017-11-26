@@ -38,7 +38,7 @@
 <body class="skin-black">
 	<!-- header logo: style can be found in header.less -->
 	<header class="header">
-		<a href="userHome.htm" class="logo"> <img alt=""
+		<a href="home.htm" class="logo"> <img alt=""
 			src="/Expendables/img/images.png" style="width: 190px;"> <!--                 B<font size="2">&</font>P Care -->
 		</a>
 		<!-- Header Navbar: style can be found in header.less -->
@@ -522,9 +522,9 @@
 		$(function() {
 			$("#membershipRegCancelButton").click(function() {
 				$.ajax({
-					url : 'userHome.htm',
+					url : 'home.htm',
 					success : function(data) {
-						$(location).attr('href', 'userHome.htm');
+						$(location).attr('href', 'home.htm');
 					}
 				});
 			});
