@@ -13,16 +13,19 @@
        <intercept-url pattern="/logout" access="isAnonymous()" />
  	   <intercept-url pattern="/css/styles.css" access="isAnonymous()" />
        
-       <intercept-url pattern="/home.htm" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" />
-       <intercept-url pattern="/simple.htm" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" />
-       <intercept-url pattern="/basicForm.htm" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" />
-       <intercept-url pattern="/general.htm" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" />
+       <intercept-url pattern="/home.htm" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN','ROLE_SUPPLIER')" />
        <intercept-url pattern="/calendarBooking.htm" access="hasAnyRole('ROLE_ADMIN','ROLE_SUPPLIER')" />
        <intercept-url pattern="/calendarBooking1.htm" access="hasAnyRole('ROLE_ADMIN','ROLE_SUPPLIER')" />
        <intercept-url pattern="/manageContent.htm" access="hasAnyRole('ROLE_ADMIN')" />
+       <intercept-url pattern="/membershipRegistration.htm" access="hasAnyRole('ROLE_ADMIN')" />
+       <intercept-url pattern="/reschedule.htm" access="hasAnyRole('ROLE_ADMIN')" />
+       <intercept-url pattern="/getAllSlots.htm" access="hasAnyRole('ROLE_ADMIN')" />
+       <intercept-url pattern="/manageSchedule.htm" access="hasAnyRole('ROLE_ADMIN')" />
+       <intercept-url pattern="/slotsQueue.htm" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN','ROLE_SUPPLIER')" />
+       <intercept-url pattern="/queueStatus.htm" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN','ROLE_SUPPLIER')" />
+       <intercept-url pattern="/uploadProfilePhoto.htm" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN','ROLE_SUPPLIER')" />
        
        <access-denied-handler error-page="/403.htm" />
- 
        <form-login login-page='/login.htm' login-processing-url="/j_spring_security_check"
            default-target-url="/home.htm" always-use-default-target="false"
            authentication-failure-url="/login?error=true" username-parameter="j_username"
