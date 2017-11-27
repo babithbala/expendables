@@ -293,57 +293,57 @@
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
                 <li><a href="home.htm"> <i class="fa fa-dashboard"></i> <span>Home</span>
-					</a></li>
-					<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
-						<li><a
-							href="${pageContext.request.contextPath}/membershipRegistration.htm">
-								<i class="fa fa-gavel"></i> <span>Register</span>
-						</a></li>
-					</sec:authorize>
-					<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
-						<li ><a
-							href="${pageContext.request.contextPath}/manageContent.htm">
-								<i class="fa fa-globe"></i> <span>Contents</span>
-						</a></li>
-					</sec:authorize>
-					<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
-						<li><a
-							href="${pageContext.request.contextPath}/getAllSlots.htm"> <i
-								class="fa fa-glass"></i> <span>Slots</span>
-						</a></li>
-					</sec:authorize>
-					<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
-						<li class="active"><a
-							href="${pageContext.request.contextPath}/manageSchedule.htm">
-								<i class="fa fa-dashboard"></i> <span>Booking</span>
-						</a></li>
-					</sec:authorize>
+                </a></li>
+                <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+                    <li><a
+                            href="${pageContext.request.contextPath}/membershipRegistration.htm">
+                        <i class="fa fa-gavel"></i> <span>Register</span>
+                    </a></li>
+                </sec:authorize>
+                <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+                    <li><a
+                            href="${pageContext.request.contextPath}/manageContent.htm">
+                        <i class="fa fa-globe"></i> <span>Contents</span>
+                    </a></li>
+                </sec:authorize>
+                <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+                    <li><a
+                            href="${pageContext.request.contextPath}/getAllSlots.htm"> <i
+                            class="fa fa-glass"></i> <span>Slots</span>
+                    </a></li>
+                </sec:authorize>
+                <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+                    <li class="active"><a
+                            href="${pageContext.request.contextPath}/manageSchedule.htm">
+                        <i class="fa fa-dashboard"></i> <span>Booking</span>
+                    </a></li>
+                </sec:authorize>
 
-					<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
-						<li><a
-							href="${pageContext.request.contextPath}/reschedule.htm"> <i
-								class="fa fa-gavel"></i> <span>Reschedule</span>
-						</a></li>
-					</sec:authorize>
+                <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+                    <li><a
+                            href="${pageContext.request.contextPath}/reschedule.htm"> <i
+                            class="fa fa-gavel"></i> <span>Reschedule</span>
+                    </a></li>
+                </sec:authorize>
 
-					<sec:authorize
-						access="hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_SUPPLIER')">
-						<li><a
-							href="${pageContext.request.contextPath}/slotsQueue.htm"> <i
-								class="fa fa-globe"></i> <span>Slots Queue</span>
-						</a></li>
-					</sec:authorize>
-					<sec:authorize
-						access="hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_SUPPLIER')">
-						<li><a
-							href="${pageContext.request.contextPath}/queueStatus.htm"> <i
-								class="fa fa-glass"></i> <span>Queue Status</span>
-						</a></li>
-					</sec:authorize>
-					<li><a
-						href="${pageContext.request.contextPath}/uploadProfilePhoto.htm">
-							<i class="fa fa-dashboard"></i> <span>Upload Photo</span>
-					</a></li>
+                <sec:authorize
+                        access="hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_SUPPLIER')">
+                    <li><a
+                            href="${pageContext.request.contextPath}/slotsQueue.htm"> <i
+                            class="fa fa-globe"></i> <span>Slots Queue</span>
+                    </a></li>
+                </sec:authorize>
+                <sec:authorize
+                        access="hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_SUPPLIER')">
+                    <li><a
+                            href="${pageContext.request.contextPath}/queueStatus.htm"> <i
+                            class="fa fa-glass"></i> <span>Queue Status</span>
+                    </a></li>
+                </sec:authorize>
+                <li><a
+                        href="${pageContext.request.contextPath}/uploadProfilePhoto.htm">
+                    <i class="fa fa-dashboard"></i> <span>Upload Photo</span>
+                </a></li>
             </ul>
         </section>
         <!-- /.sidebar -->
@@ -391,8 +391,14 @@
                                         </label>
                                     </div>
                                 </div>
-                                <div id="bookingSlotsDiv">BOOKING SLOTS:)
-                                    <div id="scheduler"></div>
+                                <div id="bookingSlotsDiv" class="form-group">
+                                    <label class="col-sm-2 control-label col-lg-2">Coke</label>
+                                    <div id="scheduler">
+                                    </div>
+                                    <label class="col-sm-2 control-label col-lg-2">Pizza</label>
+                                    <div id="scheduler2">
+                                    </div>
+
                                 </div>
                                 <p>
                                 <div class="form-group">
@@ -459,73 +465,126 @@
 <script type="text/javascript">
 
     var appointments = new Array();
+    var appointments2 = new Array();
     var appointment1 = {
         id: "id1",
         location: "",
-        subject: "Quarterly Project Review Meeting",
-        start: new Date(2015, 10, 23, 9, 0, 0),
-        end: new Date(2015, 10, 23, 16, 0, 0)
+        subject: "Deliver",
+        start: new Date(2015, 10, 27, 9, 0, 0),
+        end: new Date(2015, 10, 27, 10, 0, 0)
     }
     var appointment2 = {
         id: "id2",
         location: "",
-        subject: "IT Group Mtg.",
-        start: new Date(2015, 10, 24, 10, 0, 0),
-        end: new Date(2015, 10, 24, 15, 0, 0)
+        subject: "Delivery",
+        start: new Date(2015, 10, 27, 10, 0, 0),
+        end: new Date(2015, 10, 27, 11, 0, 0)
     }
     var appointment3 = {
         id: "id3",
         location: "",
-        subject: "Course Social Media",
-        start: new Date(2015, 10, 27, 11, 0, 0),
-        end: new Date(2015, 10, 27, 13, 0, 0)
+        subject: "Delivery",
+        start: new Date(2015, 10, 27, 13, 0, 0),
+        end: new Date(2015, 10, 27, 14, 0, 0)
     }
     var appointment4 = {
-        id: "id4",
+        id: "id1",
         location: "",
-        subject: "New Projects Planning",
-        start: new Date(2015, 10, 23, 16, 0, 0),
-        end: new Date(2015, 10, 23, 18, 0, 0)
+        subject: "Deliver",
+        start: new Date(2015, 10, 27, 9, 0, 0),
+        end: new Date(2015, 10, 27, 11, 0, 0)
     }
     var appointment5 = {
-        id: "id5",
+        id: "id2",
         location: "",
-        subject: "Interview with James",
-        start: new Date(2015, 10, 25, 15, 0, 0),
-        end: new Date(2015, 10, 25, 17, 0, 0)
+        subject: "Delivery",
+        start: new Date(2015, 10, 27, 8, 0, 0),
+        end: new Date(2015, 10, 27, 11, 9, 0)
     }
     var appointment6 = {
-        id: "id6",
+        id: "id3",
         location: "",
-        subject: "Interview with Nancy",
-        start: new Date(2015, 10, 26, 14, 0, 0),
-        end: new Date(2015, 10, 26, 16, 0, 0)
+        subject: "Delivery",
+        start: new Date(2015, 10, 27, 11, 0, 0),
+        end: new Date(2015, 10, 27, 14, 0, 0)
     }
+
     appointments.push(appointment1);
     appointments.push(appointment2);
     appointments.push(appointment3);
-    appointments.push(appointment4);
-    appointments.push(appointment5);
-    appointments.push(appointment6);
+
+    appointments2.push(appointment4);
+    appointments2.push(appointment5);
+    appointments2.push(appointment6);
+
     // prepare the data
     var source =
         {
             dataType: "array",
             dataFields: [
-                { name: 'id', type: 'string' },
-                { name: 'description', type: 'string' },
-                { name: 'location', type: 'string' },
-                { name: 'subject', type: 'string' },
-                { name: 'calendar', type: 'string' },
-                { name: 'start', type: 'date' },
-                { name: 'end', type: 'date' }
+                {name: 'id', type: 'string'},
+                {name: 'description', type: 'string'},
+                {name: 'location', type: 'string'},
+                {name: 'subject', type: 'string'},
+                {name: 'calendar', type: 'string'},
+                {name: 'start', type: 'date'},
+                {name: 'end', type: 'date'}
             ],
             id: 'id',
             localData: appointments
         };
+
+    var source2 =
+        {
+            dataType: "array",
+            dataFields: [
+                {name: 'id', type: 'string'},
+                {name: 'description', type: 'string'},
+                {name: 'location', type: 'string'},
+                {name: 'subject', type: 'string'},
+                {name: 'calendar', type: 'string'},
+                {name: 'start', type: 'date'},
+                {name: 'end', type: 'date'}
+            ],
+            id: 'id',
+            localData: appointments2
+        };
     var adapter = new $.jqx.dataAdapter(source);
+    var adapter2 = new $.jqx.dataAdapter(source2);
     $("#scheduler").jqxScheduler({
-        date: new $.jqx.date(2015, 11, 23),
+        date: new $.jqx.date(2017, 11, 27),
+        width: 700,
+        height: 500,
+        source: adapter,
+        toolbarHeight: 0,
+        view: 'dayView',
+        showLegend: true,
+        ready: function () {
+            $("#scheduler").jqxScheduler('ensureAppointmentVisible', 'id1');
+        },
+        resources:
+            {
+                colorScheme: "scheme05",
+                dataField: "calendar",
+                source: new $.jqx.dataAdapter(source)
+            },
+        appointmentDataFields:
+            {
+                from: "start",
+                to: "end",
+                id: "id",
+                description: "description",
+                location: "place",
+                subject: "subject",
+                resourceId: "calendar"
+            },
+        views:
+            [
+                'dayView'
+            ]
+    });
+    $("#scheduler2").jqxScheduler({
+        date: new $.jqx.date(2017, 11, 27),
         width: 700,
         height: 500,
         source: adapter,
@@ -572,22 +631,29 @@
         }
     }
 
-    function getSlotsDataSets(){
-        for(var i = 0; i < selectedCheckboxesArray.length; i++){
-            var value = selectedCheckboxesArray[i].value;
-            $.postJSON("getSlotData.htm",
-                value, function(data) {
-                    var success = true;
-                   // var messages = "";
-                    for (var c = 0; c < data.length; c++) {
-                        //messages += data[i].message;
-                        //  contentID = data[i].id;
-                        console.log(data[c]);
-                        selectedSlotData.push(data[c]);
-                    }
-
-                });
+    function getSlotsDataSets() {
+        var pickedDates = document.getElementsByName("datepickers");
+        var slotDateData = [];
+        for (var i = 0; i < pickedDates.length; i++) {
+            var current = pickedDates[i];
+            var currentId = current.id;
+            var slotName = currentId.substring(currentId.indexOf('_') + 1, currentId.length);
+            var slotDate = current.value;
+            slotDateData.push([slotName, slotDate]);
         }
+        console.log(slotDateData);
+        $.postJSON("getSlotData.htm",
+            slotDateData, function (data) {
+                var success = true;
+                // var messages = "";
+                for (var c = 0; c < data.length; c++) {
+                    //messages += data[i].message;
+                    //  contentID = data[i].id;
+                    console.log(data[c]);
+                    selectedSlotData.push(data[c]);
+                }
+
+            });
 
     }
 
@@ -670,16 +736,17 @@
             childTextField.setAttribute('class', 'form-control round-input');
             childTextField.setAttribute('readonly', 'true');
             childTextField.setAttribute('id', 'datepicker_' + currElementVal);
+            childTextField.setAttribute('name', 'datepickers');
             childDiv.appendChild(childTextField);
             $("#datepicker_" + currElementVal).datepicker({
-                dateFormat: "dd-mm-yy"
+                dateFormat: "yy-mm-dd"
             });
         }
     }
 
     $(function () {
 
-        
+
         $("#packagesDiv").hide();
         $("#packagesDateDiv").hide();
         $("#proceedToBookingDiv").hide();

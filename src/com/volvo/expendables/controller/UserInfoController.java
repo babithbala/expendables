@@ -2,23 +2,24 @@ package com.volvo.expendables.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
 import com.volvo.expendables.dto.*;
 
 import net.sf.json.JSONArray;
 
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.annotation.Secured;
@@ -67,9 +68,10 @@ public class UserInfoController {
         return "uploadPhoto";
     }
 
-    @Secured({ "ROLE_USER", "ROLE_ADMIN" })
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @RequestMapping(value = "getPrincipalDetails.htm", method = RequestMethod.GET)
-    public @ResponseBody PrincipalDTO getPrincipalDetails() {
+    public @ResponseBody
+    PrincipalDTO getPrincipalDetails() {
         String userName = getLoggedInUserName();
         UserInfoController.logger.info("--------------------inside getPrincipalDetails :" + userName);
         logger.info("==============================================");
@@ -90,7 +92,8 @@ public class UserInfoController {
     }
 
     @RequestMapping(value = "/saveOrUpdateEvent.htm", method = RequestMethod.POST)
-    public @ResponseBody String saveOrUpdateEvent(@RequestBody EventDTO eventDetails) {
+    public @ResponseBody
+    String saveOrUpdateEvent(@RequestBody EventDTO eventDetails) {
         List<Acknowledge> list = new ArrayList<Acknowledge>();
         UserInfoController.logger.info("--------------------inside saveOrUpdateEvent" + eventDetails.getEventDate());
         eventDetails.setUserName(getLoggedInUserName());
@@ -104,7 +107,8 @@ public class UserInfoController {
     }
 
     @RequestMapping(value = "/getUserEvents.htm", method = RequestMethod.GET)
-    public @ResponseBody String getUserEvents() {
+    public @ResponseBody
+    String getUserEvents() {
         UserInfoController.logger.info("--------------------inside getUserEvents :");
         List<EventDTO> eventList = expendablesService.getAllUserEvents(getLoggedInUserName());
         UserInfoController.logger.info("--------------------inside getUserEvents size :" + eventList.size());
@@ -113,7 +117,8 @@ public class UserInfoController {
     }
 
     @RequestMapping(value = "/populateAllSelectedDateEvents.htm", method = RequestMethod.GET)
-    public @ResponseBody String populateAllSelectedDateEvents(@RequestParam String selectedDate) {
+    public @ResponseBody
+    String populateAllSelectedDateEvents(@RequestParam String selectedDate) {
         List<EventDTO> eventList = new ArrayList<EventDTO>();
         UserInfoController.logger.info("--------------------inside populateAllSelectedDateEvents :" + selectedDate);
         eventList = expendablesService.getAllSelectedDateEvents(getLoggedInUserName(), selectedDate);
@@ -127,7 +132,7 @@ public class UserInfoController {
         return userName;
     }
 
-    @Secured({ "ROLE_USER", "ROLE_ADMIN" })
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @RequestMapping(value = "/getProfilePhoto.htm", method = RequestMethod.GET)
     public ServletOutputStream profilePhotoByUserName(HttpServletRequest request, HttpServletResponse response) {
         UserInfoController.logger.info("getProfilePhoto getProfilePhoto method called");
@@ -160,7 +165,7 @@ public class UserInfoController {
         return out;
     }
 
-    @Secured({ "ROLE_USER", "ROLE_ADMIN" })
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @RequestMapping(value = "/getProfilePhotoByUserName.htm", method = RequestMethod.GET)
     public ServletOutputStream profilePhotoByUserNameRequest(HttpServletRequest request, HttpServletResponse response) {
 
@@ -212,7 +217,8 @@ public class UserInfoController {
     }
 
     @RequestMapping(value = "saveProfilePhoto.htm", method = RequestMethod.POST)
-    public @ResponseBody String saveProfilePhoto(HttpServletRequest request, @RequestBody PrincipalDTO profileDetails) throws IOException {
+    public @ResponseBody
+    String saveProfilePhoto(HttpServletRequest request, @RequestBody PrincipalDTO profileDetails) throws IOException {
         List<Acknowledge> list = new ArrayList<Acknowledge>();
         String userName = getLoggedInUserName();
         profileDetails.setUserName(userName);
@@ -242,7 +248,8 @@ public class UserInfoController {
     }
 
     @RequestMapping(value = "/saveOrUpdateContent.htm", method = RequestMethod.POST)
-    public @ResponseBody String saveOrUpdateContent(@RequestBody ContentDTO contentDetails) {
+    public @ResponseBody
+    String saveOrUpdateContent(@RequestBody ContentDTO contentDetails) {
         List<Acknowledge> list = new ArrayList<Acknowledge>();
         UserInfoController.logger.info("--------------------inside saveOrUpdateContent" + contentDetails.getContentName());
         if (contentDetails.getSlotId().contains(",")) {
@@ -270,7 +277,8 @@ public class UserInfoController {
     }
 
     @RequestMapping(value = "/saveOrUpdateSlot.htm", method = RequestMethod.POST)
-    public @ResponseBody String addSlot(@RequestBody Slot slotDetails) {
+    public @ResponseBody
+    String addSlot(@RequestBody Slot slotDetails) {
         List<Acknowledge> list;
         UserInfoController.logger.info("--------------------inside saveOrUpdateEvent" + slotDetails.getSlotDuration());
 
@@ -305,14 +313,15 @@ public class UserInfoController {
     @ResponseBody
     public String membershipRegistrationSubmission(@RequestBody UserDTO user) {
         List<Acknowledge> list = new ArrayList<Acknowledge>();
-        UserInfoController.logger.info("--------------------inside saveOrUpdateEvent" +  user.getUserName());
-            list = expendablesService.saveMemberDetails(user);
+        UserInfoController.logger.info("--------------------inside saveOrUpdateEvent" + user.getUserName());
+        list = expendablesService.saveMemberDetails(user);
         JSONArray data = JSONArray.fromObject(list);
         return data.toString();
     }
 
     @RequestMapping(value = "/getAllSlotDetails.htm", method = RequestMethod.GET)
-    public @ResponseBody Map<String, Object> getAllSlotDetails() {
+    public @ResponseBody
+    Map<String, Object> getAllSlotDetails() {
         List<DropDownDTO> slotList = new ArrayList<DropDownDTO>();
         Map<String, Object> map = new HashMap<String, Object>();
         slotList = expendablesService.getAllSlotsDropdown();
@@ -322,7 +331,8 @@ public class UserInfoController {
     }
 
     @RequestMapping(value = "/populateAllContentDetails.htm", method = RequestMethod.POST)
-    public @ResponseBody Map<String, ? extends Object> populateAllContentDetails(@RequestParam int page, int rows, String sidx, String sord, String contentName) {
+    public @ResponseBody
+    Map<String, ? extends Object> populateAllContentDetails(@RequestParam int page, int rows, String sidx, String sord, String contentName) {
         UserInfoController.logger.info("populateAllContentDetails : ");
         Map<String, Object> modelMap = new HashMap<String, Object>();
         List<ContentDTO> list = expendablesService.populateAllContentDetails(page, rows, sidx, sord, contentName);
@@ -334,14 +344,14 @@ public class UserInfoController {
         modelMap.put("records", count);
         return modelMap;
     }
-    
-    
-    
+
+
     @RequestMapping(value = "/populateAllSlotDetails.htm", method = RequestMethod.POST)
-    public @ResponseBody Map<String, ? extends Object> populateAllSlotDetails(@RequestParam int page, int rows, String sidx, String sord, String slotName) {
+    public @ResponseBody
+    Map<String, ? extends Object> populateAllSlotDetails(@RequestParam int page, int rows, String sidx, String sord, String slotName) {
         UserInfoController.logger.info("populateAllSlotDetails : ");
         Map<String, Object> modelMap = new HashMap<String, Object>();
-        List<Slot> list = expendablesService.populateAllSlotDetails(page, rows, sidx, sord,slotName);
+        List<Slot> list = expendablesService.populateAllSlotDetails(page, rows, sidx, sord, slotName);
 
         long count = list.size();
         modelMap.put("rows", list);
@@ -350,15 +360,37 @@ public class UserInfoController {
         modelMap.put("records", count);
         return modelMap;
     }
-    
-    @RequestMapping(value = "/getSlotData.htm", method = RequestMethod.POST)
-    public @ResponseBody String getSlotData(@RequestBody String slotName) {
-        logger.debug("getting slot data:  " + slotName);
-        slotName = slotName.replace("\"", "");
-        Slot slot = expendablesService.getSlot(slotName);
 
+    @RequestMapping(value = "/getSlotData.htm", method = RequestMethod.POST)
+    public @ResponseBody
+    String getSlotData(@RequestBody String json) throws org.json.simple.parser.ParseException {
+        //logger.debug("getting slot data:  " + slotName);
         Map<Slot, List<Booking>> map = new HashMap<Slot, List<Booking>>();
-        JSONArray data = JSONArray.fromObject(map);
-        return data.toString();
+        JSONParser parser = new JSONParser();
+        Object obj = parser.parse(json);
+        org.json.simple.JSONArray array = (org.json.simple.JSONArray) obj;
+        for (int i = 0; i < array.size(); i++) {
+            JSONObject obj2=(JSONObject)array.get(i);
+            String dateValue = (String)obj2.get(0);
+            String slotValue = (String)obj2.get(0);
+            Slot slot = expendablesService.getSlot(slotValue);
+            List<Booking> bookings = expendablesService.getBookingByBookingDateAndSlotName(convertStringToDate(dateValue), slotValue);
+            map.put(slot, bookings);
+        }
+
+
+        JSONArray datareturn = JSONArray.fromObject(map);
+        return datareturn.toString();
+    }
+
+    private Date convertStringToDate(String stringDate) {
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+            return formatter.parse(stringDate);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
