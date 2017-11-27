@@ -35,6 +35,10 @@
      <link rel="stylesheet" href="/Expendables/jQuery/themes/bs/jquery-ui.css">
     <link rel="stylesheet" href="/Expendables/css/validation.css">
 
+<link rel="stylesheet" href="/Expendables/jqwidgets/styles/jqx.base.css" type="text/css" />
+		
+
+
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script src="/Expendables/js/common.js"></script>
@@ -405,66 +409,31 @@
                 <div class="col-lg-12">
                     <section class="panel">
                         <header class="panel-heading">
-                            Add New Slot
+                            Slot Queue
                         </header>
                         <div class="panel-body">
                             <div id="addSlot" style="color: red"></div>
                             <form class="form-horizontal tasi-form" role="form" id="addSlotForm">
                                 <div class="form-group">
-                                    <label for="addSlotInputSlotName" class="col-lg-2 col-sm-2 control-label">Slot
-                                        names</label>
-                                    <div class="col-lg-6">
-                                        <input type="text" name="slotName" size="12"
-                                               id="addSlotInputSlotName">
-                                    </div>
-                                </div>
+										<label for="addEventInputSlot"
+											class="col-lg-2 col-sm-2 control-label">Slot<font
+											color="red">&nbsp;*</font></label>
+										<div class="col-lg-6">
+											<select class="form-control m-b-10" id="addEventInputEventPriority"
+                                                name="slot">
+                                            <option value="" selected="selected">Select One</option>
+                                            <option value="14">SLOT-1</option>
+                                            <option value="15">SLOT2</option>
+                                        </select>
+										</div>
+									</div>
 
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label col-lg-2" for="addSlotInputSlotTime">
-                                        Min Duration</label>
-                                    <div class="col-lg-8">
-                                        <input type="text" name="slotDuration" id="addSlotInputSlotTime">
-                                    </div>
-								</div>
-                                    <div class="form-group">
-                                    <label class="col-sm-2 control-label col-lg-2" for="addSlotInputStartDate">
-                                        Start Time</label>
-                                    <div class="col-lg-8">
-                                        <div class="row">
-                                            
-
-                                            <div class="col-lg-3">
-                                                <input type="text" name="open_from" size="12"
-                                                       id="addSlotInputStartDate" maxlength="8"
-                                                       class="form-control" value="00:00:00"
-                                                       onFocus="if(this.value=='00:00:00')this.value='';">
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label col-lg-2" for="addSlotInputEndDate">
-                                        End Time</label>
-                                    <div class="col-lg-8">
-                                        <div class="row">
-                                            
-
-                                            <div class="col-lg-3">
-                                                <input type="text" name="open_to" size="12"
-                                                       id="addSlotInputEndDate" maxlength="8"
-                                                       class="form-control" value="00:00:00"
-                                                       onFocus="if(this.value=='00:00:00')this.value='';">
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
+                                
                                 
                                 <div class="form-group">
                                     <div class="col-lg-offset-2 col-lg-10">
-                                        <button type="submit" class="btn btn-info" id="addEventInputEventSubmitButton">
-                                            Create
+                                        <button type="button" class="btn btn-info" id="addEventInputEventSubmitButton">
+                                            Search
                                         </button>
                                         <button type="button" class="btn btn-danger"
                                                 id="addEventInputEventCancelButton">Cancel
@@ -484,39 +453,27 @@
 				<div class="row">
 					<div class="col-lg-12">
 						<section class="panel">
-							<header class="panel-heading"> Find All Slots </header>
+							<header class="panel-heading"> Slot Queue Results </header>
 							<div class="panel-body">
-								<div id="addEventErrorMessage1" style="color: red"></div>
-								<form class="form-horizontal tasi-form" role="form"
-									id="searchContentForm">
-									<div class="form-group">
-										<label for="serachEventInputContentName"
-											class="col-lg-2 col-sm-2 control-label">
-											Slot&nbsp;Name<font color="red">&nbsp;*</font>
-										</label>
-										<div class="col-lg-6">
-											<input name="slotName" type="text" class="form-control"
-												id="serachEventInputSlotName" placeholder="Slot Name">
-										</div>
-									</div>
+							
+							 <div class="row">
+                        <div class="col-md-6" id="slot1Div">
+                            <div class="panel">
+                            <header class="panel-heading"> Slot-1 </header>
+                                <div id="slot1scheduler"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" id="slot2Div">
+                          <div class="panel">
+                          <header class="panel-heading"> Slot2 </header>
+                                <div id="slot2scheduler"></div>
+                            </div>
+                  </div>
+              </div>
 
-
-
-									<div class="form-group">
-										<div class="col-lg-offset-2 col-lg-10">
-											<button type="button" class="btn btn-info"
-												id="searchEventInputEventSubmitButton">Search</button>
-										</div>
-									</div>
-								</form>
 
 							</div>
-							<div class="panel-body" id="user-game-point-box">
-								<div id="add_SlotListJQGTableWrapper">
-									<table id="add_SlotListJQGTable"></table>
-									<div id="add_SlotListJQGTablePagingToolbar"></div>
-								</div>
-							</div>
+							
 
 						</section>
 					</div>
@@ -539,7 +496,7 @@
 <script src="/Expendables/jQuery/jquery.populate.js"></script>
 <script src="/Expendables/jQuery/ui/jquery-ui-timepicker-addon.js"></script>
 
-
+<script src="/Expendables/jQuery/combobox.js"></script>	
 <script src="/Expendables/jQuery/jquery.validate.js"></script>
 <script src="/Expendables/jQuery/additional-methods.js"></script>
 <script src="/Expendables/jQuery/json.min.js"></script>
@@ -555,6 +512,32 @@
 <script src="/Expendables/js/bootstrap.min.js" type="text/javascript"></script>
 <!-- Director App -->
 <script src="/Expendables/js/Director/app.js" type="text/javascript"></script>
+
+
+
+  <script type="text/javascript" src="/Expendables/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="/Expendables/jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="/Expendables/jqwidgets/jqxscrollbar.js"></script>
+    <script type="text/javascript" src="/Expendables/jqwidgets/jqxdata.js"></script>
+    <script type="text/javascript" src="/Expendables/jqwidgets/jqxdate.js"></script>
+    <script type="text/javascript" src="/Expendables/jqwidgets/jqxscheduler.js"></script>
+    <script type="text/javascript" src="/Expendables/jqwidgets/jqxscheduler.api.js"></script>
+    <script type="text/javascript" src="/Expendables/jqwidgets/jqxdatetimeinput.js"></script>
+    <script type="text/javascript" src="/Expendables/jqwidgets/jqxmenu.js"></script>
+    <script type="text/javascript" src="/Expendables/jqwidgets/jqxcalendar.js"></script>
+    <script type="text/javascript" src="/Expendables/jqwidgets/jqxtooltip.js"></script>
+    <script type="text/javascript" src="/Expendables/jqwidgets/jqxwindow.js"></script>
+    <script type="text/javascript" src="/Expendables/jqwidgets/jqxcheckbox.js"></script>
+    <script type="text/javascript" src="/Expendables/jqwidgets/jqxlistbox.js"></script>
+    <script type="text/javascript" src="/Expendables/jqwidgets/jqxdropdownlist.js"></script>
+    <script type="text/javascript" src="/Expendables/jqwidgets/jqxnumberinput.js"></script>
+    <script type="text/javascript" src="/Expendables/jqwidgets/jqxradiobutton.js"></script>
+    <script type="text/javascript" src="/Expendables/jqwidgets/jqxinput.js"></script>
+    <script type="text/javascript" src="/Expendables/jqwidgets/globalization/globalize.js"></script>
+    <script type="text/javascript" src="/Expendables/jqwidgets/globalization/globalize.culture.de-DE.js"></script>
+    <script type="text/javascript" src="/Expendables/scripts/demos.js"></script>
+    
+
 
 <script type="text/javascript">
     $(function () {
@@ -579,73 +562,47 @@
             });
         });
 
-//         $('#addSlotInputSlotTime').spinner({
-//             spin: function( event, ui ) {
-//                 if ( ui.value < 0 ) {
-//                     $( this ).spinner( "slotDuration", 0 );
-//                     return false;
-//                 }
-//             }
-//         });
         
          
         $('#addSlotInputStartDate').timepicker({showSecond: true, timeFormat: 'hh:mm:ss'});
 
         $('#addSlotInputEndDate').timepicker({showSecond: true, timeFormat: 'hh:mm:ss'});
+       // $("#addEventInputSlot" ).combobox();
+//         $.ajax({
+// 			url : 'getAllSlotDetails.htm',
+// 			dataType : 'json',
+// 			cache : false,
+// 			success : function(data) {
+// 				$("#addEventInputSlot").get(0).options.length = 0;
+// 				$("#addEventInputSlot").get(0).options[0] = new Option("Select ", "");
+// 				$.each(data.mapperList,function(index, item) {
+// 					$("#addEventInputSlot").get(0).options[$("#addEventInputSlot").get(0).options.length] =
+// 							new Option(item, item);
+// 					});
 
-
+// 			}
+// 		});
+        $("#addEventInputEventPriority").change(function() {
+        	var val =$( this ).val();
+        	if("14"==val){
+        		$("#slot1Div").show();
+        		$("#slot2Div").hide();
+        	}else{
+        		$("#slot1Div").hide();
+        		$("#slot2Div").show();
+        	}
+});
+       
+        
+        
+        
+        $("#addEventInputSlot").change(function(){
+        	
+        });
 
         populatePrincipalDetails($("#addNewEventUserFullNameLabelId"), $("#addNewEventUserFirstNameLabelId"));
 
         var slotID = 0;
-        var validator = $("#addSlotForm").validate({
-            meta: "validate",
-            rules: {
-                slotName: {
-                    required: true
-                },
-                slotDuration: {
-                    required: true,
-                    integer: true
-                }
-            },
-
-            messages: {
-                slotName: {
-                    required: 'Please enter Slot Name.'
-                },
-                slotDuration: {
-                    required: 'Please enter slotDuration.',
-                    integer: "Please enter a valid number."
-                }
-            },
-            submitHandler: function () {
-                $("#addSlot").html("");
-                var slotDetails = $('#addSlotForm').serializeObject();
-                slotName=  $("#addSlotInputSlotName").val();
-                $.postJSON("saveOrUpdateSlot.htm", slotDetails, function (data) {
-                    $(".inputError").removeClass("inputError");
-                    var messages = "";
-                    for (i = 0; i < data.length; i++) {
-                        messages += data[i].message;
-                        slotID = data[i].id;
-
-                    }
-                    //$("#addEventInputEventId").val(slotID);
-
-                    $("#addSlot").html(messages);
-                    reloadContentStore();
-                });
-                $('html,body').animate({
-                        scrollTop: $(".navbar-right").offset().top
-                    },
-                    'slow');
-                return false;
-            }
-        });
-        
-        
-        
         
         var contentGrid = jQuery("#add_SlotListJQGTable").jqGrid(
 				{
@@ -745,6 +702,332 @@ var slotName="";
 			slotName = $("#serachEventInputSlotName").val();
 			reloadContentStore();
 		});
+		
+		
+		
+		//------------------------SLOT1 START
+		
+		var appointments = new Array();
+
+            var appointment1 = {
+                id: "id1",
+                description: "",
+                location: "",
+                subject: "Soft Drinks",
+                calendar: "Room 1",
+                start: new Date(2017, 10, 23, 9, 0, 0),
+                end: new Date(2017, 10, 23, 16, 0, 0)
+            }
+
+            var appointment2 = {
+                id: "id2",
+                description: "IT Group Mtg.",
+                location: "",
+                subject: "John",
+                calendar: "Room 2",
+                start: new Date(2017, 10, 24, 10, 0, 0),
+                end: new Date(2017, 10, 24, 15, 0, 0)
+            }
+
+            var appointment3 = {
+                id: "id3",
+                description: "Course Social Media",
+                location: "",
+                subject: "Antony",
+                calendar: "Room 3",
+                start: new Date(2017, 10, 27, 11, 0, 0),
+                end: new Date(2017, 10, 27, 13, 0, 0)
+            }
+
+            var appointment4 = {
+                id: "id4",
+                description: "New Projects Planning",
+                location: "",
+                subject: "Michael",
+                calendar: "Room 2",
+                start: new Date(2017, 10, 23, 16, 0, 0),
+                end: new Date(2017, 10, 23, 18, 0, 0)
+            }
+
+            var appointment5 = {
+                id: "id5",
+                description: "Interview with James",
+                location: "",
+                subject: "Peter",
+                calendar: "Room 1",
+                start: new Date(2017, 10, 25, 15, 0, 0),
+                end: new Date(2017, 10, 25, 17, 0, 0)
+            }
+
+            var appointment6 = {
+                id: "id6",
+                description: "Interview with Nancy",
+                location: "",
+                subject: "George",
+                calendar: "Room 4",
+                start: new Date(2017, 10, 26, 14, 0, 0),
+                end: new Date(2017, 10, 26, 16, 0, 0)
+            }
+            appointments.push(appointment1);
+            appointments.push(appointment2);
+            appointments.push(appointment3);
+            appointments.push(appointment4);
+            appointments.push(appointment5);
+            appointments.push(appointment6);
+
+
+            // prepare the data
+            var source =
+            {
+                dataType: "array",
+                dataFields: [
+                    { name: 'id', type: 'string' },
+                    { name: 'description', type: 'string' },
+                    { name: 'location', type: 'string' },
+                    { name: 'subject', type: 'string' },
+                    { name: 'calendar', type: 'string' },
+                    { name: 'style', type: 'string' },
+                    { name: 'color', type: 'string' },
+                    { name: 'background', type: 'string' },
+                    { name: 'borderColor', type: 'string' },
+                    { name: 'start', type: 'date' },
+                    { name: 'end', type: 'date' }
+                ],
+                id: 'id',
+                localData: appointments
+            };
+            var adapter = new $.jqx.dataAdapter(source);
+            $("#slot1scheduler").jqxScheduler({
+                date: new $.jqx.date(2017, 11, 23),
+                width: 590,
+                height: 600,
+                source: adapter,
+                renderAppointment: function(data)
+                {
+                    // data Object properties
+                    // appointment - Object with the properties from the Scheduler.s source object.
+                    // width - int
+                    // height- int
+                    // textColor - hex
+                    // background - hex
+                    // borderColor - hex
+                    // style - string
+                    // cssClass - string
+                    // html - html string
+                    // view - string
+                    var img = "<img style='top: 2px; position: relative;' src='/Expendables/images/person.png'/>";
+                    if (data.appointment.subject == "Nancy") {
+                        var img = "<img style='top: 2px; position: relative;' src='/Expendables/images/woman.png'/>";
+                    }
+                    else if (data.appointment.subject == "Peter") {
+                        var img = "<img style='top: 2px; position: relative;' src='/Expendables/images/boss.png'/>";
+                    }
+                    else if (data.appointment.subject == "Antony") {
+                        var img = "<img style='top: 2px; position: relative;' src='/Expendables/images/oldboss.png'/>";
+                    }
+                    else if (data.appointment.subject == "John") {
+                        var img = "<img style='top: 2px; position: relative;' src='/Expendables/images/asian.png'/>";
+                    }
+
+                    if (data.view == "weekView" || data.view == "dayView" || data.view == "monthView") {
+                        data.html =  img + "<i>" + data.appointment.subject + "</i>";
+                        if (data.appointment.id == "id1") {
+                            data.style = "#AA4643";
+                        }
+                        else if (data.appointment.id == "id2" || data.appointment.id == "id6") {
+                            data.style = "#309B46";
+                        }
+                        else if (data.appointment.id == "id3") {
+                            data.style = "#447F6E";
+                        }
+                   }
+
+                    return data;
+                },
+                ready: function () {
+                    $("#slot1scheduler").jqxScheduler('ensureAppointmentVisible', 'id1');
+                },
+                appointmentDataFields:
+                {
+                    from: "start",
+                    to: "end",
+                    id: "id",
+                    description: "description",
+                    location: "location",
+                    subject: "subject",
+                    style: "style",
+                    color: "color",
+                    background: "background",
+                    borderColor: "borderColor"
+                },
+                view: 'weekView',
+                appointmentsMinHeight: 20,
+                views:
+                [
+                    'dayView',
+                    'weekView',
+                    'monthView'
+                ]
+            });
+
+		//------------------------SLOT1 END
+		
+				//------------------------SLOT2 START
+		var slot2Appointments = new Array();
+
+            var slot2Appointment1 = {
+                id: "id1",
+                description: "Quarterly Project Review Meeting",
+                location: "",
+                subject: "Nancy",
+                calendar: "Room 1",
+                start: new Date(2017, 10, 23, 9, 0, 0),
+                end: new Date(2017, 10, 23, 16, 0, 0)
+            }
+
+            var slot2Appointment2 = {
+                id: "id2",
+                description: "IT Group Mtg.",
+                location: "",
+                subject: "John",
+                calendar: "Room 2",
+                start: new Date(2017, 10, 24, 10, 0, 0),
+                end: new Date(2017, 10, 24, 15, 0, 0)
+            }
+
+            var slot2Appointment3 = {
+                id: "id3",
+                description: "Course Social Media",
+                location: "",
+                subject: "Antony",
+                calendar: "Room 3",
+                start: new Date(2017, 10, 27, 11, 0, 0),
+                end: new Date(2017, 10, 27, 13, 0, 0)
+            }
+
+            var slot2Appointment4 = {
+                id: "id4",
+                description: "New Projects Planning",
+                location: "",
+                subject: "Michael",
+                calendar: "Room 2",
+                start: new Date(2017, 10, 23, 16, 0, 0),
+                end: new Date(2017, 10, 23, 18, 0, 0)
+            }
+
+            var slot2Appointment5 = {
+                id: "id5",
+                description: "Interview with James",
+                location: "",
+                subject: "Peter",
+                calendar: "Room 1",
+                start: new Date(2017, 10, 25, 15, 0, 0),
+                end: new Date(2017, 10, 25, 17, 0, 0)
+            }
+
+            var slot2Appointment6 = {
+                id: "id6",
+                description: "Interview with Nancy",
+                location: "",
+                subject: "George",
+                calendar: "Room 4",
+                start: new Date(2017, 10, 26, 14, 0, 0),
+                end: new Date(2017, 10, 26, 16, 0, 0)
+            }
+            slot2Appointments.push(slot2Appointment1);
+            slot2Appointments.push(slot2Appointment2);
+            slot2Appointments.push(slot2Appointment3);
+            slot2Appointments.push(slot2Appointment4);
+            slot2Appointments.push(slot2Appointment5);
+            slot2Appointments.push(slot2Appointment6);
+
+
+            // prepare the data
+            var source =
+            {
+                dataType: "array",
+                dataFields: [
+                    { name: 'id', type: 'string' },
+                    { name: 'description', type: 'string' },
+                    { name: 'location', type: 'string' },
+                    { name: 'subject', type: 'string' },
+                    { name: 'calendar', type: 'string' },
+                    { name: 'style', type: 'string' },
+                    { name: 'color', type: 'string' },
+                    { name: 'background', type: 'string' },
+                    { name: 'borderColor', type: 'string' },
+                    { name: 'start', type: 'date' },
+                    { name: 'end', type: 'date' }
+                ],
+                id: 'id',
+                localData: slot2Appointments
+            };
+            var adapter = new $.jqx.dataAdapter(source);
+            $("#slot2scheduler").jqxScheduler({
+                date: new $.jqx.date(2017, 11, 23),
+                width: 590,
+                height: 600,
+                source: adapter,
+                renderAppointment: function(data)
+                {
+                  
+                    var img = "<img style='top: 2px; position: relative;' src='/Expendables/images/person.png'/>";
+                    if (data.appointment.subject == "Nancy") {
+                        var img = "<img style='top: 2px; position: relative;' src='/Expendables/images/woman.png'/>";
+                    }
+                    else if (data.appointment.subject == "Peter") {
+                        var img = "<img style='top: 2px; position: relative;' src='/Expendables/images/boss.png'/>";
+                    }
+                    else if (data.appointment.subject == "Antony") {
+                        var img = "<img style='top: 2px; position: relative;' src='/Expendables/images/oldboss.png'/>";
+                    }
+                    else if (data.appointment.subject == "John") {
+                        var img = "<img style='top: 2px; position: relative;' src='/Expendables/images/asian.png'/>";
+                    }
+
+                    if (data.view == "weekView" || data.view == "dayView" || data.view == "monthView") {
+                        data.html =  img + "<i>" + data.appointment.subject + "</i>";
+                        if (data.appointment.id == "id1") {
+                            data.style = "#AA4643";
+                        }
+                        else if (data.appointment.id == "id2" || data.appointment.id == "id6") {
+                            data.style = "#309B46";
+                        }
+                        else if (data.appointment.id == "id3") {
+                            data.style = "#447F6E";
+                        }
+                   }
+
+                    return data;
+                },
+                ready: function () {
+                    $("#slot2scheduler").jqxScheduler('ensureAppointmentVisible', 'id1');
+                },
+                appointmentDataFields:
+                {
+                    from: "start",
+                    to: "end",
+                    id: "id",
+                    description: "description",
+                    location: "location",
+                    subject: "subject",
+                    style: "style",
+                    color: "color",
+                    background: "background",
+                    borderColor: "borderColor"
+                },
+                view: 'weekView',
+                appointmentsMinHeight: 20,
+                views:
+                [
+                    'dayView',
+                    'weekView',
+                    'monthView'
+                ]
+            });
+		//------------------------SLOT2 END
+		
+
     });
 
 </script>

@@ -315,7 +315,13 @@ public class UserInfoController {
     public @ResponseBody Map<String, Object> getAllSlotDetails() {
         List<DropDownDTO> slotList = new ArrayList<DropDownDTO>();
         Map<String, Object> map = new HashMap<String, Object>();
-        slotList = expendablesService.getAllSlotsDropdown();
+        //slotList = expendablesService.getAllSlotsDropdown();
+        
+        DropDownDTO d1= new DropDownDTO();
+        DropDownDTO d2= new DropDownDTO();
+        d1.setCode("14");d1.setDescription("SLOT-1");
+        d2.setCode("15");d2.setDescription("SLOT2");
+        slotList.add(d1);slotList.add(d2);
         JSONArray data = JSONArray.fromObject(slotList);
         map.put("mapperList", data);
         return map;
@@ -360,5 +366,12 @@ public class UserInfoController {
         Map<Slot, List<Booking>> map = new HashMap<Slot, List<Booking>>();
         JSONArray data = JSONArray.fromObject(map);
         return data.toString();
+    }
+    
+    
+    
+    @RequestMapping(value = "/slotsQueue.htm", method = RequestMethod.GET)
+    public String slotsQueue(Model model) {
+        return "slotsQueue";
     }
 }
