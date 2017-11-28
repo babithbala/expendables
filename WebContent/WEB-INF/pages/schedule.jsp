@@ -365,6 +365,38 @@
                         <div class="panel-body">
                             <div id="addMembershipRegErrorMessage" style="color: red"></div>
                             <form class="form-horizontal tasi-form" role="form" id="scheduleForm" name="scheduleForm">
+                                <div class="form-group" id="membershipInputLastNameDiv">
+                                    <label for="membershipVehicleRegNo"
+                                           class="col-lg-2 col-sm-2 control-label">
+                                        Vehicle Reg No</font>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <input name="lastName" type="text" class="form-control"
+                                               id="membershipVehicleRegNo" placeholder="Vehicle Reg No">
+                                    </div>
+                                </div>
+                                <div class="form-group" id="driverno">
+                                    <label for="driverphoneno"
+                                           class="col-lg-2 col-sm-2 control-label">
+                                        Driver's Number</font>
+                                    </label>
+                                    <div class="col-lg-6">
+                                        <input name="drino" type="text" class="form-control"
+                                               id="driverphoneno" placeholder="Phone Number">
+                                    </div>
+                                </div>
+                                <div class="form-group" id="customDelivery">
+                                    <label for="customsDelivery"
+                                           class="col-lg-2 col-sm-2 control-label">
+                                        Customs Delivery</font>
+                                    </label>
+                                    <div class="col-lg-6">
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" value="proceed_to_book"
+                                                       id="checkbbb">Yes
+                                            </label>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label col-lg-2" for="contents">Contents</label>
                                     <div class="col-lg-10">
